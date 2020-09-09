@@ -61,7 +61,7 @@ enum State handleHalfOpenComment(int c, int currLine, int *comStart) {
 		*comStart = currLine;
 		break;
 	case '"': /* double quote */
-		purchar('/');
+		putchar('/');
 		putchar(c);
 		state = DOUBLE_QUOTE_OPEN;
 	case '\'': /* single quote */
