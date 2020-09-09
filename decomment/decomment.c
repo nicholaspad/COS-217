@@ -197,6 +197,10 @@ enum State handleSingleQuoteEsc(int c) {
 
 /**********************************************************************/
 
+/* Reads text from standard input. Replaces comments (C89 style) with
+   spaces while preserving newline characters, writing to standard
+   output. Throws a message to standard error if a comment is
+   unterminated. */
 int main(void) {
 	int c; /* Latest character from standard input */
 	int comStart; /* Line number of most recent comment block */
