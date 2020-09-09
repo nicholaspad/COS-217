@@ -672,21 +672,17 @@ extern int toupper (int __c) __attribute__ ((__nothrow__ , __leaf__));
 
 # 3 "decomment.c" 2
 
-enum State {NORMAL, ESC_IN_NORMAL,
+enum State {NORMAL,
          HALF_OPEN_COMMENT, OPEN_COMMENT, HALF_CLOSED_COMMENT,
          DOUBLE_QUOTE_OPEN, ESC_IN_DOUBLE_QUOTE,
          SINGLE_QUOTE_OPEN, ESC_IN_SINGLE_QUOTE};
-# 20 "decomment.c"
+# 17 "decomment.c"
 enum State handleNormal(int c) {
  enum State state;
 
  switch (c) {
  case '/':
   state = HALF_OPEN_COMMENT;
-  break;
- case '\\':
-  putchar(c);
-  state = ESC_IN_NORMAL;
   break;
  case '"':
   putchar(c);
@@ -703,17 +699,7 @@ enum State handleNormal(int c) {
 
  return state;
 }
-
-
-
-
-
-enum State handleNormalEsc(int c) {
- enum State state = NORMAL;
- putchar(c);
- return state;
-}
-# 64 "decomment.c"
+# 50 "decomment.c"
 enum State handleHalfOpenComment(int c, int currLine, int *comStart) {
  enum State state;
 
@@ -726,6 +712,16 @@ enum State handleHalfOpenComment(int c, int currLine, int *comStart) {
   putchar(' ');
   state = OPEN_COMMENT;
   *comStart = currLine;
+  break;
+ case '"':
+  putchar('/');
+  putchar(c);
+  state = DOUBLE_QUOTE_OPEN;
+  break;
+ case '\'':
+  putchar('/');
+  putchar(c);
+  state = SINGLE_QUOTE_OPEN;
   break;
  default:
   putchar('/');
@@ -870,9 +866,6 @@ int main(void) {
   case NORMAL:
    state = handleNormal(c);
    break;
-  case ESC_IN_NORMAL:
-   state = handleNormalEsc(c);
-   break;
   case HALF_OPEN_COMMENT:
    state = handleHalfOpenComment(c, currLine, &comStart);
    break;
@@ -895,6 +888,12 @@ int main(void) {
    state = handleSingleQuoteEsc(c);
    break;
   }
+ }
+
+
+
+ if (state == HALF_OPEN_COMMENT) {
+  putchar('/');
  }
 
 
