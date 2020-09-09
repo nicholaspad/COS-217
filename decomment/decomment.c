@@ -237,6 +237,12 @@ int main(void) {
 		}
 	}
 
+	/* State HALF_OPEN_COMMENT indicates that a forward slash is printed
+	   if c is not an asterisk. This covers the case where c is EOF. */
+	if (state == HALF_OPEN_COMMENT) {
+		putchar('/');
+	}
+
 	/* States OPEN_COMMENT and HALF_CLOSED_COMMENT mean that a comment
 	   block has not been closed: EXIT_FAILURE. */
 	if (state == OPEN_COMMENT || state == HALF_CLOSED_COMMENT) {
