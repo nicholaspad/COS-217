@@ -12,8 +12,8 @@ enum State {NORMAL,
    block). Takes input character c. Returns state HALF_OPEN_COMMENT if
    c is a forward slash. Returns state DOUBLE_QUOTE_OPEN if c is a
    double quote. Returns state SINGLE_QUOTE_OPEN if c is a single quote.
-   Returns state NORMAL (same state) if c is any other character. Prints
-   c if it is not a forward slash. */
+   Returns state NORMAL if c is any other character. Prints c if it is
+   not a forward slash. */
 enum State handleNormal(int c) {
 	enum State state;
 
@@ -39,14 +39,14 @@ enum State handleNormal(int c) {
 
 /* Corresponds to state HALF_OPEN_COMMENT (i.e. immediately succeeding a
    forward slash not inside a comment or quote block). Takes input
-   character c, current line number currLine, and current comment block
-   line number comStart. Returns state HALF_OPEN_COMMENT (same state) if
-   c is a forward slash. Prints a space and returns state OPEN_COMMENT
-   if c is an asterisk, and updates comStart. Returns state
+   character c, current line number currLine, and ref. to current
+   comment block line number comStart. Returns state HALF_OPEN_COMMENT
+   if c is a forward slash. Prints a space and returns state
+   OPEN_COMMENT if c is an asterisk, and updates comStart. Returns state
    DOUBLE_QUOTE_OPEN if c is a double quote. Returns state
    SINGLE_QUOTE_OPEN if c is a single quote. Returns state NORMAL if c
    is any other character. Prints a forward slash succeeded by c if c is
-   not an asterisk. */
+   not an asterisk, or just c if c is a forward slash. */
 enum State handleHalfOpenComment(int c, int currLine, int *comStart) {
 	enum State state;
 
@@ -237,20 +237,20 @@ int main(void) {
 		}
 	}
 
-	/* State HALF_OPEN_COMMENT indicates that a forward slash is printed
-	   if c is not an asterisk. This covers the case where c is EOF. */
+	/* State HALF_OPEN_COMMENT prints a forward slash if c (EOF in this
+	   case) is not an asterisk. */
 	if (state == HALF_OPEN_COMMENT) {
 		putchar('/');
 	}
 
-	/* States OPEN_COMMENT and HALF_CLOSED_COMMENT mean that a comment
-	   block has not been closed: EXIT_FAILURE. */
+	/* States OPEN_COMMENT and HALF_CLOSED_COMMENT signify that a
+	   comment block has not been closed: EXIT_FAILURE. */
 	if (state == OPEN_COMMENT || state == HALF_CLOSED_COMMENT) {
 		fprintf(stderr, "Error: line %d: unterminated comment\n", comStart);
 		return 1;
 	}
 
-	/* All other states mean that all comment blocks have been closed:
-	   EXIT_SUCCESS. */
+	/* All other states signify that all comment blocks have been
+	   closed: EXIT_SUCCESS. */
 	return 0;
 }
