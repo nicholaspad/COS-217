@@ -56,11 +56,12 @@ enum State handleNormalEsc(int c) {
 
 /* Corresponds to state HALF_OPEN_COMMENT (i.e. immediately succeeding a
    forward slash not inside a comment or quote block). Takes input
-   character c. Returns state HALF_OPEN_COMMENT (same state) if c is a
-   forward slash. Returns state OPEN_COMMENT if c is an asterisk.
-   Returns state NORMAL if c is any other character. Prints c if it is
-   not an asterisk. */
-enum State handleHalfOpenComment(int c) {
+   character c, current line number currLine, and current comment block
+   line number comStart. Returns state HALF_OPEN_COMMENT (same state) if
+   c is a forward slash. Returns state OPEN_COMMENT if c is an asterisk,
+   and updates comStart. Returns state NORMAL if c is any other
+   character. Prints c if it is not an asterisk. */
+enum State handleHalfOpenComment(int c, int currLine, int *comStart) {
 	enum State state;
 
 	switch (c) {
@@ -70,6 +71,7 @@ enum State handleHalfOpenComment(int c) {
 		break;
 	case '*': /* asterisk */
 		state = OPEN_COMMENT;
+		*comStart = currLine;
 		break;
 	default: /* any other character */
 		putchar('/');
@@ -200,11 +202,17 @@ enum State handleSingleQuoteEsc(int c) {
 /**********************************************************************/
 
 int main(void) {
-	int c;
+	int c; /* Latest character from standard input */
+	int comStart; /* Line number of most recent comment block */
+	int currLine = 1; /* Keeps track of current line number */
 	enum State state = NORMAL; /* Start in state NORMAL */
 
 	/* Exhaustively read characters one-by-one from standard input. */
 	while((c = getchar()) != EOF) {
+		if (c == '\n') {
+			currLine++;
+		}
+
 		switch (state) {
 		case NORMAL:
 			state = handleNormal(c);
@@ -213,7 +221,7 @@ int main(void) {
 			state = handleNormalEsc(c);
 			break;
 		case HALF_OPEN_COMMENT:
-			state = handleHalfOpenComment(c);
+			state = handleHalfOpenComment(c, currLine, &comStart);
 			break;
 		case OPEN_COMMENT:
 			state = handleOpenComment(c);
@@ -239,6 +247,7 @@ int main(void) {
 	/* States OPEN_COMMENT and HALF_CLOSED_COMMENT mean that a comment
 	   block has not been closed: EXIT_FAILURE. */
 	if (state == OPEN_COMMENT || state == HALF_CLOSED_COMMENT) {
+		printf("Error: line %d: unterminated comment\n", comStart);
 		return 1;
 	}
 
