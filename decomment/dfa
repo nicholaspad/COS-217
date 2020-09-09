@@ -1,0 +1,39 @@
+NORMAL (accept) <-- the start state
+    /: HALF_OPEN_COMMENT
+    \: ESC_IN_NORMAL (print)
+    ": DOUBLE_QUOTE_OPEN (print)
+    ': SINGLE_QUOTE_OPEN (print)
+    other: NORMAL (print)
+
+ESC_IN_NORMAL (accept)
+    any: NORMAL (print)
+
+HALF_OPEN_COMMENT (accept)
+    /: HALF_OPEN_COMMENT (print)
+    *: OPEN_COMMENT
+    other: NORMAL (print)
+
+OPEN_COMMENT (reject)
+    *: HALF_CLOSED_COMMENT
+    other: OPEN_COMMENT (print if c == '\n')
+
+HALF_CLOSED_COMMENT (reject)
+    *: HALF_CLOSED_COMMENT
+    /: NORMAL
+    other: OPEN_COMMENT (print if c == '\n')
+
+DOUBLE_QUOTE_OPEN (accept)
+    \: ESC_IN_DOUBLE_QUOTE (print)
+    ": NORMAL (print)
+    other: DOUBLE_QUOTE_OPEN (print)
+
+ESC_IN_DOUBLE_QUOTE (accept)
+    any: DOUBLE_QUOTE_OPEN (print)
+
+SINGLE_QUOTE_OPEN (accept)
+    \: ESC_IN_SINGLE_QUOTE (print)
+    ': NORMAL (print)
+    other: SINGLE_QUOTE_OPEN (print)
+
+ESC_IN_SINGLE_QUOTE (accept)
+    any: SINGLE_QUOTE_OPEN (print)
