@@ -74,6 +74,7 @@ enum State handleHalfClosedComment(int c) {
 	if (c == '*') {
 		state = HALF_CLOSED_COMMENT;
 	} else if (c == '/') {
+		putchar(' ');
 		state = NORMAL;
 	} else {
 		if (c == '\n') {
