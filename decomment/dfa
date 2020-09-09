@@ -1,37 +1,37 @@
 NORMAL (accept) <-- the start state
     /: HALF_OPEN_COMMENT
-    ": DOUBLE_QUOTE_OPEN (print)
-    ': SINGLE_QUOTE_OPEN (print)
-    other: NORMAL (print)
+    ": DOUBLE_QUOTE_OPEN (print c)
+    ': SINGLE_QUOTE_OPEN (print c)
+    other: NORMAL (print c)
 
 HALF_OPEN_COMMENT (accept)
-    /: HALF_OPEN_COMMENT (print)
+    /: HALF_OPEN_COMMENT (print c)
     *: OPEN_COMMENT (print ' ')
     ": DOUBLE_QUOTE_OPEN (print '/"')
     ': SINGLE_QUOTE_OPEN (print '/'')
-    other: NORMAL (print '/' + c)
+    other: NORMAL (print '/' and c)
 
 OPEN_COMMENT (reject)
     *: HALF_CLOSED_COMMENT
-    other: OPEN_COMMENT (print if c == '\n')
+    other: OPEN_COMMENT (print c if c == '\n')
 
 HALF_CLOSED_COMMENT (reject)
-    *: HALF_CLOSED_COMMENT (print)
+    *: HALF_CLOSED_COMMENT (print c)
     /: NORMAL
-    other: OPEN_COMMENT (print '*' + c)
+    other: OPEN_COMMENT (print '*' and c)
 
 DOUBLE_QUOTE_OPEN (accept)
-    \: ESC_IN_DOUBLE_QUOTE (print)
-    ": NORMAL (print)
-    other: DOUBLE_QUOTE_OPEN (print)
+    \: ESC_IN_DOUBLE_QUOTE (print c)
+    ": NORMAL (print c)
+    other: DOUBLE_QUOTE_OPEN (print c)
 
 ESC_IN_DOUBLE_QUOTE (accept)
-    any: DOUBLE_QUOTE_OPEN (print)
+    any: DOUBLE_QUOTE_OPEN (print c)
 
 SINGLE_QUOTE_OPEN (accept)
-    \: ESC_IN_SINGLE_QUOTE (print)
-    ': NORMAL (print)
-    other: SINGLE_QUOTE_OPEN (print)
+    \: ESC_IN_SINGLE_QUOTE (print c)
+    ': NORMAL (print c)
+    other: SINGLE_QUOTE_OPEN (print c)
 
 ESC_IN_SINGLE_QUOTE (accept)
-    any: SINGLE_QUOTE_OPEN (print)
+    any: SINGLE_QUOTE_OPEN (print c)
