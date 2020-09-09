@@ -6,8 +6,6 @@ enum State {NORMAL, ESC_IN_NORMAL,
 	        DOUBLE_QUOTE_OPEN, ESC_IN_DOUBLE_QUOTE,
 	        SINGLE_QUOTE_OPEN, ESC_IN_SINGLE_QUOTE};
 
-/********************************************************************/
-
 enum State handleNormal(int c) {
 	enum State state;
 
@@ -131,8 +129,6 @@ enum State handleSingleQuoteEsc(int c) {
 	putchar(c);
 	return state;
 }
-
-/********************************************************************/
 
 int main(void) {
 	int c;
