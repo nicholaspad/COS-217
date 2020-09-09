@@ -6,9 +6,9 @@ enum State {NORMAL, ESC_IN_NORMAL,
 	        DOUBLE_QUOTE_OPEN, ESC_IN_DOUBLE_QUOTE,
 	        SINGLE_QUOTE_OPEN, ESC_IN_SINGLE_QUOTE};
 
-/* TODO:
+/* TODO: Write to standard error if an unterminated comment is found */
 
-   /**********************************************************************/
+/**********************************************************************/
 
 /* Corresponds to state NORMAL (i.e. not within a comment or quote
    block). Takes input character c. Returns state HALF_OPEN_COMMENT if
