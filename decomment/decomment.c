@@ -58,9 +58,9 @@ enum State handleNormalEsc(int c) {
    forward slash not inside a comment or quote block). Takes input
    character c, current line number currLine, and current comment block
    line number comStart. Returns state HALF_OPEN_COMMENT (same state) if
-   c is a forward slash. Returns state OPEN_COMMENT if c is an asterisk,
-   and updates comStart. Returns state NORMAL if c is any other
-   character. Prints c if it is not an asterisk. */
+   c is a forward slash. Prints a space and returns state OPEN_COMMENT
+   if c is an asterisk, and updates comStart. Returns state NORMAL if c
+   is any other character. Prints c if it is not an asterisk. */
 enum State handleHalfOpenComment(int c, int currLine, int *comStart) {
 	enum State state;
 
@@ -70,6 +70,7 @@ enum State handleHalfOpenComment(int c, int currLine, int *comStart) {
 		state = HALF_OPEN_COMMENT;
 		break;
 	case '*': /* asterisk */
+		putchar(' ');
 		state = OPEN_COMMENT;
 		*comStart = currLine;
 		break;
@@ -106,9 +107,9 @@ enum State handleOpenComment(int c) {
 /* Corresponds to state HALF_CLOSED_COMMENT (i.e. immediately
    succeeding a forward slash inside a comment block). Takes input
    character c. Returns state HALF_CLOSED_COMMENT if c is an asterisk.
-   Prints a space and returns state NORMAL if c is a forward slash.
-   Returns state OPEN_COMMENT if c is any other character. Prints c if
-   it is a newline character. */
+   Returns state NORMAL if c is a forward slash. Returns state
+   OPEN_COMMENT if c is any other character. Prints c if it is a newline
+   character. */
 enum State handleHalfClosedComment(int c) {
 	enum State state;
 
@@ -117,7 +118,6 @@ enum State handleHalfClosedComment(int c) {
 		state = HALF_CLOSED_COMMENT;
 		break;
 	case '/': /* forward slash */
-		putchar(' ');
 		state = NORMAL;
 		break;
 	default: /* any other character */

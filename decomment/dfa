@@ -10,7 +10,7 @@ ESC_IN_NORMAL (accept)
 
 HALF_OPEN_COMMENT (accept)
     /: HALF_OPEN_COMMENT (print)
-    *: OPEN_COMMENT
+    *: OPEN_COMMENT (print ' ')
     other: NORMAL (print '/' + c)
 
 OPEN_COMMENT (reject)
@@ -19,7 +19,7 @@ OPEN_COMMENT (reject)
 
 HALF_CLOSED_COMMENT (reject)
     *: HALF_CLOSED_COMMENT (print)
-    /: NORMAL (print ' ')
+    /: NORMAL
     other: OPEN_COMMENT (print '*' + c)
 
 DOUBLE_QUOTE_OPEN (accept)
