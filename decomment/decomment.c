@@ -6,8 +6,6 @@ enum State {NORMAL, ESC_IN_NORMAL,
 	        DOUBLE_QUOTE_OPEN, ESC_IN_DOUBLE_QUOTE,
 	        SINGLE_QUOTE_OPEN, ESC_IN_SINGLE_QUOTE};
 
-/* TODO: Write to standard error if an unterminated comment is found */
-
 /**********************************************************************/
 
 /* Corresponds to state NORMAL (i.e. not within a comment or quote
@@ -204,7 +202,7 @@ enum State handleSingleQuoteEsc(int c) {
 int main(void) {
 	int c; /* Latest character from standard input */
 	int comStart; /* Line number of most recent comment block */
-	int currLine = 1; /* Keeps track of current line number */
+	int currLine = 1; /* Current line number */
 	enum State state = NORMAL; /* Start in state NORMAL */
 
 	/* Exhaustively read characters one-by-one from standard input. */
