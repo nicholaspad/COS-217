@@ -88,6 +88,7 @@ enum State handleHalfClosedComment(int c) {
 	case '/':
 		putchar(' ');
 		state = NORMAL;
+		break;
 	default:
 		if (c == '\n') {
 			putchar(c);
@@ -109,6 +110,7 @@ enum State handleDoubleQuoteOpen(int c) {
 	case '"':
 		putchar(c);
 		state = NORMAL;
+		break;
 	default:
 		putchar(c);
 		state = DOUBLE_QUOTE_OPEN;
@@ -134,6 +136,7 @@ enum State handleSingleQuoteOpen(int c) {
 	case '\'':
 		putchar(c);
 		state = NORMAL;
+		break;
 	default:
 		putchar(c);
 		state = SINGLE_QUOTE_OPEN;
