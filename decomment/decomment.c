@@ -6,28 +6,37 @@ enum State {NORMAL, ESC_IN_NORMAL,
 	        DOUBLE_QUOTE_OPEN, ESC_IN_DOUBLE_QUOTE,
 	        SINGLE_QUOTE_OPEN, ESC_IN_SINGLE_QUOTE};
 
-/*********************************************************************/
+/* TODO:
 
+   /**********************************************************************/
+
+/* Corresponds to state NORMAL (i.e. not within a comment or quote
+   block). Takes input character c. Returns state HALF_OPEN_COMMENT if
+   c is a forward slash. Returns state ESC_IN_NORMAL if c is a back
+   slash. Returns state DOUBLE_QUOTE_OPEN if c is a double quote.
+   Returns state SINGLE_QUOTE_OPEN if c is a single quote. Returns
+   state NORMAL (same state) if c is any other character. Prints c if it
+   is not a forward slash. */
 enum State handleNormal(int c) {
 	enum State state;
 
 	switch (c) {
-	case '/':
+	case '/': /* forward slash */
 		state = HALF_OPEN_COMMENT;
 		break;
-	case '\\':
+	case '\\': /* back slash */
 		putchar(c);
 		state = ESC_IN_NORMAL;
 		break;
-	case '"':
+	case '"': /* double quote */
 		putchar(c);
 		state = DOUBLE_QUOTE_OPEN;
 		break;
-	case '\'':
+	case '\'': /* single quote */
 		putchar(c);
 		state = SINGLE_QUOTE_OPEN;
 		break;
-	default:
+	default: /* any other character */
 		putchar(c);
 		state = NORMAL;
 	}
@@ -35,24 +44,34 @@ enum State handleNormal(int c) {
 	return state;
 }
 
+
+/* Corresponds to state ESC_IN_NORMAL (i.e. immediately succeeding a
+   back slash not inside a comment or quote block). Takes input
+   character c. Returns state NORMAL. Prints c. */
 enum State handleNormalEsc(int c) {
 	enum State state = NORMAL;
 	putchar(c);
 	return state;
 }
 
+/* Corresponds to state HALF_OPEN_COMMENT (i.e. immediately succeeding a
+   forward slash not inside a comment or quote block). Takes input
+   character c. Returns state HALF_OPEN_COMMENT (same state) if c is a
+   forward slash. Returns state OPEN_COMMENT if c is an asterisk.
+   Returns state NORMAL if c is any other character. Prints c if it is
+   not an asterisk. */
 enum State handleHalfOpenComment(int c) {
 	enum State state;
 
 	switch (c) {
-	case '/':
+	case '/': /* forward slash */
 		putchar(c);
 		state = HALF_OPEN_COMMENT;
 		break;
-	case '*':
+	case '*': /* asterisk */
 		state = OPEN_COMMENT;
 		break;
-	default:
+	default: /* any other character */
 		putchar('/');
 		putchar(c);
 		state = NORMAL;
@@ -61,14 +80,18 @@ enum State handleHalfOpenComment(int c) {
 	return state;
 }
 
+/* Corresponds to state OPEN_COMMENT (i.e. within a comment block).
+   Takes input character c. Returns state HALF_CLOSED_COMMENT if c is an
+   asterisk. Returns state OPEN_COMMENT if c is any other character.
+   Prints c if it is a newline character. */
 enum State handleOpenComment(int c) {
 	enum State state;
 
 	switch (c) {
-	case '*':
+	case '*': /* asterisk */
 		state = HALF_CLOSED_COMMENT;
 		break;
-	default:
+	default: /* any other character */
 		if (c == '\n') {
 			putchar(c);
 		}
@@ -78,18 +101,24 @@ enum State handleOpenComment(int c) {
 	return state;
 }
 
+/* Corresponds to state HALF_CLOSED_COMMENT (i.e. immediately
+   succeeding a forward slash inside a comment block). Takes input
+   character c. Returns state HALF_CLOSED_COMMENT if c is an asterisk.
+   Prints a space and returns state NORMAL if c is a forward slash.
+   Returns state OPEN_COMMENT if c is any other character. Prints c if
+   it is a newline character. */
 enum State handleHalfClosedComment(int c) {
 	enum State state;
 
 	switch (c) {
-	case '*':
+	case '*': /* asterisk */
 		state = HALF_CLOSED_COMMENT;
 		break;
-	case '/':
+	case '/': /* forward slash */
 		putchar(' ');
 		state = NORMAL;
 		break;
-	default:
+	default: /* any other character */
 		if (c == '\n') {
 			putchar(c);
 		}
@@ -99,19 +128,24 @@ enum State handleHalfClosedComment(int c) {
 	return state;
 }
 
+/* Corresponds to state DOUBLE_QUOTE_OPEN (i.e. inside a double quote
+   block). Takes input character c. Returns state ESC_IN_DOUBLE_QUOTE if
+   c is a back slash. Returns state NORMAL if c is a double quote.
+   Returns state DOUBLE_QUOTE_OPEN if c is any other character. Prints
+   c. */
 enum State handleDoubleQuoteOpen(int c) {
 	enum State state;
 
 	switch (c) {
-	case '\\':
+	case '\\': /* back slash */
 		putchar(c);
 		state = ESC_IN_DOUBLE_QUOTE;
 		break;
-	case '"':
+	case '"': /* double quote */
 		putchar(c);
 		state = NORMAL;
 		break;
-	default:
+	default: /* any other character */
 		putchar(c);
 		state = DOUBLE_QUOTE_OPEN;
 	}
@@ -119,25 +153,34 @@ enum State handleDoubleQuoteOpen(int c) {
 	return state;
 }
 
+
+/* Corresponds to state ESC_IN_DOUBLE_QUOTE (i.e. immediately succeeding
+   a back slash inside a double quote block). Takes input character c.
+   Returns state DOUBLE_QUOTE_OPEN. Prints c. */
 enum State handleDoubleQuoteEsc(int c) {
 	enum State state = DOUBLE_QUOTE_OPEN;
 	putchar(c);
 	return state;
 }
 
+/* Corresponds to state SINGLE_QUOTE_OPEN (i.e. inside a single quote
+   block). Takes input character c. Returns state ESC_IN_SINGLE_QUOTE if
+   c is a back slash. Returns state NORMAL if c is a single quote.
+   Returns state SINGLE_QUOTE_OPEN if c is any other character. Prints
+   c. */
 enum State handleSingleQuoteOpen(int c) {
 	enum State state;
 
 	switch (c) {
-	case '\\':
+	case '\\': /* back slash */
 		putchar(c);
 		state = ESC_IN_SINGLE_QUOTE;
 		break;
-	case '\'':
+	case '\'': /* single quote */
 		putchar(c);
 		state = NORMAL;
 		break;
-	default:
+	default: /* any other character */
 		putchar(c);
 		state = SINGLE_QUOTE_OPEN;
 	}
@@ -145,18 +188,22 @@ enum State handleSingleQuoteOpen(int c) {
 	return state;
 }
 
+/* Corresponds to state ESC_IN_SINGLE_QUOTE (i.e. immediately succeeding
+   a back slash inside a single quote block). Takes input character c.
+   Returns state SINGLE_QUOTE_OPEN. Prints c. */
 enum State handleSingleQuoteEsc(int c) {
 	enum State state = SINGLE_QUOTE_OPEN;
 	putchar(c);
 	return state;
 }
 
-/*********************************************************************/
+/**********************************************************************/
 
 int main(void) {
 	int c;
-	enum State state = NORMAL;
+	enum State state = NORMAL; /* Start in state NORMAL */
 
+	/* Exhaustively read characters one-by-one from standard input. */
 	while((c = getchar()) != EOF) {
 		switch (state) {
 		case NORMAL:
@@ -189,9 +236,13 @@ int main(void) {
 		}
 	}
 
+	/* States OPEN_COMMENT and HALF_CLOSED_COMMENT mean that a comment
+	   block has not been closed: EXIT_FAILURE. */
 	if (state == OPEN_COMMENT || state == HALF_CLOSED_COMMENT) {
 		return 1;
 	}
 
+	/* All other states mean that all comment blocks have been closed:
+	   EXIT_SUCCESS. */
 	return 0;
 }
