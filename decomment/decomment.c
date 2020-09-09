@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <ctype.h>
 
-enum State {NORMAL, ESC_IN_NORMAL,
+enum State {NORMAL,
 	        HALF_OPEN_COMMENT, OPEN_COMMENT, HALF_CLOSED_COMMENT,
 	        DOUBLE_QUOTE_OPEN, ESC_IN_DOUBLE_QUOTE,
 	        SINGLE_QUOTE_OPEN, ESC_IN_SINGLE_QUOTE};
@@ -10,21 +10,16 @@ enum State {NORMAL, ESC_IN_NORMAL,
 
 /* Corresponds to state NORMAL (i.e. not within a comment or quote
    block). Takes input character c. Returns state HALF_OPEN_COMMENT if
-   c is a forward slash. Returns state ESC_IN_NORMAL if c is a back
-   slash. Returns state DOUBLE_QUOTE_OPEN if c is a double quote.
-   Returns state SINGLE_QUOTE_OPEN if c is a single quote. Returns
-   state NORMAL (same state) if c is any other character. Prints c if it
-   is not a forward slash. */
+   c is a forward slash. Returns state DOUBLE_QUOTE_OPEN if c is a
+   double quote. Returns state SINGLE_QUOTE_OPEN if c is a single quote.
+   Returns state NORMAL (same state) if c is any other character. Prints
+   c if it is not a forward slash. */
 enum State handleNormal(int c) {
 	enum State state;
 
 	switch (c) {
 	case '/': /* forward slash */
 		state = HALF_OPEN_COMMENT;
-		break;
-	case '\\': /* back slash */
-		putchar(c);
-		state = ESC_IN_NORMAL;
 		break;
 	case '"': /* double quote */
 		putchar(c);
@@ -39,16 +34,6 @@ enum State handleNormal(int c) {
 		state = NORMAL;
 	}
 
-	return state;
-}
-
-
-/* Corresponds to state ESC_IN_NORMAL (i.e. immediately succeeding a
-   back slash not inside a comment or quote block). Takes input
-   character c. Returns state NORMAL. Prints c. */
-enum State handleNormalEsc(int c) {
-	enum State state = NORMAL;
-	putchar(c);
 	return state;
 }
 
@@ -214,9 +199,6 @@ int main(void) {
 		switch (state) {
 		case NORMAL:
 			state = handleNormal(c);
-			break;
-		case ESC_IN_NORMAL:
-			state = handleNormalEsc(c);
 			break;
 		case HALF_OPEN_COMMENT:
 			state = handleHalfOpenComment(c, currLine, &comStart);

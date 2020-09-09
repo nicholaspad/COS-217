@@ -1,12 +1,8 @@
 NORMAL (accept) <-- the start state
     /: HALF_OPEN_COMMENT
-    \: ESC_IN_NORMAL (print)
     ": DOUBLE_QUOTE_OPEN (print)
     ': SINGLE_QUOTE_OPEN (print)
     other: NORMAL (print)
-
-ESC_IN_NORMAL (accept)
-    any: NORMAL (print)
 
 HALF_OPEN_COMMENT (accept)
     /: HALF_OPEN_COMMENT (print)
