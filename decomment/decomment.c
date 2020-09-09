@@ -11,18 +11,23 @@ enum State {NORMAL, ESC_IN_NORMAL,
 enum State handleNormal(int c) {
 	enum State state;
 
-	if (c == '/') {
+	switch (c) {
+	case '/':
 		state = HALF_OPEN_COMMENT;
-	} else if (c == '\\') {
+		break;
+	case '\\':
 		putchar(c);
 		state = ESC_IN_NORMAL;
-	} else if (c == '"') {
+		break;
+	case '"':
 		putchar(c);
 		state = DOUBLE_QUOTE_OPEN;
-	} else if (c == '\'') {
+		break;
+	case '\'':
 		putchar(c);
 		state = SINGLE_QUOTE_OPEN;
-	} else {
+		break;
+	default:
 		putchar(c);
 		state = NORMAL;
 	}
@@ -39,12 +44,15 @@ enum State handleNormalEsc(int c) {
 enum State handleHalfOpenComment(int c) {
 	enum State state;
 
-	if (c == '/') {
+	switch (c) {
+	case '/':
 		putchar(c);
 		state = HALF_OPEN_COMMENT;
-	} else if (c == '*') {
+		break;
+	case '*':
 		state = OPEN_COMMENT;
-	} else {
+		break;
+	default:
 		putchar('/');
 		putchar(c);
 		state = NORMAL;
@@ -56,9 +64,11 @@ enum State handleHalfOpenComment(int c) {
 enum State handleOpenComment(int c) {
 	enum State state;
 
-	if (c == '*') {
+	switch (c) {
+	case '*':
 		state = HALF_CLOSED_COMMENT;
-	} else {
+		break;
+	default:
 		if (c == '\n') {
 			putchar(c);
 		}
@@ -71,12 +81,14 @@ enum State handleOpenComment(int c) {
 enum State handleHalfClosedComment(int c) {
 	enum State state;
 
-	if (c == '*') {
+	switch (c) {
+	case '*':
 		state = HALF_CLOSED_COMMENT;
-	} else if (c == '/') {
+		break;
+	case '/':
 		putchar(' ');
 		state = NORMAL;
-	} else {
+	default:
 		if (c == '\n') {
 			putchar(c);
 		}
@@ -89,13 +101,15 @@ enum State handleHalfClosedComment(int c) {
 enum State handleDoubleQuoteOpen(int c) {
 	enum State state;
 
-	if (c == '\\') {
+	switch (c) {
+	case '\\':
 		putchar(c);
 		state = ESC_IN_DOUBLE_QUOTE;
-	} else if (c == '"') {
+		break;
+	case '"':
 		putchar(c);
 		state = NORMAL;
-	} else {
+	default:
 		putchar(c);
 		state = DOUBLE_QUOTE_OPEN;
 	}
@@ -112,13 +126,15 @@ enum State handleDoubleQuoteEsc(int c) {
 enum State handleSingleQuoteOpen(int c) {
 	enum State state;
 
-	if (c == '\\') {
+	switch (c) {
+	case '\\':
 		putchar(c);
 		state = ESC_IN_SINGLE_QUOTE;
-	} else if (c == '\'') {
+		break;
+	case '\'':
 		putchar(c);
 		state = NORMAL;
-	} else {
+	default:
 		putchar(c);
 		state = SINGLE_QUOTE_OPEN;
 	}
