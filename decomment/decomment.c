@@ -6,6 +6,8 @@ enum State {NORMAL, ESC_IN_NORMAL,
 	        DOUBLE_QUOTE_OPEN, ESC_IN_DOUBLE_QUOTE,
 	        SINGLE_QUOTE_OPEN, ESC_IN_SINGLE_QUOTE};
 
+/*********************************************************************/
+
 enum State handleNormal(int c) {
 	enum State state;
 
@@ -70,14 +72,13 @@ enum State handleHalfClosedComment(int c) {
 	enum State state;
 
 	if (c == '*') {
-		putchar(c);
 		state = HALF_CLOSED_COMMENT;
 	} else if (c == '/') {
-		putchar(' ');
 		state = NORMAL;
 	} else {
-		putchar('*');
-		putchar(c);
+		if (c == '\n') {
+			putchar(c);
+		}
 		state = OPEN_COMMENT;
 	}
 
@@ -129,6 +130,8 @@ enum State handleSingleQuoteEsc(int c) {
 	putchar(c);
 	return state;
 }
+
+/*********************************************************************/
 
 int main(void) {
 	int c;
