@@ -7,6 +7,8 @@ NORMAL (accept) <-- the start state
 HALF_OPEN_COMMENT (accept)
     /: HALF_OPEN_COMMENT (print)
     *: OPEN_COMMENT (print ' ')
+    ": DOUBLE_QUOTE_OPEN (print '/"')
+    ': SINGLE_QUOTE_OPEN (print '/'')
     other: NORMAL (print '/' + c)
 
 OPEN_COMMENT (reject)
