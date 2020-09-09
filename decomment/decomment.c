@@ -247,7 +247,7 @@ int main(void) {
 	/* States OPEN_COMMENT and HALF_CLOSED_COMMENT mean that a comment
 	   block has not been closed: EXIT_FAILURE. */
 	if (state == OPEN_COMMENT || state == HALF_CLOSED_COMMENT) {
-		printf("Error: line %d: unterminated comment\n", comStart);
+		fprintf(stderr, "Error: line %d: unterminated comment\n", comStart);
 		return 1;
 	}
 
