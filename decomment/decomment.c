@@ -251,10 +251,10 @@ int main(void) {
 	   comment block has not been closed: EXIT_FAILURE. */
 	if (state == OPEN_COMMENT || state == HALF_CLOSED_COMMENT) {
 		fprintf(stderr, "Error: line %d: unterminated comment\n", comStart);
-		return 1;
+		exit(EXIT_FAILURE);
 	}
 
 	/* All other states signify that all comment blocks have been
 	   closed: EXIT_SUCCESS. */
-	return 0;
+	exit(EXIT_SUCCESS);
 }
