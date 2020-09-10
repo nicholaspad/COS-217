@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <ctype.h>
+#include <stdlib.h>
 
 enum State {NORMAL,
 	        HALF_OPEN_COMMENT, OPEN_COMMENT, HALF_CLOSED_COMMENT,
