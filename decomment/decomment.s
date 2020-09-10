@@ -486,15 +486,10 @@ main:
 	add	x1, x1, :lo12:.LC0
 	bl	fprintf
 	mov	w0, 1
-	b	.L68
+	bl	exit
 .L66:
 	mov	w0, 0
-.L68:
-	ldp	x29, x30, [sp], 32
-	.cfi_restore 30
-	.cfi_restore 29
-	.cfi_def_cfa 31, 0
-	ret
+	bl	exit
 	.cfi_endproc
 .LFE8:
 	.size	main, .-main
