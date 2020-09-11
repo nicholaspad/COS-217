@@ -10,11 +10,9 @@ enum State {NORMAL,
 /**********************************************************************/
 
 /* Corresponds to state NORMAL (i.e. not within a comment or quote
-   block). Takes input character c. Returns state HALF_OPEN_COMMENT if
-   c is a forward slash. Returns state DOUBLE_QUOTE_OPEN if c is a
-   double quote. Returns state SINGLE_QUOTE_OPEN if c is a single quote.
-   Returns state NORMAL if c is any other character. Prints c if it is
-   not a forward slash. */
+   block). Takes input character c. Returns state HALF_OPEN_COMMENT,
+   DOUBLE_QUOTE_OPEN, SINGLE_QUOTE_OPEN, or NORMAL depending on c.
+   Writes c to standard out if it is not a forward slash. */
 enum State handleNormal(int c) {
 	enum State state;
 
@@ -40,14 +38,11 @@ enum State handleNormal(int c) {
 
 /* Corresponds to state HALF_OPEN_COMMENT (i.e. immediately succeeding a
    forward slash not inside a comment or quote block). Takes input
-   character c, current line number currLine, and ref. to current
-   comment block line number comStart. Returns state HALF_OPEN_COMMENT
-   if c is a forward slash. Prints a space and returns state
-   OPEN_COMMENT if c is an asterisk, and updates comStart. Returns state
-   DOUBLE_QUOTE_OPEN if c is a double quote. Returns state
-   SINGLE_QUOTE_OPEN if c is a single quote. Returns state NORMAL if c
-   is any other character. Prints a forward slash succeeded by c if c is
-   not an asterisk, or just c if c is a forward slash. */
+   character c, current line number currLine, and reference to current
+   comment block line number comStart. Returns state HALF_OPEN_COMMENT,
+   OPEN_COMMENT, DOUBLE_QUOTE_OPEN, SINGLE_QUOTE_OPEN, or NORMAL
+   depending on c. Writes c to standard out, along with another
+   character if necessary, if it is not an asterisk. */
 enum State handleHalfOpenComment(int c, int currLine, int *comStart) {
 	enum State state;
 
@@ -81,9 +76,9 @@ enum State handleHalfOpenComment(int c, int currLine, int *comStart) {
 }
 
 /* Corresponds to state OPEN_COMMENT (i.e. within a comment block).
-   Takes input character c. Returns state HALF_CLOSED_COMMENT if c is an
-   asterisk. Returns state OPEN_COMMENT if c is any other character.
-   Prints c if it is a newline character. */
+   Takes input character c. Returns state HALF_CLOSED_COMMENT or
+   OPEN_COMMENT depending on c. Writes c to standard out if it is a
+   newline character. */
 enum State handleOpenComment(int c) {
 	enum State state;
 
@@ -103,10 +98,9 @@ enum State handleOpenComment(int c) {
 
 /* Corresponds to state HALF_CLOSED_COMMENT (i.e. immediately
    succeeding a forward slash inside a comment block). Takes input
-   character c. Returns state HALF_CLOSED_COMMENT if c is an asterisk.
-   Returns state NORMAL if c is a forward slash. Returns state
-   OPEN_COMMENT if c is any other character. Prints c if it is a newline
-   character. */
+   character c. Returns state HALF_CLOSED_COMMENT, NORMAL, or
+   OPEN_COMMENT depending on c. Writes c to standard out if it is a
+   newline character. */
 enum State handleHalfClosedComment(int c) {
 	enum State state;
 
@@ -128,10 +122,9 @@ enum State handleHalfClosedComment(int c) {
 }
 
 /* Corresponds to state DOUBLE_QUOTE_OPEN (i.e. inside a double quote
-   block). Takes input character c. Returns state ESC_IN_DOUBLE_QUOTE if
-   c is a back slash. Returns state NORMAL if c is a double quote.
-   Returns state DOUBLE_QUOTE_OPEN if c is any other character. Prints
-   c. */
+   block). Takes input character c. Returns state ESC_IN_DOUBLE_QUOTE,
+   NORMAL, or DOUBLE_QUOTE_OPEN depending on c. Writes c to standard
+   out. */
 enum State handleDoubleQuoteOpen(int c) {
 	enum State state;
 
@@ -155,7 +148,7 @@ enum State handleDoubleQuoteOpen(int c) {
 
 /* Corresponds to state ESC_IN_DOUBLE_QUOTE (i.e. immediately succeeding
    a back slash inside a double quote block). Takes input character c.
-   Returns state DOUBLE_QUOTE_OPEN. Prints c. */
+   Returns state DOUBLE_QUOTE_OPEN. Writes c to standard out. */
 enum State handleDoubleQuoteEsc(int c) {
 	enum State state = DOUBLE_QUOTE_OPEN;
 	putchar(c);
@@ -163,10 +156,9 @@ enum State handleDoubleQuoteEsc(int c) {
 }
 
 /* Corresponds to state SINGLE_QUOTE_OPEN (i.e. inside a single quote
-   block). Takes input character c. Returns state ESC_IN_SINGLE_QUOTE if
-   c is a back slash. Returns state NORMAL if c is a single quote.
-   Returns state SINGLE_QUOTE_OPEN if c is any other character. Prints
-   c. */
+   block). Takes input character c. Returns state ESC_IN_SINGLE_QUOTE,
+   NORMAL, or SINGLE_QUOTE_OPEN depending on c. Writes c to standard
+   out. */
 enum State handleSingleQuoteOpen(int c) {
 	enum State state;
 
@@ -189,7 +181,7 @@ enum State handleSingleQuoteOpen(int c) {
 
 /* Corresponds to state ESC_IN_SINGLE_QUOTE (i.e. immediately succeeding
    a back slash inside a single quote block). Takes input character c.
-   Returns state SINGLE_QUOTE_OPEN. Prints c. */
+   Returns state SINGLE_QUOTE_OPEN. Writes c to standard out. */
 enum State handleSingleQuoteEsc(int c) {
 	enum State state = SINGLE_QUOTE_OPEN;
 	putchar(c);
@@ -199,8 +191,8 @@ enum State handleSingleQuoteEsc(int c) {
 /**********************************************************************/
 
 /* Reads text from standard input. Replaces comments (C89 style) with
-   spaces while preserving newline characters, writing to standard
-   output. Throws a message to standard error if a comment is
+   spaces while preserving newline characters and writes to standard
+   out. Writes a message to standard error if a comment is
    unterminated. */
 int main(void) {
 	int c; /* Latest character from standard input */
