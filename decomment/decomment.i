@@ -864,7 +864,13 @@ enum State {NORMAL,
          HALF_OPEN_COMMENT, OPEN_COMMENT, HALF_CLOSED_COMMENT,
          DOUBLE_QUOTE_OPEN, ESC_IN_DOUBLE_QUOTE,
          SINGLE_QUOTE_OPEN, ESC_IN_SINGLE_QUOTE};
-# 18 "decomment.c"
+
+
+
+
+
+
+
 enum State handleNormal(int c) {
  enum State state;
 
@@ -887,7 +893,7 @@ enum State handleNormal(int c) {
 
  return state;
 }
-# 51 "decomment.c"
+# 46 "decomment.c"
 enum State handleHalfOpenComment(int c, int currLine, int *comStart) {
  enum State state;
 
@@ -946,7 +952,6 @@ enum State handleOpenComment(int c) {
 
 
 
-
 enum State handleHalfClosedComment(int c) {
  enum State state;
 
@@ -966,7 +971,6 @@ enum State handleHalfClosedComment(int c) {
 
  return state;
 }
-
 
 
 
@@ -1001,7 +1005,6 @@ enum State handleDoubleQuoteEsc(int c) {
  putchar(c);
  return state;
 }
-
 
 
 
