@@ -1,3 +1,6 @@
+/* Filename: decomment.c
+   Author: Nicholas Padmanabhan (ntyp) */
+
 #include <stdio.h>
 #include <ctype.h>
 #include <stdlib.h>
@@ -42,7 +45,7 @@ enum State handleNormal(int c) {
    comment block line number comStart. Returns state HALF_OPEN_COMMENT,
    OPEN_COMMENT, DOUBLE_QUOTE_OPEN, SINGLE_QUOTE_OPEN, or NORMAL
    depending on c. Writes c to standard out, along with another
-   character if necessary, if it is not an asterisk. */
+   character if necessary, if c is not an asterisk. */
 enum State handleHalfOpenComment(int c, int currLine, int *comStart) {
 	enum State state;
 

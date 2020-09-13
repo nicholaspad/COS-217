@@ -1,3 +1,6 @@
+Filename: dfa
+Author: Nicholas Padmanabhan (ntyp)
+
 NORMAL (accept) <-- the start state
     /: HALF_OPEN_COMMENT
     ": DOUBLE_QUOTE_OPEN (print c)
