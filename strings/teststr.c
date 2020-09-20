@@ -136,171 +136,167 @@ static void testGetLength(void)
 
 /* Test the Str_copy() function. */
 
-/*
-   static void testCopy(void)
-   {
-    char *pcResult;
+static void testCopy(void)
+{
+	char *pcResult;
 
-    printf("Testing Str_copy()\n");
+	printf("Testing Str_copy()\n");
 
-    printf("   Boundary Tests\n");
-    fflush(stdout);
+	printf("   Boundary Tests\n");
+	fflush(stdout);
 
-    {
-        const char acSrc[] = {'\0', 's'};
-        char acDest1[] = {'d', 'd'};
-        char acDest2[] = {'d', 'd'};
-        pcResult = Str_copy(acDest1, acSrc);
-        ASSURE(pcResult == acDest1);
-        (void)strcpy(acDest2, acSrc);
-        ASSURE(memcmp(acDest1, acDest2, sizeof(acDest1)) == 0);
-    }
+	{
+		const char acSrc[] = {'\0', 's'};
+		char acDest1[] = {'d', 'd'};
+		char acDest2[] = {'d', 'd'};
+		pcResult = Str_copy(acDest1, acSrc);
+		ASSURE(pcResult == acDest1);
+		(void)strcpy(acDest2, acSrc);
+		ASSURE(memcmp(acDest1, acDest2, sizeof(acDest1)) == 0);
+	}
 
-    {
-        const char acSrc[] = {'\0', 's'};
-        char acDest1[] = {'\0', 'd'};
-        char acDest2[] = {'\0', 'd'};
-        pcResult = Str_copy(acDest1, acSrc);
-        ASSURE(pcResult == acDest1);
-        (void)strcpy(acDest2, acSrc);
-        ASSURE(memcmp(acDest1, acDest2, sizeof(acDest1)) == 0);
-    }
+	{
+		const char acSrc[] = {'\0', 's'};
+		char acDest1[] = {'\0', 'd'};
+		char acDest2[] = {'\0', 'd'};
+		pcResult = Str_copy(acDest1, acSrc);
+		ASSURE(pcResult == acDest1);
+		(void)strcpy(acDest2, acSrc);
+		ASSURE(memcmp(acDest1, acDest2, sizeof(acDest1)) == 0);
+	}
 
-    printf("   Statement Tests\n");
-    fflush(stdout);
+	printf("   Statement Tests\n");
+	fflush(stdout);
 
-    {
-        const char acSrc[] = {'R', 'u', 't', 'h', '\0', 's'};
-        char acDest1[] = {'d', 'd', 'd', 'd', 'd', 'd'};
-        char acDest2[] = {'d', 'd', 'd', 'd', 'd', 'd'};
-        pcResult = Str_copy(acDest1, acSrc);
-        ASSURE(pcResult == acDest1);
-        (void)strcpy(acDest2, acSrc);
-        ASSURE(memcmp(acDest1, acDest2, sizeof(acDest1)) == 0);
-    }
+	{
+		const char acSrc[] = {'R', 'u', 't', 'h', '\0', 's'};
+		char acDest1[] = {'d', 'd', 'd', 'd', 'd', 'd'};
+		char acDest2[] = {'d', 'd', 'd', 'd', 'd', 'd'};
+		pcResult = Str_copy(acDest1, acSrc);
+		ASSURE(pcResult == acDest1);
+		(void)strcpy(acDest2, acSrc);
+		ASSURE(memcmp(acDest1, acDest2, sizeof(acDest1)) == 0);
+	}
 
-    {
-        const char acSrc[] = {'G', 'e', 'h', 'r', 'i', 'g', '\0', 's'};
-        char acDest1[] = {'d', 'd', 'd', 'd', 'd', 'd', 'd', 'd'};
-        char acDest2[] = {'d', 'd', 'd', 'd', 'd', 'd', 'd', 'd'};
-        pcResult = Str_copy(acDest1, acSrc);
-        ASSURE(pcResult == acDest1);
-        (void)strcpy(acDest2, acSrc);
-        ASSURE(memcmp(acDest1, acDest2, sizeof(acDest1)) == 0);
-    }
+	{
+		const char acSrc[] = {'G', 'e', 'h', 'r', 'i', 'g', '\0', 's'};
+		char acDest1[] = {'d', 'd', 'd', 'd', 'd', 'd', 'd', 'd'};
+		char acDest2[] = {'d', 'd', 'd', 'd', 'd', 'd', 'd', 'd'};
+		pcResult = Str_copy(acDest1, acSrc);
+		ASSURE(pcResult == acDest1);
+		(void)strcpy(acDest2, acSrc);
+		ASSURE(memcmp(acDest1, acDest2, sizeof(acDest1)) == 0);
+	}
 
-    {
-        const char acSrc[] = {'R', 'u', 't', 'h', '\0', 's'};
-        char acDest1[] = {'\0', 'd', 'd', 'd', 'd', 'd'};
-        char acDest2[] = {'\0', 'd', 'd', 'd', 'd', 'd'};
-        pcResult = Str_copy(acDest1, acSrc);
-        ASSURE(pcResult == acDest1);
-        (void)strcpy(acDest2, acSrc);
-        ASSURE(memcmp(acDest1, acDest2, sizeof(acDest1)) == 0);
-    }
+	{
+		const char acSrc[] = {'R', 'u', 't', 'h', '\0', 's'};
+		char acDest1[] = {'\0', 'd', 'd', 'd', 'd', 'd'};
+		char acDest2[] = {'\0', 'd', 'd', 'd', 'd', 'd'};
+		pcResult = Str_copy(acDest1, acSrc);
+		ASSURE(pcResult == acDest1);
+		(void)strcpy(acDest2, acSrc);
+		ASSURE(memcmp(acDest1, acDest2, sizeof(acDest1)) == 0);
+	}
 
-    printf("   Stress Tests\n");
-    fflush(stdout);
+	printf("   Stress Tests\n");
+	fflush(stdout);
 
-    {
-        int i;
-        char acSrc[STRESS_STRING_SIZE];
-        char acDest1[STRESS_STRING_SIZE];
-        char acDest2[STRESS_STRING_SIZE];
-        for (i = 0; i < STRESS_TEST_COUNT; i++)
-        {
-            randomString(acSrc, STRESS_STRING_SIZE);
-            randomString(acDest1, STRESS_STRING_SIZE);
-            memcpy(acDest2, acDest1, STRESS_STRING_SIZE);
-            pcResult = Str_copy(acDest1, acSrc);
-            ASSURE(pcResult == acDest1);
-            (void)strcpy(acDest2, acSrc);
-            ASSURE(memcmp(acDest1, acDest2, STRESS_STRING_SIZE) == 0);
-        }
-    }
-   }
- */
+	{
+		int i;
+		char acSrc[STRESS_STRING_SIZE];
+		char acDest1[STRESS_STRING_SIZE];
+		char acDest2[STRESS_STRING_SIZE];
+		for (i = 0; i < STRESS_TEST_COUNT; i++)
+		{
+			randomString(acSrc, STRESS_STRING_SIZE);
+			randomString(acDest1, STRESS_STRING_SIZE);
+			memcpy(acDest2, acDest1, STRESS_STRING_SIZE);
+			pcResult = Str_copy(acDest1, acSrc);
+			ASSURE(pcResult == acDest1);
+			(void)strcpy(acDest2, acSrc);
+			ASSURE(memcmp(acDest1, acDest2, STRESS_STRING_SIZE) == 0);
+		}
+	}
+}
 
 /*--------------------------------------------------------------------*/
 
 /* Test the Str_concat() function. */
 
-/*
-   static void testConcat(void)
-   {
-    char *pcResult;
+static void testConcat(void)
+{
+	char *pcResult;
 
-    printf("Testing Str_concat()\n");
+	printf("Testing Str_concat()\n");
 
-    printf("   Boundary Tests\n");
-    fflush(stdout);
+	printf("   Boundary Tests\n");
+	fflush(stdout);
 
-    {
-        const char acSrc[] = {'\0', 's', 's', 's', 's', 's'};
-        char acDest1[] = {'\0', 'd', 'd', 'd', 'd', 'd'};
-        char acDest2[] = {'\0', 'd', 'd', 'd', 'd', 'd'};
-        pcResult = Str_concat(acDest1, acSrc);
-        ASSURE(pcResult == acDest1);
-        (void)strcat(acDest2, acSrc);
-        ASSURE(memcmp(acDest1, acDest2, sizeof(acDest1)) == 0);
-    }
+	{
+		const char acSrc[] = {'\0', 's', 's', 's', 's', 's'};
+		char acDest1[] = {'\0', 'd', 'd', 'd', 'd', 'd'};
+		char acDest2[] = {'\0', 'd', 'd', 'd', 'd', 'd'};
+		pcResult = Str_concat(acDest1, acSrc);
+		ASSURE(pcResult == acDest1);
+		(void)strcat(acDest2, acSrc);
+		ASSURE(memcmp(acDest1, acDest2, sizeof(acDest1)) == 0);
+	}
 
-    {
-        const char acSrc[] = {'R', 'u', 't', 'h', '\0', 's'};
-        char acDest1[] = {'\0', 'd', 'd', 'd', 'd', 'd'};
-        char acDest2[] = {'\0', 'd', 'd', 'd', 'd', 'd'};
-        pcResult = Str_concat(acDest1, acSrc);
-        ASSURE(pcResult == acDest1);
-        (void)strcat(acDest2, acSrc);
-        ASSURE(memcmp(acDest1, acDest2, sizeof(acDest1)) == 0);
-    }
+	{
+		const char acSrc[] = {'R', 'u', 't', 'h', '\0', 's'};
+		char acDest1[] = {'\0', 'd', 'd', 'd', 'd', 'd'};
+		char acDest2[] = {'\0', 'd', 'd', 'd', 'd', 'd'};
+		pcResult = Str_concat(acDest1, acSrc);
+		ASSURE(pcResult == acDest1);
+		(void)strcat(acDest2, acSrc);
+		ASSURE(memcmp(acDest1, acDest2, sizeof(acDest1)) == 0);
+	}
 
-    {
-        const char acSrc[] = {'\0', 's', 's', 's', 's', 's'};
-        char acDest1[] = {'R', 'u', 't', 'h', '\0', 'd'};
-        char acDest2[] = {'R', 'u', 't', 'h', '\0', 'd'};
-        pcResult = Str_concat(acDest1, acSrc);
-        ASSURE(pcResult == acDest1);
-        (void)strcat(acDest2, acSrc);
-        ASSURE(memcmp(acDest1, acDest2, sizeof(acDest1)) == 0);
-    }
+	{
+		const char acSrc[] = {'\0', 's', 's', 's', 's', 's'};
+		char acDest1[] = {'R', 'u', 't', 'h', '\0', 'd'};
+		char acDest2[] = {'R', 'u', 't', 'h', '\0', 'd'};
+		pcResult = Str_concat(acDest1, acSrc);
+		ASSURE(pcResult == acDest1);
+		(void)strcat(acDest2, acSrc);
+		ASSURE(memcmp(acDest1, acDest2, sizeof(acDest1)) == 0);
+	}
 
-    printf("   Statement Tests\n");
-    fflush(stdout);
+	printf("   Statement Tests\n");
+	fflush(stdout);
 
-    {
-        const char acSrc[] = {'R', 'u', 't', 'h', '\0', 's'};
-        char acDest1[] =
-        {'B', 'a', 'b', 'e', '\0', 'd', 'd', 'd', 'd', 'd'};
-        char acDest2[] =
-        {'B', 'a', 'b', 'e', '\0', 'd', 'd', 'd', 'd', 'd'};
-        pcResult = Str_concat(acDest1, acSrc);
-        ASSURE(pcResult == acDest1);
-        (void)strcat(acDest2, acSrc);
-        ASSURE(memcmp(acDest1, acDest2, sizeof(acDest1)) == 0);
-    }
+	{
+		const char acSrc[] = {'R', 'u', 't', 'h', '\0', 's'};
+		char acDest1[] =
+		{'B', 'a', 'b', 'e', '\0', 'd', 'd', 'd', 'd', 'd'};
+		char acDest2[] =
+		{'B', 'a', 'b', 'e', '\0', 'd', 'd', 'd', 'd', 'd'};
+		pcResult = Str_concat(acDest1, acSrc);
+		ASSURE(pcResult == acDest1);
+		(void)strcat(acDest2, acSrc);
+		ASSURE(memcmp(acDest1, acDest2, sizeof(acDest1)) == 0);
+	}
 
-    printf("   Stress Tests\n");
-    fflush(stdout);
+	printf("   Stress Tests\n");
+	fflush(stdout);
 
-    {
-        int i;
-        char acSrc[STRESS_STRING_SIZE];
-        char acDest1[STRESS_STRING_SIZE] = {'\0'};
-        char acDest2[STRESS_STRING_SIZE] = {'\0'};
-        for (i = 0; i < STRESS_TEST_COUNT; i++)
-        {
-            randomString(acSrc, STRESS_STRING_SIZE/2);
-            randomString(acDest1, STRESS_STRING_SIZE/2);
-            memcpy(acDest2, acDest1, STRESS_STRING_SIZE);
-            pcResult = Str_concat(acDest1, acSrc);
-            ASSURE(pcResult == acDest1);
-            (void)strcat(acDest2, acSrc);
-            ASSURE(memcmp(acDest1, acDest2, STRESS_STRING_SIZE) == 0);
-        }
-    }
-   }
- */
+	{
+		int i;
+		char acSrc[STRESS_STRING_SIZE];
+		char acDest1[STRESS_STRING_SIZE] = {'\0'};
+		char acDest2[STRESS_STRING_SIZE] = {'\0'};
+		for (i = 0; i < STRESS_TEST_COUNT; i++)
+		{
+			randomString(acSrc, STRESS_STRING_SIZE/2);
+			randomString(acDest1, STRESS_STRING_SIZE/2);
+			memcpy(acDest2, acDest1, STRESS_STRING_SIZE);
+			pcResult = Str_concat(acDest1, acSrc);
+			ASSURE(pcResult == acDest1);
+			(void)strcat(acDest2, acSrc);
+			ASSURE(memcmp(acDest1, acDest2, STRESS_STRING_SIZE) == 0);
+		}
+	}
+}
 
 /*--------------------------------------------------------------------*/
 
@@ -317,160 +313,158 @@ static int sign(int i)
 
 /* Test the Str_compare() function. */
 
-/*
-   static void testCompare(void)
-   {
-    int iResult1;
-    int iResult2;
+static void testCompare(void)
+{
+	int iResult1;
+	int iResult2;
 
-    printf("Testing Str_compare()\n");
+	printf("Testing Str_compare()\n");
 
-    printf("   Boundary Tests\n");
-    fflush(stdout);
+	printf("   Boundary Tests\n");
+	fflush(stdout);
 
-    {
-        const char acSrc1[] = {'\0', 'x', 'x', 'x', 'x', 'x'};
-        const char acSrc2[] = {'\0', 'y', 'y', 'y', 'y', 'y'};
-        iResult1 = Str_compare(acSrc1, acSrc2);
-        iResult2 = strcmp(acSrc1, acSrc2);
-        ASSURE(sign(iResult1) == sign(iResult2));
-    }
+	{
+		const char acSrc1[] = {'\0', 'x', 'x', 'x', 'x', 'x'};
+		const char acSrc2[] = {'\0', 'y', 'y', 'y', 'y', 'y'};
+		iResult1 = Str_compare(acSrc1, acSrc2);
+		iResult2 = strcmp(acSrc1, acSrc2);
+		ASSURE(sign(iResult1) == sign(iResult2));
+	}
 
-    {
-        const char acSrc1[] = {'\0', 'x', 'x', 'x', 'x', 'x'};
-        const char acSrc2[] = {'R', 'u', 't', 'h', '\0', 'y'};
-        iResult1 = Str_compare(acSrc1, acSrc2);
-        iResult2 = strcmp(acSrc1, acSrc2);
-        ASSURE(sign(iResult1) == sign(iResult2));
-    }
+	{
+		const char acSrc1[] = {'\0', 'x', 'x', 'x', 'x', 'x'};
+		const char acSrc2[] = {'R', 'u', 't', 'h', '\0', 'y'};
+		iResult1 = Str_compare(acSrc1, acSrc2);
+		iResult2 = strcmp(acSrc1, acSrc2);
+		ASSURE(sign(iResult1) == sign(iResult2));
+	}
 
-    {
-        const char acSrc1[] = {'R', 'u', 't', 'h', '\0', 'y'};
-        const char acSrc2[] = {'\0', 'x', 'x', 'x', 'x', 'x'};
-        iResult1 = Str_compare(acSrc1, acSrc2);
-        iResult2 = strcmp(acSrc1, acSrc2);
-        ASSURE(sign(iResult1) == sign(iResult2));
-    }
+	{
+		const char acSrc1[] = {'R', 'u', 't', 'h', '\0', 'y'};
+		const char acSrc2[] = {'\0', 'x', 'x', 'x', 'x', 'x'};
+		iResult1 = Str_compare(acSrc1, acSrc2);
+		iResult2 = strcmp(acSrc1, acSrc2);
+		ASSURE(sign(iResult1) == sign(iResult2));
+	}
 
-    printf("   Statement Tests\n");
-    fflush(stdout);
+	printf("   Statement Tests\n");
+	fflush(stdout);
 
-    {
-        const char acSrc1[] = {'R', 'u', 't', 'h', '\0', 'x'};
-        const char acSrc2[] = {'R', 'u', 't', 'h', '\0', 'y'};
-        iResult1 = Str_compare(acSrc1, acSrc2);
-        iResult2 = strcmp(acSrc1, acSrc2);
-        ASSURE(sign(iResult1) == sign(iResult2));
-    }
+	{
+		const char acSrc1[] = {'R', 'u', 't', 'h', '\0', 'x'};
+		const char acSrc2[] = {'R', 'u', 't', 'h', '\0', 'y'};
+		iResult1 = Str_compare(acSrc1, acSrc2);
+		iResult2 = strcmp(acSrc1, acSrc2);
+		ASSURE(sign(iResult1) == sign(iResult2));
+	}
 
-    {
-        const char acSrc1[] = {'R', 'o', 't', 'h', '\0', 'y'};
-        const char acSrc2[] = {'R', 'u', 't', 'h', '\0', 'x'};
-        iResult1 = Str_compare(acSrc1, acSrc2);
-        iResult2 = strcmp(acSrc1, acSrc2);
-        ASSURE(sign(iResult1) == sign(iResult2));
-    }
+	{
+		const char acSrc1[] = {'R', 'o', 't', 'h', '\0', 'y'};
+		const char acSrc2[] = {'R', 'u', 't', 'h', '\0', 'x'};
+		iResult1 = Str_compare(acSrc1, acSrc2);
+		iResult2 = strcmp(acSrc1, acSrc2);
+		ASSURE(sign(iResult1) == sign(iResult2));
+	}
 
-    {
-        const char acSrc1[] = {'R', 'u', 't', 'h', '\0', 'x'};
-        const char acSrc2[] = {'R', 'o', 't', 'h', '\0', 'y'};
-        iResult1 = Str_compare(acSrc1, acSrc2);
-        iResult2 = strcmp(acSrc1, acSrc2);
-        ASSURE(sign(iResult1) == sign(iResult2));
-    }
+	{
+		const char acSrc1[] = {'R', 'u', 't', 'h', '\0', 'x'};
+		const char acSrc2[] = {'R', 'o', 't', 'h', '\0', 'y'};
+		iResult1 = Str_compare(acSrc1, acSrc2);
+		iResult2 = strcmp(acSrc1, acSrc2);
+		ASSURE(sign(iResult1) == sign(iResult2));
+	}
 
-    {
-        const char acSrc1[] = {'R', 'u', 't', 'h', '\0', 'y'};
-        const char acSrc2[] = {'r', 'u', 't', 'h', '\0', 'x'};
-        iResult1 = Str_compare(acSrc1, acSrc2);
-        iResult2 = strcmp(acSrc1, acSrc2);
-        ASSURE(sign(iResult1) == sign(iResult2));
-    }
+	{
+		const char acSrc1[] = {'R', 'u', 't', 'h', '\0', 'y'};
+		const char acSrc2[] = {'r', 'u', 't', 'h', '\0', 'x'};
+		iResult1 = Str_compare(acSrc1, acSrc2);
+		iResult2 = strcmp(acSrc1, acSrc2);
+		ASSURE(sign(iResult1) == sign(iResult2));
+	}
 
-    {
-        const char acSrc1[] = {'r', 'u', 't', 'h', '\0', 'x'};
-        const char acSrc2[] = {'R', 'u', 't', 'h', '\0', 'y'};
-        iResult1 = Str_compare(acSrc1, acSrc2);
-        iResult2 = strcmp(acSrc1, acSrc2);
-        ASSURE(sign(iResult1) == sign(iResult2));
-    }
+	{
+		const char acSrc1[] = {'r', 'u', 't', 'h', '\0', 'x'};
+		const char acSrc2[] = {'R', 'u', 't', 'h', '\0', 'y'};
+		iResult1 = Str_compare(acSrc1, acSrc2);
+		iResult2 = strcmp(acSrc1, acSrc2);
+		ASSURE(sign(iResult1) == sign(iResult2));
+	}
 
-    {
-        const char acSrc1[] = {'B', 'a', 'b', 'e', '\0', 'y'};
-        const char acSrc2[] =
-        {'B', 'a', 'b', 'e', 'R', 'u', 't', 'h', '\0', 'x'};
-        iResult1 = Str_compare(acSrc1, acSrc2);
-        iResult2 = strcmp(acSrc1, acSrc2);
-        ASSURE(sign(iResult1) == sign(iResult2));
-    }
+	{
+		const char acSrc1[] = {'B', 'a', 'b', 'e', '\0', 'y'};
+		const char acSrc2[] =
+		{'B', 'a', 'b', 'e', 'R', 'u', 't', 'h', '\0', 'x'};
+		iResult1 = Str_compare(acSrc1, acSrc2);
+		iResult2 = strcmp(acSrc1, acSrc2);
+		ASSURE(sign(iResult1) == sign(iResult2));
+	}
 
-    {
-        const char acSrc1[] =
-        {'B', 'a', 'b', 'e', 'R', 'u', 't', 'h', '\0', 'x'};
-        const char acSrc2[] = {'B', 'a', 'b', 'e', '\0', 'y'};
-        iResult1 = Str_compare(acSrc1, acSrc2);
-        iResult2 = strcmp(acSrc1, acSrc2);
-        ASSURE(sign(iResult1) == sign(iResult2));
-    }
+	{
+		const char acSrc1[] =
+		{'B', 'a', 'b', 'e', 'R', 'u', 't', 'h', '\0', 'x'};
+		const char acSrc2[] = {'B', 'a', 'b', 'e', '\0', 'y'};
+		iResult1 = Str_compare(acSrc1, acSrc2);
+		iResult2 = strcmp(acSrc1, acSrc2);
+		ASSURE(sign(iResult1) == sign(iResult2));
+	}
 
-    {
-        const char acSrc1[] = {'x', 'y', '\0', 'z', 'z', 'z'};
-        const char acSrc2[] = {'y', 'x', '\0', 'z', 'z', 'z'};
-        iResult1 = Str_compare(acSrc1, acSrc2);
-        iResult2 = strcmp(acSrc1, acSrc2);
-        ASSURE(sign(iResult1) == sign(iResult2));
-    }
+	{
+		const char acSrc1[] = {'x', 'y', '\0', 'z', 'z', 'z'};
+		const char acSrc2[] = {'y', 'x', '\0', 'z', 'z', 'z'};
+		iResult1 = Str_compare(acSrc1, acSrc2);
+		iResult2 = strcmp(acSrc1, acSrc2);
+		ASSURE(sign(iResult1) == sign(iResult2));
+	}
 
-    {
-        const char acSrc1[] = {'y', 'x', '\0', 'z', 'z', 'z'};
-        const char acSrc2[] = {'x', 'y', '\0', 'z', 'z', 'z'};
-        iResult1 = Str_compare(acSrc1, acSrc2);
-        iResult2 = strcmp(acSrc1, acSrc2);
-        ASSURE(sign(iResult1) == sign(iResult2));
-    }
+	{
+		const char acSrc1[] = {'y', 'x', '\0', 'z', 'z', 'z'};
+		const char acSrc2[] = {'x', 'y', '\0', 'z', 'z', 'z'};
+		iResult1 = Str_compare(acSrc1, acSrc2);
+		iResult2 = strcmp(acSrc1, acSrc2);
+		ASSURE(sign(iResult1) == sign(iResult2));
+	}
 
-    {
-        const char acSrc1[] = {'x', 'x', '\0', 'z', 'z', 'z'};
-        const char acSrc2[] = {'y', '\0', 'z', 'z', 'z', 'z'};
-        iResult1 = Str_compare(acSrc1, acSrc2);
-        iResult2 = strcmp(acSrc1, acSrc2);
-        ASSURE(sign(iResult1) == sign(iResult2));
-    }
+	{
+		const char acSrc1[] = {'x', 'x', '\0', 'z', 'z', 'z'};
+		const char acSrc2[] = {'y', '\0', 'z', 'z', 'z', 'z'};
+		iResult1 = Str_compare(acSrc1, acSrc2);
+		iResult2 = strcmp(acSrc1, acSrc2);
+		ASSURE(sign(iResult1) == sign(iResult2));
+	}
 
-    {
-        const char acSrc1[] = {'y', '\0', 'z', 'z', 'z', 'z'};
-        const char acSrc2[] = {'x', 'x', '\0', 'z', 'z', 'z'};
-        iResult1 = Str_compare(acSrc1, acSrc2);
-        iResult2 = strcmp(acSrc1, acSrc2);
-        ASSURE(sign(iResult1) == sign(iResult2));
-    }
+	{
+		const char acSrc1[] = {'y', '\0', 'z', 'z', 'z', 'z'};
+		const char acSrc2[] = {'x', 'x', '\0', 'z', 'z', 'z'};
+		iResult1 = Str_compare(acSrc1, acSrc2);
+		iResult2 = strcmp(acSrc1, acSrc2);
+		ASSURE(sign(iResult1) == sign(iResult2));
+	}
 
-    {
-        const char acSrc1[] = {'x', 'y', 'y', '\0', 'z', 'z'};
-        const char acSrc2[] = {'y', 'x', 'x', '\0', 'z', 'z'};
-        iResult1 = Str_compare(acSrc1, acSrc2);
-        iResult2 = strcmp(acSrc1, acSrc2);
-        ASSURE(sign(iResult1) == sign(iResult2));
-    }
+	{
+		const char acSrc1[] = {'x', 'y', 'y', '\0', 'z', 'z'};
+		const char acSrc2[] = {'y', 'x', 'x', '\0', 'z', 'z'};
+		iResult1 = Str_compare(acSrc1, acSrc2);
+		iResult2 = strcmp(acSrc1, acSrc2);
+		ASSURE(sign(iResult1) == sign(iResult2));
+	}
 
-    printf("   Stress Tests\n");
-    fflush(stdout);
+	printf("   Stress Tests\n");
+	fflush(stdout);
 
-    {
-        int i;
-        char acSrc1[STRESS_STRING_SIZE];
-        char acSrc2[STRESS_STRING_SIZE];
-        for (i = 0; i < STRESS_TEST_COUNT; i++)
-        {
-            randomString(acSrc1, STRESS_STRING_SIZE);
-            randomString(acSrc2, STRESS_STRING_SIZE);
-            iResult1 = Str_compare(acSrc1, acSrc2);
-            iResult2 = strcmp(acSrc1, acSrc2);
-            ASSURE(sign(iResult1) == sign(iResult2));
-        }
-    }
-   }
- */
+	{
+		int i;
+		char acSrc1[STRESS_STRING_SIZE];
+		char acSrc2[STRESS_STRING_SIZE];
+		for (i = 0; i < STRESS_TEST_COUNT; i++)
+		{
+			randomString(acSrc1, STRESS_STRING_SIZE);
+			randomString(acSrc2, STRESS_STRING_SIZE);
+			iResult1 = Str_compare(acSrc1, acSrc2);
+			iResult2 = strcmp(acSrc1, acSrc2);
+			ASSURE(sign(iResult1) == sign(iResult2));
+		}
+	}
+}
 
 /*--------------------------------------------------------------------*/
 
@@ -763,10 +757,10 @@ int main(int argc, char *argv[])
 #endif
 
 	testGetLength();
+	testCopy();
+	testConcat();
+	testCompare();
 	/*
-	   testCopy();
-	   testConcat();
-	   testCompare();
 	   testSearch();
 	 */
 
