@@ -1,3 +1,8 @@
+/**********************************************************************/
+/* stra.c                                                             */
+/* Nicholas Padmanabhan (ntyp) (P05)                                  */
+/**********************************************************************/
+
 #include "str.h"
 
 size_t Str_getLength(const char pSrc[]) {
@@ -40,16 +45,16 @@ char* Str_concat(char pDest[], const char pSrc[]) {
 	return pDest;
 }
 
-int Str_compare(const char str1[], const char str2[]) {
+int Str_compare(const char pStr1[], const char pStr2[]) {
 	size_t index = 0;
-	assert(str1 != NULL);
-	assert(str2 != NULL);
+	assert(pStr1 != NULL);
+	assert(pStr2 != NULL);
 
-	while (str1[index] != '\0' && str2[index] != '\0') {
-		if (str1[index] != str2[index])
+	while (pStr1[index] != '\0' && pStr2[index] != '\0') {
+		if (pStr1[index] != pStr2[index])
 			break;
 		index++;
 	}
 
-	return (int) (str1[index] - str2[index]);
+	return (int) (pStr1[index] - pStr2[index]);
 }
