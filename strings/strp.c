@@ -62,5 +62,5 @@ int Str_compare(const char* pStr1, const char* pStr2) {
 		pStr2End++;
 	}
 
-	return *pStr1End - *pStr2End;
+	return (int) (*pStr1End - *pStr2End);
 }
