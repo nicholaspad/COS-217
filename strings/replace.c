@@ -1,6 +1,6 @@
 /*--------------------------------------------------------------------*/
 /* replace.c                                                          */
-/* Author: ???                                                        */
+/* Author: Nicholas Padmanabhan (ntyp) (P05)                          */
 /*--------------------------------------------------------------------*/
 
 #include "str.h"
@@ -18,9 +18,27 @@
    maximum number of characters in strings pcLine, pcFrom, or pcTo. */
 
 static size_t replaceAndWrite(const char *pcLine,
-                              const char *pcFrom, const char *pcTo)
-{
-   /* Insert your code here. */
+                              const char *pcFrom, const char *pcTo) {
+	size_t nReplaced = 0;
+	size_t lineIndex = 0;
+	size_t fromIndex = 0;
+	size_t toIndex = 0;
+
+	assert(pcLine != NULL);
+	assert(pcFrom != NULL);
+	assert(pcTo != NULL);
+
+	if (*pcFrom == '\0') {
+		printf("%s\n", *pcLine);
+		return 0;
+	}
+
+	while(pcLine[lineIndex] != '\0') {
+		lineIndex++;
+	}
+
+	printf("%s\n", *pcLine);
+	return nReplaced;
 }
 
 /*--------------------------------------------------------------------*/
@@ -36,28 +54,27 @@ static size_t replaceAndWrite(const char *pcLine,
    Assume that no line of stdin consists of more than MAX_LINE_SIZE-1
    characters. */
 
-int main(int argc, char *argv[])
-{
-   enum {MAX_LINE_SIZE = 4096};
-   enum {PROPER_ARG_COUNT = 3};
+int main(int argc, char *argv[]) {
+	enum {MAX_LINE_SIZE = 4096};
+	enum {PROPER_ARG_COUNT = 3};
 
-   char acLine[MAX_LINE_SIZE];
-   char *pcFrom;
-   char *pcTo;
-   size_t uReplaceCount = 0;
+	char acLine[MAX_LINE_SIZE];
+	char *pcFrom;
+	char *pcTo;
+	size_t uReplaceCount = 0;
 
-   if (argc != PROPER_ARG_COUNT)
-   {
-      fprintf(stderr, "usage: %s fromstring tostring\n", argv[0]);
-      return EXIT_FAILURE;
-   }
+	if (argc != PROPER_ARG_COUNT)
+	{
+		fprintf(stderr, "usage: %s fromstring tostring\n", argv[0]);
+		return EXIT_FAILURE;
+	}
 
-   pcFrom = argv[1];
-   pcTo = argv[2];
+	pcFrom = argv[1];
+	pcTo = argv[2];
 
-   while (fgets(acLine, MAX_LINE_SIZE, stdin) != NULL)
-      /* Insert your code here. */
+	while (fgets(acLine, MAX_LINE_SIZE, stdin) != NULL)
+		/* Insert your code here. */
 
-   fprintf(stderr, "%lu replacements\n", (unsigned long)uReplaceCount);
-   return 0;
+		fprintf(stderr, "%lu replacements\n", (unsigned long)uReplaceCount);
+	return 0;
 }

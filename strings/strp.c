@@ -10,6 +10,7 @@ size_t Str_getLength(const char* pSrc) {
 	assert(pSrc != NULL);
 
 	pEnd = pSrc;
+
 	while (*pEnd != '\0')
 		pEnd++;
 
@@ -24,6 +25,7 @@ char* Str_copy(char* pDest, const char* pSrc) {
 
 	pSrcEnd = pSrc;
 	pDestEnd = pDest;
+
 	while (*pSrcEnd != '\0') {
 		*pDestEnd = *pSrcEnd;
 		pSrcEnd++;
@@ -42,6 +44,7 @@ char* Str_concat(char* pDest, const char* pSrc) {
 
 	pSrcEnd = pSrc;
 	pDestEnd = pDest + Str_getLength(pDest);
+
 	while (*pSrcEnd != '\0') {
 		*pDestEnd = *pSrcEnd;
 		pSrcEnd++;
@@ -60,6 +63,7 @@ int Str_compare(const char* pStr1, const char* pStr2) {
 
 	pStr1End = pStr1;
 	pStr2End = pStr2;
+
 	while (*pStr1End != '\0' && *pStr2End != '\0') {
 		if (*pStr1End != *pStr2End)
 			break;
@@ -68,4 +72,35 @@ int Str_compare(const char* pStr1, const char* pStr2) {
 	}
 
 	return (int) (*pStr1End - *pStr2End);
+}
+
+char* Str_search(const char* pHaystack, const char* pNeedle) {
+	const char* pHaystackEnd;
+	const char* pNeedleEnd;
+	const char* pHaystackTemp;
+	size_t nLen = Str_getLength(pNeedle);
+	assert(pHaystack != NULL);
+	assert(pNeedle != NULL);
+
+	pHaystackEnd = pHaystack;
+	pNeedleEnd = pNeedle;
+
+	if (*pNeedle == '\0')
+		return (char*) pHaystack;
+
+	while (*pHaystack != '\0') {
+		pHaystackTemp = pHaystackEnd;
+		pNeedleEnd = pNeedle;
+		while(*pNeedleEnd != '\0') {
+			if (*pHaystackTemp != *pNeedleEnd)
+				break;
+			else if (pNeedleEnd - pNeedle == nLen - 1)
+				return (char*) pHaystackEnd;
+			pHaystackTemp++;
+			pNeedleEnd++;
+		}
+		pHaystackEnd++;
+	}
+
+	return NULL;
 }

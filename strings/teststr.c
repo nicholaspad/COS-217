@@ -470,278 +470,276 @@ static void testCompare(void)
 
 /* Test the Str_search() function. */
 
-/*
-   static void testSearch(void)
-   {
-    const char *pcResult1;
-    const char *pcResult2;
+static void testSearch(void)
+{
+	const char *pcResult1;
+	const char *pcResult2;
 
-    printf("Testing Str_search()\n");
+	printf("Testing Str_search()\n");
 
-    printf("   Boundary Tests\n");
-    fflush(stdout);
+	printf("   Boundary Tests\n");
+	fflush(stdout);
 
-    {
-        const char acHaystack[] = "";
-        const char acNeedle[] = "";
-        pcResult1 = Str_search(acHaystack, acNeedle);
-        pcResult2 = strstr(acHaystack, acNeedle);
-        ASSURE(pcResult1 == pcResult2);
-    }
+	{
+		const char acHaystack[] = "";
+		const char acNeedle[] = "";
+		pcResult1 = Str_search(acHaystack, acNeedle);
+		pcResult2 = strstr(acHaystack, acNeedle);
+		ASSURE(pcResult1 == pcResult2);
+	}
 
-    {
-        const char acHaystack[] = "abcde";
-        const char acNeedle[] = "";
-        pcResult1 = Str_search(acHaystack, acNeedle);
-        pcResult2 = strstr(acHaystack, acNeedle);
-        ASSURE(pcResult1 == pcResult2);
-    }
+	{
+		const char acHaystack[] = "abcde";
+		const char acNeedle[] = "";
+		pcResult1 = Str_search(acHaystack, acNeedle);
+		pcResult2 = strstr(acHaystack, acNeedle);
+		ASSURE(pcResult1 == pcResult2);
+	}
 
-    {
-        const char acHaystack[] = "";
-        const char acNeedle[] = "abcde";
-        pcResult1 = Str_search(acHaystack, acNeedle);
-        pcResult2 = strstr(acHaystack, acNeedle);
-        ASSURE(pcResult1 == pcResult2);
-    }
+	{
+		const char acHaystack[] = "";
+		const char acNeedle[] = "abcde";
+		pcResult1 = Str_search(acHaystack, acNeedle);
+		pcResult2 = strstr(acHaystack, acNeedle);
+		ASSURE(pcResult1 == pcResult2);
+	}
 
-    printf("   Statement Tests\n");
-    fflush(stdout);
+	printf("   Statement Tests\n");
+	fflush(stdout);
 
-    {
-        const char acHaystack[] = "abcde";
-        const char acNeedle[] = "d";
-        pcResult1 = Str_search(acHaystack, acNeedle);
-        pcResult2 = strstr(acHaystack, acNeedle);
-        ASSURE(pcResult1 == pcResult2);
-    }
+	{
+		const char acHaystack[] = "abcde";
+		const char acNeedle[] = "d";
+		pcResult1 = Str_search(acHaystack, acNeedle);
+		pcResult2 = strstr(acHaystack, acNeedle);
+		ASSURE(pcResult1 == pcResult2);
+	}
 
-    {
-        const char acHaystack[] = "abcde";
-        const char acNeedle[] = "cd";
-        pcResult1 = Str_search(acHaystack, acNeedle);
-        pcResult2 = strstr(acHaystack, acNeedle);
-        ASSURE(pcResult1 == pcResult2);
-    }
+	{
+		const char acHaystack[] = "abcde";
+		const char acNeedle[] = "cd";
+		pcResult1 = Str_search(acHaystack, acNeedle);
+		pcResult2 = strstr(acHaystack, acNeedle);
+		ASSURE(pcResult1 == pcResult2);
+	}
 
-    {
-        const char acHaystack[] = "abcde";
-        const char acNeedle[] = "bcde";
-        pcResult1 = Str_search(acHaystack, acNeedle);
-        pcResult2 = strstr(acHaystack, acNeedle);
-        ASSURE(pcResult1 == pcResult2);
-    }
+	{
+		const char acHaystack[] = "abcde";
+		const char acNeedle[] = "bcde";
+		pcResult1 = Str_search(acHaystack, acNeedle);
+		pcResult2 = strstr(acHaystack, acNeedle);
+		ASSURE(pcResult1 == pcResult2);
+	}
 
-    {
-        const char acHaystack[] = "abcde";
-        const char acNeedle[] = "abcde";
-        pcResult1 = Str_search(acHaystack, acNeedle);
-        pcResult2 = strstr(acHaystack, acNeedle);
-        ASSURE(pcResult1 == pcResult2);
-    }
+	{
+		const char acHaystack[] = "abcde";
+		const char acNeedle[] = "abcde";
+		pcResult1 = Str_search(acHaystack, acNeedle);
+		pcResult2 = strstr(acHaystack, acNeedle);
+		ASSURE(pcResult1 == pcResult2);
+	}
 
-    {
-        const char acHaystack[] = "abcde";
-        const char acNeedle[] = "abcdf";
-        pcResult1 = Str_search(acHaystack, acNeedle);
-        pcResult2 = strstr(acHaystack, acNeedle);
-        ASSURE(pcResult1 == pcResult2);
-    }
+	{
+		const char acHaystack[] = "abcde";
+		const char acNeedle[] = "abcdf";
+		pcResult1 = Str_search(acHaystack, acNeedle);
+		pcResult2 = strstr(acHaystack, acNeedle);
+		ASSURE(pcResult1 == pcResult2);
+	}
 
-    {
-        const char acHaystack[] = "abcde";
-        const char acNeedle[] = "bcdef";
-        pcResult1 = Str_search(acHaystack, acNeedle);
-        pcResult2 = strstr(acHaystack, acNeedle);
-        ASSURE(pcResult1 == pcResult2);
-    }
+	{
+		const char acHaystack[] = "abcde";
+		const char acNeedle[] = "bcdef";
+		pcResult1 = Str_search(acHaystack, acNeedle);
+		pcResult2 = strstr(acHaystack, acNeedle);
+		ASSURE(pcResult1 == pcResult2);
+	}
 
-    {
-        const char acHaystack[] = "aab";
-        const char acNeedle[] = "ab";
-        pcResult1 = Str_search(acHaystack, acNeedle);
-        pcResult2 = strstr(acHaystack, acNeedle);
-        ASSURE(pcResult1 == pcResult2);
-    }
+	{
+		const char acHaystack[] = "aab";
+		const char acNeedle[] = "ab";
+		pcResult1 = Str_search(acHaystack, acNeedle);
+		pcResult2 = strstr(acHaystack, acNeedle);
+		ASSURE(pcResult1 == pcResult2);
+	}
 
-    {
-        const char acHaystack[] = "aaab";
-        const char acNeedle[] = "ab";
-        pcResult1 = Str_search(acHaystack, acNeedle);
-        pcResult2 = strstr(acHaystack, acNeedle);
-        ASSURE(pcResult1 == pcResult2);
-    }
+	{
+		const char acHaystack[] = "aaab";
+		const char acNeedle[] = "ab";
+		pcResult1 = Str_search(acHaystack, acNeedle);
+		pcResult2 = strstr(acHaystack, acNeedle);
+		ASSURE(pcResult1 == pcResult2);
+	}
 
-    {
-        const char acHaystack[] = "aaab";
-        const char acNeedle[] = "aab";
-        pcResult1 = Str_search(acHaystack, acNeedle);
-        pcResult2 = strstr(acHaystack, acNeedle);
-        ASSURE(pcResult1 == pcResult2);
-    }
+	{
+		const char acHaystack[] = "aaab";
+		const char acNeedle[] = "aab";
+		pcResult1 = Str_search(acHaystack, acNeedle);
+		pcResult2 = strstr(acHaystack, acNeedle);
+		ASSURE(pcResult1 == pcResult2);
+	}
 
-    {
-        const char acHaystack[] = "aaaab";
-        const char acNeedle[] = "aab";
-        pcResult1 = Str_search(acHaystack, acNeedle);
-        pcResult2 = strstr(acHaystack, acNeedle);
-        ASSURE(pcResult1 == pcResult2);
-    }
+	{
+		const char acHaystack[] = "aaaab";
+		const char acNeedle[] = "aab";
+		pcResult1 = Str_search(acHaystack, acNeedle);
+		pcResult2 = strstr(acHaystack, acNeedle);
+		ASSURE(pcResult1 == pcResult2);
+	}
 
-    {
-        const char acHaystack[] = "aaaaab";
-        const char acNeedle[] = "aab";
-        pcResult1 = Str_search(acHaystack, acNeedle);
-        pcResult2 = strstr(acHaystack, acNeedle);
-        ASSURE(pcResult1 == pcResult2);
-    }
+	{
+		const char acHaystack[] = "aaaaab";
+		const char acNeedle[] = "aab";
+		pcResult1 = Str_search(acHaystack, acNeedle);
+		pcResult2 = strstr(acHaystack, acNeedle);
+		ASSURE(pcResult1 == pcResult2);
+	}
 
-    {
-        const char acHaystack[] = "aaaab";
-        const char acNeedle[] = "aaab";
-        pcResult1 = Str_search(acHaystack, acNeedle);
-        pcResult2 = strstr(acHaystack, acNeedle);
-        ASSURE(pcResult1 == pcResult2);
-    }
+	{
+		const char acHaystack[] = "aaaab";
+		const char acNeedle[] = "aaab";
+		pcResult1 = Str_search(acHaystack, acNeedle);
+		pcResult2 = strstr(acHaystack, acNeedle);
+		ASSURE(pcResult1 == pcResult2);
+	}
 
-    {
-        const char acHaystack[] = "aaaaab";
-        const char acNeedle[] = "aaab";
-        pcResult1 = Str_search(acHaystack, acNeedle);
-        pcResult2 = strstr(acHaystack, acNeedle);
-        ASSURE(pcResult1 == pcResult2);
-    }
+	{
+		const char acHaystack[] = "aaaaab";
+		const char acNeedle[] = "aaab";
+		pcResult1 = Str_search(acHaystack, acNeedle);
+		pcResult2 = strstr(acHaystack, acNeedle);
+		ASSURE(pcResult1 == pcResult2);
+	}
 
-    {
-        const char acHaystack[] = "aaaaaab";
-        const char acNeedle[] = "aaab";
-        pcResult1 = Str_search(acHaystack, acNeedle);
-        pcResult2 = strstr(acHaystack, acNeedle);
-        ASSURE(pcResult1 == pcResult2);
-    }
+	{
+		const char acHaystack[] = "aaaaaab";
+		const char acNeedle[] = "aaab";
+		pcResult1 = Str_search(acHaystack, acNeedle);
+		pcResult2 = strstr(acHaystack, acNeedle);
+		ASSURE(pcResult1 == pcResult2);
+	}
 
-    {
-        const char acHaystack[] = "aaaaaaab";
-        const char acNeedle[] = "aaab";
-        pcResult1 = Str_search(acHaystack, acNeedle);
-        pcResult2 = strstr(acHaystack, acNeedle);
-        ASSURE(pcResult1 == pcResult2);
-    }
+	{
+		const char acHaystack[] = "aaaaaaab";
+		const char acNeedle[] = "aaab";
+		pcResult1 = Str_search(acHaystack, acNeedle);
+		pcResult2 = strstr(acHaystack, acNeedle);
+		ASSURE(pcResult1 == pcResult2);
+	}
 
-    {
-        const char acHaystack[] = "abcdefg";
-        const char acNeedle[] = "abcg";
-        pcResult1 = Str_search(acHaystack, acNeedle);
-        pcResult2 = strstr(acHaystack, acNeedle);
-        ASSURE(pcResult1 == pcResult2);
-    }
+	{
+		const char acHaystack[] = "abcdefg";
+		const char acNeedle[] = "abcg";
+		pcResult1 = Str_search(acHaystack, acNeedle);
+		pcResult2 = strstr(acHaystack, acNeedle);
+		ASSURE(pcResult1 == pcResult2);
+	}
 
-    {
-        const char acHaystack[] = "abcde";
-        const char acNeedle[] = "abcdefg";
-        pcResult1 = Str_search(acHaystack, acNeedle);
-        pcResult2 = strstr(acHaystack, acNeedle);
-        ASSURE(pcResult1 == pcResult2);
-    }
+	{
+		const char acHaystack[] = "abcde";
+		const char acNeedle[] = "abcdefg";
+		pcResult1 = Str_search(acHaystack, acNeedle);
+		pcResult2 = strstr(acHaystack, acNeedle);
+		ASSURE(pcResult1 == pcResult2);
+	}
 
-    {
-        const char acHaystack[] = "aababaab";
-        const char acNeedle[] = "abaab";
-        pcResult1 = Str_search(acHaystack, acNeedle);
-        pcResult2 = strstr(acHaystack, acNeedle);
-        ASSURE(pcResult1 == pcResult2);
-    }
+	{
+		const char acHaystack[] = "aababaab";
+		const char acNeedle[] = "abaab";
+		pcResult1 = Str_search(acHaystack, acNeedle);
+		pcResult2 = strstr(acHaystack, acNeedle);
+		ASSURE(pcResult1 == pcResult2);
+	}
 
-    {
-        const char acHaystack[] = "aaa";
-        const char acNeedle[] = "a";
-        pcResult1 = Str_search(acHaystack, acNeedle);
-        pcResult2 = strstr(acHaystack, acNeedle);
-        ASSURE(pcResult1 == pcResult2);
-    }
+	{
+		const char acHaystack[] = "aaa";
+		const char acNeedle[] = "a";
+		pcResult1 = Str_search(acHaystack, acNeedle);
+		pcResult2 = strstr(acHaystack, acNeedle);
+		ASSURE(pcResult1 == pcResult2);
+	}
 
-    {
-        const char acHaystack[] = "aabbcc";
-        const char acNeedle[] = "abc";
-        pcResult1 = Str_search(acHaystack, acNeedle);
-        pcResult2 = strstr(acHaystack, acNeedle);
-        ASSURE(pcResult1 == pcResult2);
-    }
+	{
+		const char acHaystack[] = "aabbcc";
+		const char acNeedle[] = "abc";
+		pcResult1 = Str_search(acHaystack, acNeedle);
+		pcResult2 = strstr(acHaystack, acNeedle);
+		ASSURE(pcResult1 == pcResult2);
+	}
 
-    printf("   Stress Tests\n");
-    fflush(stdout);
+	printf("   Stress Tests\n");
+	fflush(stdout);
 
-    {
-        int i;
-        char acSrc1[STRESS_STRING_SIZE];
-        char acSrc2[STRESS_STRING_SIZE];
-        for (i = 0; i < STRESS_TEST_COUNT; i++)
-        {
-            randomString(acSrc1, STRESS_STRING_SIZE);
-            randomString(acSrc2, 1);
-            pcResult1 = Str_search(acSrc1, acSrc2);
-            pcResult2 = strstr(acSrc1, acSrc2);
-            ASSURE(pcResult1 == pcResult2);
-        }
-    }
+	{
+		int i;
+		char acSrc1[STRESS_STRING_SIZE];
+		char acSrc2[STRESS_STRING_SIZE];
+		for (i = 0; i < STRESS_TEST_COUNT; i++)
+		{
+			randomString(acSrc1, STRESS_STRING_SIZE);
+			randomString(acSrc2, 1);
+			pcResult1 = Str_search(acSrc1, acSrc2);
+			pcResult2 = strstr(acSrc1, acSrc2);
+			ASSURE(pcResult1 == pcResult2);
+		}
+	}
 
-    {
-        int i;
-        char acSrc1[STRESS_STRING_SIZE];
-        char acSrc2[STRESS_STRING_SIZE];
-        for (i = 0; i < STRESS_TEST_COUNT; i++)
-        {
-            randomString(acSrc1, STRESS_STRING_SIZE);
-            randomString(acSrc2, 2);
-            pcResult1 = Str_search(acSrc1, acSrc2);
-            pcResult2 = strstr(acSrc1, acSrc2);
-            ASSURE(pcResult1 == pcResult2);
-        }
-    }
+	{
+		int i;
+		char acSrc1[STRESS_STRING_SIZE];
+		char acSrc2[STRESS_STRING_SIZE];
+		for (i = 0; i < STRESS_TEST_COUNT; i++)
+		{
+			randomString(acSrc1, STRESS_STRING_SIZE);
+			randomString(acSrc2, 2);
+			pcResult1 = Str_search(acSrc1, acSrc2);
+			pcResult2 = strstr(acSrc1, acSrc2);
+			ASSURE(pcResult1 == pcResult2);
+		}
+	}
 
-    {
-        int i;
-        char acSrc1[STRESS_STRING_SIZE];
-        char acSrc2[STRESS_STRING_SIZE];
-        for (i = 0; i < STRESS_TEST_COUNT; i++)
-        {
-            randomString(acSrc1, STRESS_STRING_SIZE);
-            randomString(acSrc2, 3);
-            pcResult1 = Str_search(acSrc1, acSrc2);
-            pcResult2 = strstr(acSrc1, acSrc2);
-            ASSURE(pcResult1 == pcResult2);
-        }
-    }
+	{
+		int i;
+		char acSrc1[STRESS_STRING_SIZE];
+		char acSrc2[STRESS_STRING_SIZE];
+		for (i = 0; i < STRESS_TEST_COUNT; i++)
+		{
+			randomString(acSrc1, STRESS_STRING_SIZE);
+			randomString(acSrc2, 3);
+			pcResult1 = Str_search(acSrc1, acSrc2);
+			pcResult2 = strstr(acSrc1, acSrc2);
+			ASSURE(pcResult1 == pcResult2);
+		}
+	}
 
-    {
-        int i;
-        char acSrc1[STRESS_STRING_SIZE];
-        char acSrc2[STRESS_STRING_SIZE];
-        for (i = 0; i < STRESS_TEST_COUNT; i++)
-        {
-            randomString(acSrc1, STRESS_STRING_SIZE);
-            randomString(acSrc2, 4);
-            pcResult1 = Str_search(acSrc1, acSrc2);
-            pcResult2 = strstr(acSrc1, acSrc2);
-            ASSURE(pcResult1 == pcResult2);
-        }
-    }
+	{
+		int i;
+		char acSrc1[STRESS_STRING_SIZE];
+		char acSrc2[STRESS_STRING_SIZE];
+		for (i = 0; i < STRESS_TEST_COUNT; i++)
+		{
+			randomString(acSrc1, STRESS_STRING_SIZE);
+			randomString(acSrc2, 4);
+			pcResult1 = Str_search(acSrc1, acSrc2);
+			pcResult2 = strstr(acSrc1, acSrc2);
+			ASSURE(pcResult1 == pcResult2);
+		}
+	}
 
-    {
-        int i;
-        char acSrc1[STRESS_STRING_SIZE];
-        char acSrc2[STRESS_STRING_SIZE];
-        for (i = 0; i < STRESS_TEST_COUNT; i++)
-        {
-            randomString(acSrc1, STRESS_STRING_SIZE);
-            randomString(acSrc2, 5);
-            pcResult1 = Str_search(acSrc1, acSrc2);
-            pcResult2 = strstr(acSrc1, acSrc2);
-            ASSURE(pcResult1 == pcResult2);
-        }
-    }
-   }
- */
+	{
+		int i;
+		char acSrc1[STRESS_STRING_SIZE];
+		char acSrc2[STRESS_STRING_SIZE];
+		for (i = 0; i < STRESS_TEST_COUNT; i++)
+		{
+			randomString(acSrc1, STRESS_STRING_SIZE);
+			randomString(acSrc2, 5);
+			pcResult1 = Str_search(acSrc1, acSrc2);
+			pcResult2 = strstr(acSrc1, acSrc2);
+			ASSURE(pcResult1 == pcResult2);
+		}
+	}
+}
 
 /*--------------------------------------------------------------------*/
 
@@ -760,9 +758,7 @@ int main(int argc, char *argv[])
 	testCopy();
 	testConcat();
 	testCompare();
-	/*
-	   testSearch();
-	 */
+	testSearch();
 
 	printf("End of %s.\n", argv[0]);
 	return 0;
