@@ -88,13 +88,13 @@ char* Str_search(const char* pHaystack, const char* pNeedle) {
 	if (*pNeedle == '\0')
 		return (char*) pHaystack;
 
-	while (*pHaystack != '\0') {
+	while (*pHaystackEnd != '\0') {
 		pHaystackTemp = pHaystackEnd;
 		pNeedleEnd = pNeedle;
 		while(*pNeedleEnd != '\0') {
 			if (*pHaystackTemp != *pNeedleEnd)
 				break;
-			else if (pNeedleEnd - pNeedle == nLen - 1)
+			else if (pNeedleEnd - pNeedle == (long) nLen - 1)
 				return (char*) pHaystackEnd;
 			pHaystackTemp++;
 			pNeedleEnd++;
