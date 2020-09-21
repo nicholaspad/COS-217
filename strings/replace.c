@@ -19,6 +19,17 @@
 
 static size_t replaceAndWrite(const char *pcLine,
                               const char *pcFrom, const char *pcTo) {
+	/*
+	    Algorithm overview:
+	    1. Search for next occurence of pcFrom from current char of
+	    pcLine to end of pcLine.
+	    2. If next occurence not found, print rest of pcLine.
+	    3. Otherwise, print pcLine char-by-char until reaching next
+	    occurence. Then, print pcTo. Finally, skip k chars in pcLine,
+	    where k is the length of pcFrom.
+	    4. Return to step 1 until reaching end of pcLine.
+	 */
+
 	size_t nReplaced = 0;
 	const char* pcLineEnd;
 	const char* nextOccur;
@@ -30,6 +41,7 @@ static size_t replaceAndWrite(const char *pcLine,
 	pcLineEnd = pcLine;
 
 	if (*pcFrom == '\0') {
+		/* pcLine is unchanged if pcFrom is empty string */
 		printf("%s", pcLine);
 		return 0;
 	}
