@@ -15,12 +15,12 @@
 size_t Str_getLength(const char* pSrc);
 
 /*
-   Returns a copy of string pSrc.
+   Copies pSrc into pDest and returns pDest.
  */
 char* Str_copy(char* pDest, const char* pSrc);
 
 /*
-   Returns the concatenation of string pSrc to the end of string pDest.
+   Concatenates pSrc to pDest and returns pDest.
  */
 char* Str_concat(char* pDest, const char* pSrc);
 
@@ -31,7 +31,8 @@ char* Str_concat(char* pDest, const char* pSrc);
 int Str_compare(const char* pStr1, const char* pStr2);
 
 /*
-   Returns a pointer to the first occurence of pNeedle in pHaystack.
+   Returns a pointer to the first occurence of pNeedle (in its entirety)
+   in pHaystack.
  */
 char* Str_search(const char *pHaystack, const char *pNeedle);
 
