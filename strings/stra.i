@@ -130,6 +130,7 @@ int Str_compare(const char pStr1[], const char pStr2[]) {
 
  while (pStr1[index] != '\0' && pStr2[index] != '\0') {
   if (pStr1[index] != pStr2[index])
+
    break;
   index++;
  }
@@ -138,24 +139,29 @@ int Str_compare(const char pStr1[], const char pStr2[]) {
 }
 
 char* Str_search(const char pHaystack[], const char pNeedle[]) {
+# 78 "stra.c"
  size_t hIndex = 0;
  size_t nIndex;
  size_t nLen = Str_getLength(pNeedle);
- ((pHaystack != ((void *)0)) ? (void) (0) : __assert_fail ("pHaystack != ((void *)0)", "stra.c", 66, __PRETTY_FUNCTION__));
- ((pNeedle != ((void *)0)) ? (void) (0) : __assert_fail ("pNeedle != ((void *)0)", "stra.c", 67, __PRETTY_FUNCTION__));
+ ((pHaystack != ((void *)0)) ? (void) (0) : __assert_fail ("pHaystack != ((void *)0)", "stra.c", 81, __PRETTY_FUNCTION__));
+ ((pNeedle != ((void *)0)) ? (void) (0) : __assert_fail ("pNeedle != ((void *)0)", "stra.c", 82, __PRETTY_FUNCTION__));
 
  if (pNeedle[0] == '\0')
   return (char*) pHaystack;
 
- while(pHaystack[hIndex] != '\0') {
+ while (pHaystack[hIndex] != '\0') {
   for (nIndex = 0; nIndex < nLen; nIndex++) {
    if (pHaystack[hIndex + nIndex] != pNeedle[nIndex])
+
     break;
    else if (nIndex == nLen - 1)
+
+
     return (char*) (pHaystack + hIndex);
   }
   hIndex++;
  }
+
 
  return ((void *)0);
 }

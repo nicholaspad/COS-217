@@ -144,6 +144,7 @@ int Str_compare(const char* pStr1, const char* pStr2) {
 
  while (*pStr1End != '\0' && *pStr2End != '\0') {
   if (*pStr1End != *pStr2End)
+
    break;
   pStr1End++;
   pStr2End++;
@@ -153,12 +154,13 @@ int Str_compare(const char* pStr1, const char* pStr2) {
 }
 
 char* Str_search(const char* pHaystack, const char* pNeedle) {
+# 93 "strp.c"
  const char* pHaystackEnd;
  const char* pNeedleEnd;
  const char* pHaystackTemp;
  size_t nLen = Str_getLength(pNeedle);
- ((pHaystack != ((void *)0)) ? (void) (0) : __assert_fail ("pHaystack != ((void *)0)", "strp.c", 82, __PRETTY_FUNCTION__));
- ((pNeedle != ((void *)0)) ? (void) (0) : __assert_fail ("pNeedle != ((void *)0)", "strp.c", 83, __PRETTY_FUNCTION__));
+ ((pHaystack != ((void *)0)) ? (void) (0) : __assert_fail ("pHaystack != ((void *)0)", "strp.c", 97, __PRETTY_FUNCTION__));
+ ((pNeedle != ((void *)0)) ? (void) (0) : __assert_fail ("pNeedle != ((void *)0)", "strp.c", 98, __PRETTY_FUNCTION__));
 
  pHaystackEnd = pHaystack;
  pNeedleEnd = pNeedle;
@@ -171,14 +173,18 @@ char* Str_search(const char* pHaystack, const char* pNeedle) {
   pNeedleEnd = pNeedle;
   while(*pNeedleEnd != '\0') {
    if (*pHaystackTemp != *pNeedleEnd)
+
     break;
    else if (pNeedleEnd - pNeedle == (long) nLen - 1)
+
+
     return (char*) pHaystackEnd;
    pHaystackTemp++;
    pNeedleEnd++;
   }
   pHaystackEnd++;
  }
+
 
  return ((void *)0);
 }

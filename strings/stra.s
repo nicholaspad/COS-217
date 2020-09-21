@@ -341,7 +341,7 @@ Str_search:
 	add	x1, x1, :lo12:.LC1
 	adrp	x2, __PRETTY_FUNCTION__.2088
 	add	x3, x2, :lo12:__PRETTY_FUNCTION__.2088
-	mov	w2, 66
+	mov	w2, 81
 	bl	__assert_fail
 .L27:
 	ldr	x0, [x29,16]
@@ -353,7 +353,7 @@ Str_search:
 	add	x1, x1, :lo12:.LC1
 	adrp	x2, __PRETTY_FUNCTION__.2088
 	add	x3, x2, :lo12:__PRETTY_FUNCTION__.2088
-	mov	w2, 67
+	mov	w2, 82
 	bl	__assert_fail
 .L28:
 	ldr	x0, [x29,16]

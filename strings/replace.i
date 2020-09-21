@@ -880,17 +880,19 @@ extern size_t wcstombs (char *__restrict __s,
 # 20 "replace.c"
 static size_t replaceAndWrite(const char *pcLine,
                               const char *pcFrom, const char *pcTo) {
+# 33 "replace.c"
  size_t nReplaced = 0;
  const char* pcLineEnd;
  const char* nextOccur;
  size_t fromLen = Str_getLength(pcFrom);
- ((pcLine != ((void *)0)) ? (void) (0) : __assert_fail ("pcLine != ((void *)0)", "replace.c", 26, __PRETTY_FUNCTION__));
- ((pcFrom != ((void *)0)) ? (void) (0) : __assert_fail ("pcFrom != ((void *)0)", "replace.c", 27, __PRETTY_FUNCTION__));
- ((pcTo != ((void *)0)) ? (void) (0) : __assert_fail ("pcTo != ((void *)0)", "replace.c", 28, __PRETTY_FUNCTION__));
+ ((pcLine != ((void *)0)) ? (void) (0) : __assert_fail ("pcLine != ((void *)0)", "replace.c", 37, __PRETTY_FUNCTION__));
+ ((pcFrom != ((void *)0)) ? (void) (0) : __assert_fail ("pcFrom != ((void *)0)", "replace.c", 38, __PRETTY_FUNCTION__));
+ ((pcTo != ((void *)0)) ? (void) (0) : __assert_fail ("pcTo != ((void *)0)", "replace.c", 39, __PRETTY_FUNCTION__));
 
  pcLineEnd = pcLine;
 
  if (*pcFrom == '\0') {
+
   printf("%s", pcLine);
   return 0;
  }
@@ -914,7 +916,7 @@ static size_t replaceAndWrite(const char *pcLine,
 
  return nReplaced;
 }
-# 70 "replace.c"
+# 82 "replace.c"
 int main(int argc, char *argv[]) {
  enum {MAX_LINE_SIZE = 4096};
  enum {PROPER_ARG_COUNT = 3};
