@@ -101,26 +101,23 @@ Is it possible for Str_copy or Str_concat to call assert to verify
 that the destination memory area specified by the caller is large
 enough? Explain.
 
-No, unless we know that the source string is terminated by the null
-character. See below for explanation. If it is unknown whether or not
-the source string ends with the null character, then it is impossible to
-call assert in such a way because Str_copy and Str_concat would not know
-when the source string ends. They would "think" that the string has
-undefined length, making it impossible to check whether the destination
-memory area is large enough.
+No. Strings (char arrays) are passed to functions (e.g. Str_copy and
+Str_concat) as pointers to their first char. So, calling sizeof(pDest)
+within any function, where pDest is a pointer to the first char of the
+destination string, will always result in 8 or 4 depending on whether
+the computer is 64 or 32-bit. Also, calling sizeof(*pDest) will
+always result in 1, because chars are 1 byte in C.
 
-If we KNOW that the source string is terminated by the null character,
-we can do the following:
+Further, it is impossible to determine the destination memory size by
+finding the length of the destination string (i.e. using Str_length) and
+adding 1 (to count the terminating null char). The destination string
+may contain any number of null chars (e.g. "h\0ello"), but Str_length
+will halt when it encounters the first null char even if there are more
+chars afterward. Thus, the length of the destination string as
+determined by Str_length does not necessarily tell us the size of the
+destination memory area.
 
-We know the size of a char (1 byte), and know the number of chars that
-will be stored in the destination string (i.e. the length of the
-resultant string). For Str_copy, the number of chars that will be stored
-in the destination string is equal to the length of the longer string,
-+1 for the null char. For Str_concat, the number of chars that will be
-stored in the destination string is equal to the sum of the lengths of
-the two given strings, +1 for the null char. Since chars are 1 byte in
-C, the resultant char counts for Str_copy and Str_concat are equal to
-the required destination memory. Therefore, we can use assert to verify
-that the destination memory area is large enough.
+Therefore, there is no way to call assert within Str_copy or Str_concat
+to verify that the size of the destination memory area is large enough.
 
 ------------------------------------------------------------------------
