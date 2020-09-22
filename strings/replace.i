@@ -909,6 +909,7 @@ static size_t replaceAndWrite(const char *pcLine,
    printf("%c", *pcLineEnd);
    pcLineEnd++;
   }
+
   printf("%s", pcTo);
   pcLineEnd += fromLen;
   nReplaced++;
@@ -916,7 +917,7 @@ static size_t replaceAndWrite(const char *pcLine,
 
  return nReplaced;
 }
-# 82 "replace.c"
+# 83 "replace.c"
 int main(int argc, char *argv[]) {
  enum {MAX_LINE_SIZE = 4096};
  enum {PROPER_ARG_COUNT = 3};
