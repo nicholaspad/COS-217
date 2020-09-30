@@ -77,12 +77,14 @@ char* Str_search(const char pHaystack[], const char pNeedle[]) {
 
 	size_t hIndex = 0;
 	size_t nIndex;
-	size_t nLen = Str_getLength(pNeedle);
+	size_t nLen;
 	assert(pHaystack != NULL);
 	assert(pNeedle != NULL);
 
 	if (pNeedle[0] == '\0')
 		return (char*) pHaystack;
+
+	nLen = Str_getLength(pNeedle);
 
 	while (pHaystack[hIndex] != '\0') {
 		for (nIndex = 0; nIndex < nLen; nIndex++) {

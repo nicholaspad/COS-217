@@ -93,10 +93,11 @@ char* Str_search(const char* pHaystack, const char* pNeedle) {
 	const char* pHaystackEnd;
 	const char* pNeedleEnd;
 	const char* pHaystackTemp;
-	size_t nLen = Str_getLength(pNeedle);
+	size_t nLen;
 	assert(pHaystack != NULL);
 	assert(pNeedle != NULL);
 
+	nLen = Str_getLength(pNeedle);
 	pHaystackEnd = pHaystack;
 	pNeedleEnd = pNeedle;
 

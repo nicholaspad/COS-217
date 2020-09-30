@@ -33,11 +33,12 @@ static size_t replaceAndWrite(const char *pcLine,
 	size_t nReplaced = 0;
 	const char* pcLineEnd;
 	const char* nextOccur;
-	size_t fromLen = Str_getLength(pcFrom);
+	size_t fromLen;
 	assert(pcLine != NULL);
 	assert(pcFrom != NULL);
 	assert(pcTo != NULL);
 
+	fromLen = Str_getLength(pcFrom);
 	pcLineEnd = pcLine;
 
 	if (*pcFrom == '\0') {
