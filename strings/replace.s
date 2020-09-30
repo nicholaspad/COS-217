@@ -32,9 +32,6 @@ replaceAndWrite:
 	str	x1, [x29,32]
 	str	x2, [x29,24]
 	str	xzr, [x29,72]
-	ldr	x0, [x29,32]
-	bl	Str_getLength
-	str	x0, [x29,56]
 	ldr	x0, [x29,40]
 	cmp	x0, xzr
 	bne	.L2
@@ -71,6 +68,9 @@ replaceAndWrite:
 	mov	w2, 39
 	bl	__assert_fail
 .L4:
+	ldr	x0, [x29,32]
+	bl	Str_getLength
+	str	x0, [x29,56]
 	ldr	x0, [x29,40]
 	str	x0, [x29,64]
 	ldr	x0, [x29,32]

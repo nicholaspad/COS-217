@@ -884,11 +884,12 @@ static size_t replaceAndWrite(const char *pcLine,
  size_t nReplaced = 0;
  const char* pcLineEnd;
  const char* nextOccur;
- size_t fromLen = Str_getLength(pcFrom);
+ size_t fromLen;
  ((pcLine != ((void *)0)) ? (void) (0) : __assert_fail ("pcLine != ((void *)0)", "replace.c", 37, __PRETTY_FUNCTION__));
  ((pcFrom != ((void *)0)) ? (void) (0) : __assert_fail ("pcFrom != ((void *)0)", "replace.c", 38, __PRETTY_FUNCTION__));
  ((pcTo != ((void *)0)) ? (void) (0) : __assert_fail ("pcTo != ((void *)0)", "replace.c", 39, __PRETTY_FUNCTION__));
 
+ fromLen = Str_getLength(pcFrom);
  pcLineEnd = pcLine;
 
  if (*pcFrom == '\0') {
@@ -917,7 +918,7 @@ static size_t replaceAndWrite(const char *pcLine,
 
  return nReplaced;
 }
-# 83 "replace.c"
+# 84 "replace.c"
 int main(int argc, char *argv[]) {
  enum {MAX_LINE_SIZE = 4096};
  enum {PROPER_ARG_COUNT = 3};

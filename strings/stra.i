@@ -108,10 +108,12 @@ char* Str_copy(char pDest[], const char pSrc[]) {
 }
 
 char* Str_concat(char pDest[], const char pSrc[]) {
- size_t pDestIndex = Str_getLength(pDest);
+ size_t pDestIndex;
  size_t index = 0;
  ((pSrc != ((void *)0)) ? (void) (0) : __assert_fail ("pSrc != ((void *)0)", "stra.c", 35, __PRETTY_FUNCTION__));
  ((pDest != ((void *)0)) ? (void) (0) : __assert_fail ("pDest != ((void *)0)", "stra.c", 36, __PRETTY_FUNCTION__));
+
+ pDestIndex = Str_getLength(pDest);
 
  while (pSrc[index] != '\0') {
   pDest[pDestIndex] = pSrc[index];
@@ -125,8 +127,8 @@ char* Str_concat(char pDest[], const char pSrc[]) {
 
 int Str_compare(const char pStr1[], const char pStr2[]) {
  size_t index = 0;
- ((pStr1 != ((void *)0)) ? (void) (0) : __assert_fail ("pStr1 != ((void *)0)", "stra.c", 50, __PRETTY_FUNCTION__));
- ((pStr2 != ((void *)0)) ? (void) (0) : __assert_fail ("pStr2 != ((void *)0)", "stra.c", 51, __PRETTY_FUNCTION__));
+ ((pStr1 != ((void *)0)) ? (void) (0) : __assert_fail ("pStr1 != ((void *)0)", "stra.c", 52, __PRETTY_FUNCTION__));
+ ((pStr2 != ((void *)0)) ? (void) (0) : __assert_fail ("pStr2 != ((void *)0)", "stra.c", 53, __PRETTY_FUNCTION__));
 
  while (pStr1[index] != '\0' && pStr2[index] != '\0') {
   if (pStr1[index] != pStr2[index])
@@ -139,15 +141,17 @@ int Str_compare(const char pStr1[], const char pStr2[]) {
 }
 
 char* Str_search(const char pHaystack[], const char pNeedle[]) {
-# 78 "stra.c"
+# 80 "stra.c"
  size_t hIndex = 0;
  size_t nIndex;
- size_t nLen = Str_getLength(pNeedle);
- ((pHaystack != ((void *)0)) ? (void) (0) : __assert_fail ("pHaystack != ((void *)0)", "stra.c", 81, __PRETTY_FUNCTION__));
- ((pNeedle != ((void *)0)) ? (void) (0) : __assert_fail ("pNeedle != ((void *)0)", "stra.c", 82, __PRETTY_FUNCTION__));
+ size_t nLen;
+ ((pHaystack != ((void *)0)) ? (void) (0) : __assert_fail ("pHaystack != ((void *)0)", "stra.c", 83, __PRETTY_FUNCTION__));
+ ((pNeedle != ((void *)0)) ? (void) (0) : __assert_fail ("pNeedle != ((void *)0)", "stra.c", 84, __PRETTY_FUNCTION__));
 
  if (pNeedle[0] == '\0')
   return (char*) pHaystack;
+
+ nLen = Str_getLength(pNeedle);
 
  while (pHaystack[hIndex] != '\0') {
   for (nIndex = 0; nIndex < nLen; nIndex++) {

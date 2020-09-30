@@ -146,9 +146,6 @@ Str_concat:
 	.cfi_def_cfa_register 29
 	str	x0, [x29,24]
 	str	x1, [x29,16]
-	ldr	x0, [x29,24]
-	bl	Str_getLength
-	str	x0, [x29,40]
 	str	xzr, [x29,32]
 	ldr	x0, [x29,16]
 	cmp	x0, xzr
@@ -174,6 +171,9 @@ Str_concat:
 	mov	w2, 36
 	bl	__assert_fail
 .L14:
+	ldr	x0, [x29,24]
+	bl	Str_getLength
+	str	x0, [x29,40]
 	b	.L15
 .L16:
 	ldr	x1, [x29,24]
@@ -242,7 +242,7 @@ Str_compare:
 	add	x1, x1, :lo12:.LC1
 	adrp	x2, __PRETTY_FUNCTION__.2077
 	add	x3, x2, :lo12:__PRETTY_FUNCTION__.2077
-	mov	w2, 50
+	mov	w2, 52
 	bl	__assert_fail
 .L19:
 	ldr	x0, [x29,16]
@@ -254,7 +254,7 @@ Str_compare:
 	add	x1, x1, :lo12:.LC1
 	adrp	x2, __PRETTY_FUNCTION__.2077
 	add	x3, x2, :lo12:__PRETTY_FUNCTION__.2077
-	mov	w2, 51
+	mov	w2, 53
 	bl	__assert_fail
 .L20:
 	b	.L21
@@ -329,9 +329,6 @@ Str_search:
 	str	x0, [x29,24]
 	str	x1, [x29,16]
 	str	xzr, [x29,56]
-	ldr	x0, [x29,16]
-	bl	Str_getLength
-	str	x0, [x29,40]
 	ldr	x0, [x29,24]
 	cmp	x0, xzr
 	bne	.L27
@@ -341,7 +338,7 @@ Str_search:
 	add	x1, x1, :lo12:.LC1
 	adrp	x2, __PRETTY_FUNCTION__.2088
 	add	x3, x2, :lo12:__PRETTY_FUNCTION__.2088
-	mov	w2, 81
+	mov	w2, 83
 	bl	__assert_fail
 .L27:
 	ldr	x0, [x29,16]
@@ -353,7 +350,7 @@ Str_search:
 	add	x1, x1, :lo12:.LC1
 	adrp	x2, __PRETTY_FUNCTION__.2088
 	add	x3, x2, :lo12:__PRETTY_FUNCTION__.2088
-	mov	w2, 82
+	mov	w2, 84
 	bl	__assert_fail
 .L28:
 	ldr	x0, [x29,16]
@@ -363,6 +360,9 @@ Str_search:
 	ldr	x0, [x29,24]
 	b	.L30
 .L29:
+	ldr	x0, [x29,16]
+	bl	Str_getLength
+	str	x0, [x29,40]
 	b	.L31
 .L37:
 	str	xzr, [x29,48]

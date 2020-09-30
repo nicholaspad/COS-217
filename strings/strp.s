@@ -316,9 +316,6 @@ Str_search:
 	.cfi_def_cfa_register 29
 	str	x0, [x29,24]
 	str	x1, [x29,16]
-	ldr	x0, [x29,16]
-	bl	Str_getLength
-	str	x0, [x29,32]
 	ldr	x0, [x29,24]
 	cmp	x0, xzr
 	bne	.L27
@@ -343,6 +340,9 @@ Str_search:
 	mov	w2, 98
 	bl	__assert_fail
 .L28:
+	ldr	x0, [x29,16]
+	bl	Str_getLength
+	str	x0, [x29,32]
 	ldr	x0, [x29,24]
 	str	x0, [x29,56]
 	ldr	x0, [x29,16]

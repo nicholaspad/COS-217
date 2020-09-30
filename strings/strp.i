@@ -158,10 +158,11 @@ char* Str_search(const char* pHaystack, const char* pNeedle) {
  const char* pHaystackEnd;
  const char* pNeedleEnd;
  const char* pHaystackTemp;
- size_t nLen = Str_getLength(pNeedle);
+ size_t nLen;
  ((pHaystack != ((void *)0)) ? (void) (0) : __assert_fail ("pHaystack != ((void *)0)", "strp.c", 97, __PRETTY_FUNCTION__));
  ((pNeedle != ((void *)0)) ? (void) (0) : __assert_fail ("pNeedle != ((void *)0)", "strp.c", 98, __PRETTY_FUNCTION__));
 
+ nLen = Str_getLength(pNeedle);
  pHaystackEnd = pHaystack;
  pNeedleEnd = pNeedle;
 
