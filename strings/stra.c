@@ -30,10 +30,12 @@ char* Str_copy(char pDest[], const char pSrc[]) {
 }
 
 char* Str_concat(char pDest[], const char pSrc[]) {
-	size_t pDestIndex = Str_getLength(pDest);
+	size_t pDestIndex;
 	size_t index = 0;
 	assert(pSrc != NULL);
 	assert(pDest != NULL);
+
+	pDestIndex = Str_getLength(pDest);
 
 	while (pSrc[index] != '\0') {
 		pDest[pDestIndex] = pSrc[index];
