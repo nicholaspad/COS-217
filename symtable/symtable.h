@@ -1,3 +1,8 @@
+/*--------------------------------------------------------------------*/
+/* symtable.h                                                         */
+/* Author: Nicholas Padmanabhan (ntyp) (P05)                          */
+/*--------------------------------------------------------------------*/
+
 #ifndef ST_INCLUDED
 #define ST_INCLUDED
 
@@ -5,6 +10,11 @@
 #include <stddef.h>
 #include <string.h>
 
+/*
+   A SymTable_T stores bindings each consisting of a key-value pair.
+   Keys are strings that uniquely identify their bindings, and values
+   are data that are somehow associated with their keys.
+ */
 typedef struct SymTable *SymTable_T;
 
 /*
