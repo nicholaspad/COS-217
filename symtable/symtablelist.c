@@ -79,6 +79,19 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey,
 
 void *SymTable_replace(SymTable_T oSymTable, const char *pcKey,
                        const void *pvValue) {
+	struct Binding *curr;
+	void *retval;
+	assert(oSymTable != NULL);
+	assert(pcKey != NULL);
+	assert(pvValue != NULL);
+
+	for (curr = oSymTable->first; curr != NULL; curr = curr->next)
+		if (strcmp(curr->key, pcKey) == 0) {
+			retval = (void *) curr->value;
+			curr->value = pvValue;
+			return retval;
+		}
+
 	return NULL;
 }
 
@@ -87,10 +100,9 @@ int SymTable_contains(SymTable_T oSymTable, const char *pcKey) {
 	assert(oSymTable != NULL);
 	assert(pcKey != NULL);
 
-	for (curr = oSymTable->first; curr != NULL; curr = curr->next) {
+	for (curr = oSymTable->first; curr != NULL; curr = curr->next)
 		if (strcmp(curr->key, pcKey) == 0)
 			return 1;
-	}
 
 	return 0;
 }
@@ -100,10 +112,9 @@ void *SymTable_get(SymTable_T oSymTable, const char *pcKey) {
 	assert(oSymTable != NULL);
 	assert(pcKey != NULL);
 
-	for (curr = oSymTable->first; curr != NULL; curr = curr->next) {
+	for (curr = oSymTable->first; curr != NULL; curr = curr->next)
 		if (strcmp(curr->key, pcKey) == 0)
 			return (void *) curr->value;
-	}
 
 	return NULL;
 }

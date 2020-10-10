@@ -184,8 +184,6 @@ static void testBasics(void)
 	pcValue = (char*)SymTable_get(oSymTable, "Maris");
 	ASSURE(pcValue == NULL);
 
-	return;
-
 	/* Test SymTable_replace(). */
 
 	pcValue = (char*)
@@ -207,6 +205,8 @@ static void testBasics(void)
 
 	uLength = SymTable_getLength(oSymTable);
 	ASSURE(uLength == 4);
+
+	return;
 
 	/* Test SymTable_free(). */
 
