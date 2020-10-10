@@ -9,7 +9,7 @@ struct Binding {
 	/* Pointer to binding key (string) */
 	const char *key;
 	/* Pointer to binding value */
-	void *value;
+	const void *value;
 	/* Pointer to next binding in list */
 	struct Binding *next;
 };
@@ -62,7 +62,7 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey,
 	curr->key = malloc(strlen(pcKey) + 1);
 	if (curr->key == NULL)
 		return 0;
-	strcpy(curr->key, pcKey);
+	strcpy((char *) curr->key, pcKey);
 
 	curr->value = pvValue;
 	oSymTable->length++;
