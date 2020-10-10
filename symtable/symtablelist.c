@@ -51,12 +51,10 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey,
 	assert(pvValue != NULL);
 
 	prev = NULL;
-	curr = oSymTable->first;
-	while (curr != NULL) {
+	for (curr = oSymTable->first; curr != NULL; curr = curr->next) {
 		if (strcmp(curr->key, pcKey) == 0)
 			return 0;
 		prev = curr;
-		curr = curr->next;
 	}
 
 	curr = malloc(sizeof(struct Binding));
@@ -89,11 +87,9 @@ int SymTable_contains(SymTable_T oSymTable, const char *pcKey) {
 	assert(oSymTable != NULL);
 	assert(pcKey != NULL);
 
-	curr = oSymTable->first;
-	while (curr != NULL) {
+	for (curr = oSymTable->first; curr != NULL; curr = curr->next) {
 		if (strcmp(curr->key, pcKey) == 0)
 			return 1;
-		curr = curr->next;
 	}
 
 	return 0;
@@ -104,11 +100,9 @@ void *SymTable_get(SymTable_T oSymTable, const char *pcKey) {
 	assert(oSymTable != NULL);
 	assert(pcKey != NULL);
 
-	curr = oSymTable->first;
-	while (curr != NULL) {
+	for (curr = oSymTable->first; curr != NULL; curr = curr->next) {
 		if (strcmp(curr->key, pcKey) == 0)
 			return (void *) curr->value;
-		curr = curr->next;
 	}
 
 	return NULL;
