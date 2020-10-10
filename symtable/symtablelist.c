@@ -26,14 +26,7 @@ SymTable_T SymTable_new(void) {
 	if (oSymTable == NULL)
 		return NULL;
 
-	oSymTable->first = malloc(sizeof(struct Binding));
-	if (oSymTable->first == NULL) {
-		free(oSymTable);
-		return NULL;
-	}
-
 	oSymTable->length = 0;
-
 	return oSymTable;
 }
 
@@ -42,12 +35,40 @@ void SymTable_free(SymTable_T oSymTable) {
 }
 
 size_t SymTable_getLength(SymTable_T oSymTable) {
-	return 0;
+	assert(oSymTable != NULL);
+	return oSymTable->length;
 }
 
 int SymTable_put(SymTable_T oSymTable, const char *pcKey,
                  const void *pvValue) {
-	return 0;
+	struct Binding *prev;
+	struct Binding *curr;
+	assert(oSymTable != NULL);
+	assert(pcKey != NULL);
+	assert(pvValue != NULL);
+
+	curr = oSymTable->first;
+	while (curr != NULL) {
+		if (strcmp(curr->key, pcKey) == 0)
+			return 0;
+		prev = curr;
+		curr = curr->next;
+	}
+
+	curr = malloc(sizeof(struct Binding));
+	if (curr == NULL)
+		return 0;
+
+	curr->key = malloc(strlen(pcKey) + 1);
+	if (curr->key == NULL)
+		return 0;
+	strcpy(curr->key, pcKey);
+
+	curr->value = pvValue;
+	oSymTable->length++;
+	if (prev != NULL)
+		prev->next = curr;
+	return 1;
 }
 
 void *SymTable_replace(SymTable_T oSymTable, const char *pcKey,

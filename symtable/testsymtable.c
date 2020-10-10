@@ -111,7 +111,6 @@ static void testBasics(void)
 
 	oSymTable = SymTable_new();
 	ASSURE(oSymTable != NULL);
-	return;
 
 	/* Test SymTable_put() and SymTable_getLength(). */
 
@@ -144,6 +143,8 @@ static void testBasics(void)
 
 	uLength = SymTable_getLength(oSymTable);
 	ASSURE(uLength == 4);
+
+	return;
 
 	/* Test SymTable_contains(). */
 
