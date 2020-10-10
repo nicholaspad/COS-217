@@ -132,6 +132,29 @@ void *SymTable_get(SymTable_T oSymTable, const char *pcKey) {
 }
 
 void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
+	struct Binding *prev;
+	struct Binding *curr;
+	void *retval;
+	assert(oSymTable != NULL);
+	assert(pcKey != NULL);
+
+	prev = NULL;
+	for (curr = oSymTable->first; curr != NULL; curr = curr->next) {
+		if (strcmp(curr->key, pcKey) == 0) {
+			oSymTable->length--;
+			retval = (void *) curr->value;
+
+			if (prev != NULL)
+				prev->next = curr->next;
+
+			free((char *) curr->key);
+			free(curr);
+			curr = NULL;
+			return retval;
+		}
+		prev = curr;
+	}
+
 	return NULL;
 }
 
@@ -139,5 +162,10 @@ void SymTable_map(SymTable_T oSymTable,
                   void (*pfApply)(const char *pcKey, void *pvValue,
                                   void *pvExtra),
                   const void *pvExtra) {
+	assert(oSymTable != NULL);
+	assert(pfApply != NULL);
+	assert(pvExtra != NULL);
 
+	for (curr = oSymTable->first; curr != NULL; curr = curr->next)
+		pfApply(curr->key, (void *) curr->value, pvValue);
 }

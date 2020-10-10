@@ -923,19 +923,17 @@ int main(int argc, char *argv[])
 #endif
 
 	testBasics();
-	/*
-	   testKeyComparison();
-	   testKeyOwnership();
-	   testRemove();
-	   testMap();
-	   testEmptyTable();
-	   testEmptyKey();
-	   testNullValue();
-	   testLongKey();
-	   testTableOfTables();
-	   testCollisions();
-	   testLargeTable(iBindingCount);
-	 */
+	testKeyComparison();
+	testKeyOwnership();
+	testRemove();
+	testMap();
+	testEmptyTable();
+	testEmptyKey();
+	testNullValue();
+	testLongKey();
+	testTableOfTables();
+	testCollisions();
+	testLargeTable(iBindingCount);
 
 	printf("------------------------------------------------------\n");
 	printf("End of %s.\n", argv[0]);
