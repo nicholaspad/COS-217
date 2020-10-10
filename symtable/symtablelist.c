@@ -22,7 +22,7 @@ struct SymTable {
 };
 
 SymTable_T SymTable_new(void) {
-	SymTable_T oSymTable = malloc(sizeof(*SymTable_T));
+	SymTable_T oSymTable = malloc(sizeof(struct SymTable));
 	if (oSymTable == NULL)
 		return NULL;
 
