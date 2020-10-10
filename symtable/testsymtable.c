@@ -164,8 +164,6 @@ static void testBasics(void)
 	iFound = SymTable_contains(oSymTable, "Maris");
 	ASSURE(!iFound);
 
-	return;
-
 	/* Test SymTable_get(). */
 
 	pcValue = (char*)SymTable_get(oSymTable, acJeter);
@@ -185,6 +183,8 @@ static void testBasics(void)
 
 	pcValue = (char*)SymTable_get(oSymTable, "Maris");
 	ASSURE(pcValue == NULL);
+
+	return;
 
 	/* Test SymTable_replace(). */
 
