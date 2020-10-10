@@ -168,5 +168,5 @@ void SymTable_map(SymTable_T oSymTable,
 	assert(pvExtra != NULL);
 
 	for (curr = oSymTable->first; curr != NULL; curr = curr->next)
-		pfApply(curr->key, (void *) curr->value, pvExtra);
+		pfApply(curr->key, (void *) curr->value, (void *) pvExtra);
 }
