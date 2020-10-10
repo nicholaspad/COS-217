@@ -100,6 +100,17 @@ int SymTable_contains(SymTable_T oSymTable, const char *pcKey) {
 }
 
 void *SymTable_get(SymTable_T oSymTable, const char *pcKey) {
+	struct Binding *curr;
+	assert(oSymTable != NULL);
+	assert(pcKey != NULL);
+
+	curr = oSymTable->first;
+	while (curr != NULL) {
+		if (strcmp(curr->key, pcKey) == 0)
+			return pcKey->value;
+		curr = curr->next;
+	}
+
 	return NULL;
 }
 
