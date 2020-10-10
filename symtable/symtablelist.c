@@ -162,10 +162,11 @@ void SymTable_map(SymTable_T oSymTable,
                   void (*pfApply)(const char *pcKey, void *pvValue,
                                   void *pvExtra),
                   const void *pvExtra) {
+	struct Binding *curr;
 	assert(oSymTable != NULL);
 	assert(pfApply != NULL);
 	assert(pvExtra != NULL);
 
 	for (curr = oSymTable->first; curr != NULL; curr = curr->next)
-		pfApply(curr->key, (void *) curr->value, pvValue);
+		pfApply(curr->key, (void *) curr->value, pvExtra);
 }
