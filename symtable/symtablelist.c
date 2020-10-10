@@ -18,11 +18,11 @@ struct SymTable {
 	/* Pointer to first binding in list */
 	struct Binding *first;
 	/* Number of bindings in list */
-	size_t length;
+	size_t *length;
 };
 
 SymTable_T SymTable_new(void) {
-	SymTable_T oSymTable = malloc(sizeof(SymTable_T));
+	SymTable_T oSymTable = malloc(sizeof(*SymTable_T));
 	if (oSymTable == NULL)
 		return NULL;
 
