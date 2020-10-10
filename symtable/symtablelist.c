@@ -47,6 +47,7 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey,
 	assert(pcKey != NULL);
 	assert(pvValue != NULL);
 
+	prev = NULL;
 	curr = oSymTable->first;
 	while (curr != NULL) {
 		if (strcmp(curr->key, pcKey) == 0)
