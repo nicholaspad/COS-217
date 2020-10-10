@@ -5,8 +5,6 @@
 
 #include "symtable.h"
 
-static size_t length;
-
 struct Binding {
 	/* Pointer to binding key (string) */
 	const char *key;
@@ -24,7 +22,7 @@ struct SymTable {
 };
 
 SymTable_T SymTable_new(void) {
-	SymTable_T *oSymTable = malloc(sizeof(SymTable_T));
+	SymTable_T oSymTable = malloc(sizeof(SymTable_T));
 	if (oSymTable == NULL)
 		return NULL;
 
