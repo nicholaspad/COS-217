@@ -36,12 +36,11 @@ void SymTable_free(SymTable_T oSymTable) {
 	struct Binding *prev;
 	struct Binding *curr;
 	assert(oSymTable != NULL);
-	assert(pcKey != NULL);
 
 	prev = NULL;
 	for (curr = oSymTable->first; curr != NULL; curr = curr->next) {
 		free(prev);
-		free(curr->key);
+		free((char *) curr->key);
 		prev = curr;
 	}
 
