@@ -144,8 +144,6 @@ static void testBasics(void)
 	uLength = SymTable_getLength(oSymTable);
 	ASSURE(uLength == 4);
 
-	return;
-
 	/* Test SymTable_contains(). */
 
 	iFound = SymTable_contains(oSymTable, acJeter);
@@ -165,6 +163,8 @@ static void testBasics(void)
 
 	iFound = SymTable_contains(oSymTable, "Maris");
 	ASSURE(!iFound);
+
+	return;
 
 	/* Test SymTable_get(). */
 
