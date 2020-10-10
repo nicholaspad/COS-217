@@ -28,6 +28,7 @@ SymTable_T SymTable_new(void) {
 
 	oSymTable->first = NULL;
 	oSymTable->length = 0;
+
 	return oSymTable;
 }
 
@@ -37,6 +38,7 @@ void SymTable_free(SymTable_T oSymTable) {
 
 size_t SymTable_getLength(SymTable_T oSymTable) {
 	assert(oSymTable != NULL);
+
 	return oSymTable->length;
 }
 
@@ -71,6 +73,9 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey,
 	curr->next=NULL;
 	if (prev != NULL)
 		prev->next = curr;
+	else
+		oSymTable->first = curr;
+
 	return 1;
 }
 
