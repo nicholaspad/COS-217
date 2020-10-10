@@ -33,7 +33,20 @@ SymTable_T SymTable_new(void) {
 }
 
 void SymTable_free(SymTable_T oSymTable) {
+	struct Binding *prev;
+	struct Binding *curr;
+	assert(oSymTable != NULL);
+	assert(pcKey != NULL);
 
+	prev = NULL;
+	for (curr = oSymTable->first; curr != NULL; curr = curr->next) {
+		free(prev);
+		free(curr->key);
+		prev = curr;
+	}
+
+	free(prev);
+	free(oSymTable);
 }
 
 size_t SymTable_getLength(SymTable_T oSymTable) {

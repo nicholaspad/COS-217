@@ -206,8 +206,6 @@ static void testBasics(void)
 	uLength = SymTable_getLength(oSymTable);
 	ASSURE(uLength == 4);
 
-	return;
-
 	/* Test SymTable_free(). */
 
 	SymTable_free(oSymTable);
