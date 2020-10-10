@@ -26,6 +26,7 @@ SymTable_T SymTable_new(void) {
 	if (oSymTable == NULL)
 		return NULL;
 
+	oSymTable->first = NULL;
 	oSymTable->length = 0;
 	return oSymTable;
 }
@@ -67,6 +68,7 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey,
 
 	curr->value = pvValue;
 	oSymTable->length++;
+	curr->next=NULL;
 	if (prev != NULL)
 		prev->next = curr;
 	return 1;
