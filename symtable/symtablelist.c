@@ -44,6 +44,7 @@ void SymTable_free(SymTable_T oSymTable) {
 		prev = curr;
 	}
 
+	free(prev);
 	free(oSymTable);
 }
 
