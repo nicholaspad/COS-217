@@ -20,7 +20,7 @@ struct Binding {
 
 /*
    Represents the head of the linked list, consisting of a pointer to
-   the first binding and a variable to store the list's length.
+   the first binding and a variable to store the number of bindings.
  */
 struct SymTable {
 	/* Pointer to first binding in list */
@@ -30,12 +30,9 @@ struct SymTable {
 };
 
 SymTable_T SymTable_new(void) {
-	SymTable_T oSymTable = malloc(sizeof(struct SymTable));
+	SymTable_T oSymTable = calloc(1, sizeof(struct SymTable));
 	if (oSymTable == NULL)
 		return NULL;
-
-	oSymTable->first = NULL;
-	oSymTable->length = 0;
 
 	return oSymTable;
 }
