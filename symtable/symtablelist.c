@@ -5,6 +5,10 @@
 
 #include "symtable.h"
 
+/*
+   Represents a single binding, consisting of a key (string), a value
+   (any pointer), and a pointer to the next binding in the linked list.
+ */
 struct Binding {
 	/* Pointer to binding key (string) */
 	const char *key;
@@ -14,6 +18,10 @@ struct Binding {
 	struct Binding *next;
 };
 
+/*
+   Represents the head of the linked list, consisting of a pointer to
+   the first binding and a variable to store the list's length.
+ */
 struct SymTable {
 	/* Pointer to first binding in list */
 	struct Binding *first;
