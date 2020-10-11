@@ -73,7 +73,7 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey,
 		prev = curr;
 	}
 
-	curr = malloc(sizeof(struct Binding));
+	curr = calloc(1, sizeof(struct Binding));
 	if (curr == NULL)
 		return 0;
 
@@ -84,7 +84,6 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey,
 
 	curr->value = pvValue;
 	oSymTable->length++;
-	curr->next=NULL;
 	if (prev != NULL)
 		prev->next = curr;
 	else

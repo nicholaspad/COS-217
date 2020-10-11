@@ -26,10 +26,12 @@ struct Binding {
    of bindings and a variable to store the number of bindings.
  */
 struct SymTable {
-	/* Pointer to first binding in list */
+	/* Pointer to buckets array */
 	struct Binding **buckets;
-	/* Number of bindings in list */
+	/* Number of bindings in hash table */
 	size_t length;
+	/* Number of buckets in hash table */
+	size_t nBuckets;
 };
 
 /*
@@ -44,7 +46,7 @@ static size_t SymTable_hash(const char *pcKey, size_t uBucketCount) {
 	assert(pcKey != NULL);
 
 	for (u = 0; pcKey[u] != '\0'; u++)
-		uHash = uHash * HASH_MULTIPLIER + (size_t)pcKey[u];
+		uHash = uHash * HASH_MULTIPLIER + (size_t) pcKey[u];
 
 	return uHash % uBucketCount;
 }
@@ -60,5 +62,72 @@ SymTable_T SymTable_new(void) {
 		return NULL;
 	}
 
+	oSymTable->nBuckets = INITIAL_SIZE;
+
 	return oSymTable;
+}
+
+void SymTable_free(SymTable_T oSymTable) {
+	struct Binding *prev;
+	struct Binding *curr;
+	size_t i;
+	assert(oSymTable != NULL);
+
+	for (i = 0; i < oSymTable->nBuckets; i++) {
+		prev = NULL;
+
+		for (curr = oSymTable->buckets[i]; curr != NULL;
+		     curr = curr->next) {
+			free(prev);
+			free((char *) curr->key);
+			prev = curr;
+		}
+
+		free(prev);
+	}
+
+	free(oSymTable);
+}
+
+size_t SymTable_getLength(SymTable_T oSymTable) {
+	assert(oSymTable != NULL);
+
+	return oSymTable->length;
+}
+
+int SymTable_put(SymTable_T oSymTable, const char *pcKey,
+                 const void *pvValue) {
+	struct Binding *prev;
+	struct Binding *curr;
+	size_t i;
+	assert(oSymTable != NULL);
+	assert(pcKey != NULL);
+
+	i = SymTable_hash(pcKey, oSymTable->nBuckets);
+
+	prev = NULL;
+	for (curr = oSymTable->buckets[i]; curr != NULL;
+	     curr = curr->next) {
+		if (strcmp(curr->key, pcKey) == 0)
+			return 0;
+		prev = curr;
+	}
+
+	curr = calloc(1, sizeof(struct Binding));
+	if (curr == NULL)
+		return 0;
+
+	curr->key = malloc(strlen(pcKey) + 1);
+	if (curr->key == NULL)
+		return 0;
+	strcpy((char *) curr->key, pcKey);
+
+	curr->value = pvValue;
+	oSymTable->length++;
+	if (prev != NULL)
+		prev->next = curr;
+	else
+		oSymTable->buckets[i] = curr;
+
+	return 1;
 }
