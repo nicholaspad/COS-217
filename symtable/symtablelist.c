@@ -60,7 +60,6 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey,
 	struct Binding *curr;
 	assert(oSymTable != NULL);
 	assert(pcKey != NULL);
-	assert(pvValue != NULL);
 
 	prev = NULL;
 	for (curr = oSymTable->first; curr != NULL; curr = curr->next) {
@@ -95,7 +94,6 @@ void *SymTable_replace(SymTable_T oSymTable, const char *pcKey,
 	void *retval;
 	assert(oSymTable != NULL);
 	assert(pcKey != NULL);
-	assert(pvValue != NULL);
 
 	for (curr = oSymTable->first; curr != NULL; curr = curr->next)
 		if (strcmp(curr->key, pcKey) == 0) {
