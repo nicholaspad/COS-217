@@ -119,6 +119,7 @@ static SymTable_T SymTable_expand(SymTable_T oSymTable) {
 		}
 	}
 
+	newSymTable->length = oSymTable->length;
 	SymTable_free(oSymTable);
 
 	return newSymTable;
