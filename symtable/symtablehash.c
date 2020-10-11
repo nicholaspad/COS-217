@@ -131,3 +131,103 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey,
 
 	return 1;
 }
+
+void *SymTable_replace(SymTable_T oSymTable, const char *pcKey,
+                       const void *pvValue) {
+	struct Binding *curr;
+	void *retval;
+	size_t i;
+	assert(oSymTable != NULL);
+	assert(pcKey != NULL);
+
+	i = SymTable_hash(pcKey, oSymTable->nBuckets);
+
+	for (curr = oSymTable->buckets[i]; curr != NULL;
+	     curr = curr->next)
+		if (strcmp(curr->key, pcKey) == 0) {
+			retval = (void *) curr->value;
+			curr->value = pvValue;
+			return retval;
+		}
+
+	return NULL;
+}
+
+int SymTable_contains(SymTable_T oSymTable, const char *pcKey) {
+	struct Binding *curr;
+	size_t i;
+	assert(oSymTable != NULL);
+	assert(pcKey != NULL);
+
+	i = SymTable_hash(pcKey, oSymTable->nBuckets);
+
+	for (curr = oSymTable->buckets[i]; curr != NULL;
+	     curr = curr->next)
+		if (strcmp(curr->key, pcKey) == 0)
+			return 1;
+
+	return 0;
+}
+
+void *SymTable_get(SymTable_T oSymTable, const char *pcKey) {
+	struct Binding *curr;
+	size_t i;
+	assert(oSymTable != NULL);
+	assert(pcKey != NULL);
+
+	i = SymTable_hash(pcKey, oSymTable->nBuckets);
+
+	for (curr = oSymTable->buckets[i]; curr != NULL;
+	     curr = curr->next)
+		if (strcmp(curr->key, pcKey) == 0)
+			return (void *) curr->value;
+
+	return NULL;
+}
+
+void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
+	struct Binding *prev;
+	struct Binding *curr;
+	void *retval;
+	size_t i;
+	assert(oSymTable != NULL);
+	assert(pcKey != NULL);
+
+	i = SymTable_hash(pcKey, oSymTable->nBuckets);
+
+	prev = NULL;
+	for (curr = oSymTable->buckets[i]; curr != NULL;
+	     curr = curr->next) {
+		if (strcmp(curr->key, pcKey) == 0) {
+			oSymTable->length--;
+			retval = (void *) curr->value;
+
+			if (prev != NULL)
+				prev->next = curr->next;
+			else
+				oSymTable->buckets[i] = curr->next;
+
+			free((char *) curr->key);
+			free(curr);
+			return retval;
+		}
+		prev = curr;
+	}
+
+	return NULL;
+}
+
+void SymTable_map(SymTable_T oSymTable,
+                  void (*pfApply)(const char *pcKey, void *pvValue,
+                                  void *pvExtra),
+                  const void *pvExtra) {
+	struct Binding *curr;
+	size_t i;
+	assert(oSymTable != NULL);
+	assert(pfApply != NULL);
+
+	for (i = 0; i < oSymTable->nBuckets; i++)
+		for (curr = oSymTable->buckets[i]; curr != NULL;
+		     curr = curr->next)
+			pfApply(curr->key, (void *) curr->value, (void *) pvExtra);
+}
