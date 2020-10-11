@@ -166,7 +166,6 @@ void SymTable_map(SymTable_T oSymTable,
 	struct Binding *curr;
 	assert(oSymTable != NULL);
 	assert(pfApply != NULL);
-	assert(pvExtra != NULL);
 
 	for (curr = oSymTable->first; curr != NULL; curr = curr->next)
 		pfApply(curr->key, (void *) curr->value, (void *) pvExtra);
