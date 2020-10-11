@@ -90,7 +90,7 @@ static SymTable_T SymTable_expand(SymTable_T oSymTable) {
 	size_t uNewSize;
 	size_t b;
 	int res;
-	assert (oSymTable != NULL);
+	assert(oSymTable != NULL);
 
 	newSymTable = SymTable_new();
 
@@ -160,6 +160,7 @@ void SymTable_free(SymTable_T oSymTable) {
 		free(prev);
 	}
 
+	free(oSymTable->buckets);
 	free(oSymTable);
 }
 
