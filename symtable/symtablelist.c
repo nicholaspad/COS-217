@@ -42,6 +42,8 @@ void SymTable_free(SymTable_T oSymTable) {
 	struct Binding *curr;
 	assert(oSymTable != NULL);
 
+	/* Free each binding */
+
 	prev = NULL;
 	for (curr = oSymTable->first; curr != NULL; curr = curr->next) {
 		free(prev);
@@ -66,12 +68,16 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey,
 	assert(oSymTable != NULL);
 	assert(pcKey != NULL);
 
+	/* Check list for duplicate key */
+
 	prev = NULL;
 	for (curr = oSymTable->first; curr != NULL; curr = curr->next) {
 		if (strcmp(curr->key, pcKey) == 0)
 			return 0;
 		prev = curr;
 	}
+
+	/* Add binding to list */
 
 	curr = calloc(1, sizeof(struct Binding));
 	if (curr == NULL)
@@ -99,6 +105,8 @@ void *SymTable_replace(SymTable_T oSymTable, const char *pcKey,
 	assert(oSymTable != NULL);
 	assert(pcKey != NULL);
 
+	/* Locate binding and replace its value */
+
 	for (curr = oSymTable->first; curr != NULL; curr = curr->next)
 		if (strcmp(curr->key, pcKey) == 0) {
 			retval = (void *) curr->value;
@@ -114,6 +122,8 @@ int SymTable_contains(SymTable_T oSymTable, const char *pcKey) {
 	assert(oSymTable != NULL);
 	assert(pcKey != NULL);
 
+	/* Locate binding */
+
 	for (curr = oSymTable->first; curr != NULL; curr = curr->next)
 		if (strcmp(curr->key, pcKey) == 0)
 			return 1;
@@ -125,6 +135,8 @@ void *SymTable_get(SymTable_T oSymTable, const char *pcKey) {
 	struct Binding *curr;
 	assert(oSymTable != NULL);
 	assert(pcKey != NULL);
+
+	/* Locate binding */
 
 	for (curr = oSymTable->first; curr != NULL; curr = curr->next)
 		if (strcmp(curr->key, pcKey) == 0)
@@ -139,6 +151,8 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
 	void *retval;
 	assert(oSymTable != NULL);
 	assert(pcKey != NULL);
+
+	/* Locate binding, remove it from the list, and clean up */
 
 	prev = NULL;
 	for (curr = oSymTable->first; curr != NULL; curr = curr->next) {
@@ -168,6 +182,8 @@ void SymTable_map(SymTable_T oSymTable,
 	struct Binding *curr;
 	assert(oSymTable != NULL);
 	assert(pfApply != NULL);
+
+	/* Traverse all bindings and apply the function */
 
 	for (curr = oSymTable->first; curr != NULL; curr = curr->next)
 		pfApply(curr->key, (void *) curr->value, (void *) pvExtra);
