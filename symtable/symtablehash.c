@@ -51,6 +51,9 @@ static size_t SymTable_hash(const char *pcKey, size_t uBucketCount) {
 	return uHash % uBucketCount;
 }
 
+/*
+   Frees the buckets array of the given SymTable_T object.
+ */
 static void SymTable_freeBuckets(SymTable_T oSymTable) {
 	struct Binding *prev;
 	struct Binding *curr;
