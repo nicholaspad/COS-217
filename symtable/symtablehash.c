@@ -182,7 +182,6 @@ size_t SymTable_getLength(SymTable_T oSymTable) {
 
 int SymTable_put(SymTable_T oSymTable, const char *pcKey,
                  const void *pvValue) {
-	SymTable_T temp;
 	struct Binding *prev;
 	struct Binding *curr;
 	size_t i;
