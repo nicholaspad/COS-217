@@ -4,6 +4,7 @@
 /*--------------------------------------------------------------------*/
 
 #include "symtable.h"
+#include <stdio.h>
 
 enum {INITIAL_SIZE = 509, XXS = 1021, XS = 2039, S = 4093, M = 8191,
 	  L = 16381, XL = 32749, XXL = 65521};
@@ -49,6 +50,28 @@ static size_t SymTable_hash(const char *pcKey, size_t uBucketCount) {
 		uHash = uHash * HASH_MULTIPLIER + (size_t) pcKey[u];
 
 	return uHash % uBucketCount;
+}
+
+static void SymTable_freeBuckets(SymTable_T oSymTable) {
+	struct Binding *prev;
+	struct Binding *curr;
+	size_t b;
+	assert(oSymTable != NULL);
+
+	for (b = 0; b < oSymTable->nBuckets; b++) {
+		prev = NULL;
+
+		for (curr = oSymTable->buckets[b]; curr != NULL;
+		     curr = curr->next) {
+			free(prev);
+			free((char *) curr->key);
+			prev = curr;
+		}
+
+		free(prev);
+	}
+
+	free(oSymTable->buckets);
 }
 
 /*
@@ -119,10 +142,12 @@ static SymTable_T SymTable_expand(SymTable_T oSymTable) {
 		}
 	}
 
-	newSymTable->length = oSymTable->length;
-	SymTable_free(oSymTable);
+	SymTable_freeBuckets(oSymTable);
+	oSymTable->buckets = newSymTable->buckets;
+	oSymTable->nBuckets = uNewSize;
+	free(newSymTable);
 
-	return newSymTable;
+	return oSymTable;
 }
 
 SymTable_T SymTable_new(void) {
@@ -147,20 +172,7 @@ void SymTable_free(SymTable_T oSymTable) {
 	size_t b;
 	assert(oSymTable != NULL);
 
-	for (b = 0; b < oSymTable->nBuckets; b++) {
-		prev = NULL;
-
-		for (curr = oSymTable->buckets[b]; curr != NULL;
-		     curr = curr->next) {
-			free(prev);
-			free((char *) curr->key);
-			prev = curr;
-		}
-
-		free(prev);
-	}
-
-	free(oSymTable->buckets);
+	SymTable_freeBuckets(oSymTable);
 	free(oSymTable);
 }
 
