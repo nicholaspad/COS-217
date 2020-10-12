@@ -109,7 +109,7 @@ static size_t SymTable_nextSize(size_t uCurrentSize) {
    buckets array is already at maximum size, or if there is insufficient
    memory.
  */
-static SymTable_T SymTable_expand(SymTable_T oSymTable) {
+static void SymTable_expand(SymTable_T oSymTable) {
 	SymTable_T newSymTable;
 	struct Binding *curr;
 	size_t uNewSize;
@@ -118,17 +118,19 @@ static SymTable_T SymTable_expand(SymTable_T oSymTable) {
 	assert(oSymTable != NULL);
 
 	newSymTable = SymTable_new();
+	if (newSymTable == NULL)
+		return;
 
 	uNewSize = SymTable_nextSize(oSymTable->length);
 	if (uNewSize == 0) {
 		SymTable_free(newSymTable);
-		return NULL;
+		return;
 	}
 
 	newSymTable->buckets = calloc(uNewSize, sizeof(struct Binding));
 	if (newSymTable->buckets == NULL) {
 		SymTable_free(newSymTable);
-		return NULL;
+		return;
 	}
 
 	newSymTable->nBuckets = uNewSize;
@@ -139,7 +141,7 @@ static SymTable_T SymTable_expand(SymTable_T oSymTable) {
 			res = SymTable_put(newSymTable, curr->key, curr->value);
 			if (res == 0) {
 				SymTable_free(newSymTable);
-				return NULL;
+				return;
 			}
 		}
 	}
@@ -148,8 +150,6 @@ static SymTable_T SymTable_expand(SymTable_T oSymTable) {
 	oSymTable->buckets = newSymTable->buckets;
 	oSymTable->nBuckets = uNewSize;
 	free(newSymTable);
-
-	return oSymTable;
 }
 
 SymTable_T SymTable_new(void) {
@@ -190,11 +190,8 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey,
 	assert(oSymTable != NULL);
 	assert(pcKey != NULL);
 
-	if (oSymTable->length == oSymTable->nBuckets) {
-		temp = SymTable_expand(oSymTable);
-		if (temp != NULL)
-			oSymTable = temp;
-	}
+	if (oSymTable->length == oSymTable->nBuckets)
+		SymTable_expand(oSymTable);
 
 	i = SymTable_hash(pcKey, oSymTable->nBuckets);
 
