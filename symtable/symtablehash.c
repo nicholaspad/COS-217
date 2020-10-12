@@ -207,8 +207,10 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey,
 
 	/* Expand oSymTable if needed */
 
-	if (oSymTable->length == oSymTable->nBuckets)
-		SymTable_expand(oSymTable);
+	/*
+	   if (oSymTable->length == oSymTable->nBuckets)
+	    SymTable_expand(oSymTable);
+	 */
 
 	i = SymTable_hash(pcKey, oSymTable->nBuckets);
 
