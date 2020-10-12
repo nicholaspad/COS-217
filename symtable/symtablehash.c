@@ -126,6 +126,7 @@ static void SymTable_expand(SymTable_T oSymTable) {
 		return;
 	}
 
+	free(newSymTable->buckets);
 	newSymTable->buckets = calloc(uNewSize, sizeof(struct Binding));
 	if (newSymTable->buckets == NULL) {
 		SymTable_free(newSymTable);
