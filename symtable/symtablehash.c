@@ -5,8 +5,12 @@
 
 #include "symtable.h"
 
-enum {INITIAL_SIZE = 509, XXS = 1021, XS = 2039, S = 4093, M = 8191,
-	  L = 16381, XL = 32749, XXL = 65521};
+/*
+   Successive prime-number sizes of the buckets array, used during hash
+   table expansion.
+ */
+enum {INITIAL_SIZE = 509, XXSMALL = 1021, XSMALL = 2039, SMALL = 4093,
+	  MEDIUM = 8191, LARGE = 16381, XLARGE = 32749, XXLARGE = 65521};
 
 /*
    Represents a single binding, consisting of a key (string), a value
@@ -52,18 +56,18 @@ static size_t SymTable_hash(const char *pcKey, size_t uBucketCount) {
 }
 
 /*
-   Frees the buckets array of the given SymTable_T object.
+   Frees the buckets array of oSymTable, a SymTable_T object.
  */
 static void SymTable_freeBuckets(SymTable_T oSymTable) {
 	struct Binding *prev;
 	struct Binding *curr;
-	size_t b;
+	size_t uIndex;
 	assert(oSymTable != NULL);
 
-	for (b = 0; b < oSymTable->nBuckets; b++) {
+	for (uIndex = 0; uIndex < oSymTable->nBuckets; uIndex++) {
 		prev = NULL;
 
-		for (curr = oSymTable->buckets[b]; curr != NULL;
+		for (curr = oSymTable->buckets[uIndex]; curr != NULL;
 		     curr = curr->next) {
 			free(prev);
 			free((char *) curr->key);
@@ -77,26 +81,27 @@ static void SymTable_freeBuckets(SymTable_T oSymTable) {
 }
 
 /*
-   Returns the next bucket count based on the current bucket count,
-   needed during hash table expansion. Returns 0 if the maximum bucket
-   count is already in use, or if expansion is not yet needed.
+   Returns the next bucket count based on the current bucket count
+   uCurrentSize, needed during hash table expansion. Returns 0 if the
+   maximum bucket count is already in use, or if expansion is not yet
+   needed.
  */
 static size_t SymTable_nextSize(size_t uCurrentSize) {
 	switch (uCurrentSize) {
 	case INITIAL_SIZE:
-		return XXS;
-	case XXS:
-		return XS;
-	case XS:
-		return S;
-	case S:
-		return M;
-	case M:
-		return L;
-	case L:
-		return XL;
-	case XL:
-		return XXL;
+		return XXSMALL;
+	case XXSMALL:
+		return XSMALL;
+	case XSMALL:
+		return SMALL;
+	case SMALL:
+		return MEDIUM;
+	case MEDIUM:
+		return LARGE;
+	case LARGE:
+		return XLARGE;
+	case XLARGE:
+		return XXLARGE;
 	default:
 		return 0;
 	}
@@ -112,7 +117,7 @@ static void SymTable_expand(SymTable_T oSymTable) {
 	SymTable_T newSymTable;
 	struct Binding *curr;
 	size_t uNewSize;
-	size_t b;
+	size_t uIndex;
 	int res;
 	assert(oSymTable != NULL);
 
@@ -135,8 +140,8 @@ static void SymTable_expand(SymTable_T oSymTable) {
 
 	newSymTable->nBuckets = uNewSize;
 
-	for (b = 0; b < oSymTable->nBuckets; b++) {
-		for (curr = oSymTable->buckets[b]; curr != NULL;
+	for (uIndex = 0; uIndex < oSymTable->nBuckets; uIndex++) {
+		for (curr = oSymTable->buckets[uIndex]; curr != NULL;
 		     curr = curr->next) {
 			res = SymTable_put(newSymTable, curr->key, curr->value);
 			if (res == 0) {
@@ -311,12 +316,12 @@ void SymTable_map(SymTable_T oSymTable,
                                   void *pvExtra),
                   const void *pvExtra) {
 	struct Binding *curr;
-	size_t b;
+	size_t uIndex;
 	assert(oSymTable != NULL);
 	assert(pfApply != NULL);
 
-	for (b = 0; b < oSymTable->nBuckets; b++)
-		for (curr = oSymTable->buckets[b]; curr != NULL;
+	for (uIndex = 0; uIndex < oSymTable->nBuckets; uIndex++)
+		for (curr = oSymTable->buckets[uIndex]; curr != NULL;
 		     curr = curr->next)
 			pfApply(curr->key, (void *) curr->value, (void *) pvExtra);
 }
