@@ -1,12 +1,11 @@
 # Macros
-CC = gcc217m
-
-CFLAGS =
+CC = gcc217
+CFLAGS = -g
 
 # Dependency rules for non-file targets
 all: testsymtablelist testsymtablehash
 clean:
-	rm -f testsymtablelist testsymtablehash *.o
+	rm -f testsymtablelist testsymtablehash *.o meminfo*
 submit:
 	submit 3 symtable.h symtablelist.c symtablehash.c \
 	Makefile readme feedback
