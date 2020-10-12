@@ -4,7 +4,6 @@
 /*--------------------------------------------------------------------*/
 
 #include "symtable.h"
-#include <stdio.h>
 
 enum {INITIAL_SIZE = 509, XXS = 1021, XS = 2039, S = 4093, M = 8191,
 	  L = 16381, XL = 32749, XXL = 65521};
@@ -167,9 +166,6 @@ SymTable_T SymTable_new(void) {
 }
 
 void SymTable_free(SymTable_T oSymTable) {
-	struct Binding *prev;
-	struct Binding *curr;
-	size_t b;
 	assert(oSymTable != NULL);
 
 	SymTable_freeBuckets(oSymTable);
