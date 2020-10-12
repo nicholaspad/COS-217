@@ -148,7 +148,6 @@ static void SymTable_expand(SymTable_T oSymTable) {
 	SymTable_freeBuckets(oSymTable);
 	oSymTable->buckets = newSymTable->buckets;
 	oSymTable->nBuckets = uNewSize;
-	free(newSymTable->buckets);
 	free(newSymTable);
 }
 
