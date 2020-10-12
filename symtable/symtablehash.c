@@ -103,11 +103,10 @@ static size_t SymTable_nextSize(size_t uCurrentSize) {
 }
 
 /*
-   Creates and returns a new SymTable_T object with an expanded buckets
-   array and frees the old SymTable_T. Does not change the old
-   SymTable_T and returns NULL if expansion is not needed, if the
-   buckets array is already at maximum size, or if there is insufficient
-   memory.
+   Expands the buckets array (if needed) of oSymTable, a SymTable_T
+   object, to the next appropriate size. Does not change oSymTable if
+   expansion is not needed, if the buckets array is already at maximum
+   size, or if there is insufficient memory.
  */
 static void SymTable_expand(SymTable_T oSymTable) {
 	SymTable_T newSymTable;

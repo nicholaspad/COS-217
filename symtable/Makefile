@@ -1,7 +1,7 @@
 # Macros
-CC = gcc217
+CC = gcc217m
 
-CFLAGS = -g
+CFLAGS =
 
 # Dependency rules for non-file targets
 all: testsymtablelist testsymtablehash
