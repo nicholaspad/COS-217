@@ -131,6 +131,8 @@ static void SymTable_expand(SymTable_T oSymTable) {
 	if (newSymTable == NULL)
 		return;
 
+	/* Retrieve the next buckets count */
+
 	uNewSize = SymTable_nextSize(oSymTable->length);
 	if (uNewSize == 0) {
 		SymTable_free(newSymTable);
@@ -142,7 +144,7 @@ static void SymTable_expand(SymTable_T oSymTable) {
 	free(newSymTable->buckets);
 	newSymTable->buckets = calloc(uNewSize, sizeof(struct Binding));
 	if (newSymTable->buckets == NULL) {
-		SymTable_free(newSymTable);
+		free(newSymTable);
 		return;
 	}
 
