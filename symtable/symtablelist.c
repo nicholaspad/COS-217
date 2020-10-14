@@ -10,12 +10,12 @@
    (any pointer), and a pointer to the next binding in the linked list.
  */
 struct Binding {
-	/* Pointer to binding key (string) */
-	const char *key;
-	/* Pointer to binding value */
-	const void *value;
-	/* Pointer to next binding in list */
-	struct Binding *next;
+    /* Pointer to binding key (string) */
+    const char *key;
+    /* Pointer to binding value */
+    const void *value;
+    /* Pointer to next binding in list */
+    struct Binding *next;
 };
 
 /*
@@ -23,168 +23,168 @@ struct Binding {
    the first binding and a variable to store the number of bindings.
  */
 struct SymTable {
-	/* Pointer to first binding in list */
-	struct Binding *first;
-	/* Number of bindings in list */
-	size_t length;
+    /* Pointer to first binding in list */
+    struct Binding *first;
+    /* Number of bindings in list */
+    size_t length;
 };
 
 SymTable_T SymTable_new(void) {
-	SymTable_T oSymTable = calloc(1, sizeof(struct SymTable));
-	if (oSymTable == NULL)
-		return NULL;
+    SymTable_T oSymTable = calloc(1, sizeof(struct SymTable));
+    if (oSymTable == NULL)
+        return NULL;
 
-	return oSymTable;
+    return oSymTable;
 }
 
 void SymTable_free(SymTable_T oSymTable) {
-	struct Binding *prev;
-	struct Binding *curr;
-	assert(oSymTable != NULL);
+    struct Binding *prev;
+    struct Binding *curr;
+    assert(oSymTable != NULL);
 
-	/* Free each binding */
+    /* Free each binding */
 
-	prev = NULL;
-	for (curr = oSymTable->first; curr != NULL; curr = curr->next) {
-		free(prev);
-		free((char *) curr->key);
-		prev = curr;
-	}
+    prev = NULL;
+    for (curr = oSymTable->first; curr != NULL; curr = curr->next) {
+        free(prev);
+        free((char *)curr->key);
+        prev = curr;
+    }
 
-	free(prev);
-	free(oSymTable);
+    free(prev);
+    free(oSymTable);
 }
 
 size_t SymTable_getLength(SymTable_T oSymTable) {
-	assert(oSymTable != NULL);
+    assert(oSymTable != NULL);
 
-	return oSymTable->length;
+    return oSymTable->length;
 }
 
 int SymTable_put(SymTable_T oSymTable, const char *pcKey,
                  const void *pvValue) {
-	struct Binding *prev;
-	struct Binding *curr;
-	assert(oSymTable != NULL);
-	assert(pcKey != NULL);
+    struct Binding *prev;
+    struct Binding *curr;
+    assert(oSymTable != NULL);
+    assert(pcKey != NULL);
 
-	/* Check list for duplicate key */
+    /* Check list for duplicate key */
 
-	prev = NULL;
-	for (curr = oSymTable->first; curr != NULL; curr = curr->next) {
-		if (strcmp(curr->key, pcKey) == 0)
-			return 0;
-		prev = curr;
-	}
+    prev = NULL;
+    for (curr = oSymTable->first; curr != NULL; curr = curr->next) {
+        if (strcmp(curr->key, pcKey) == 0)
+            return 0;
+        prev = curr;
+    }
 
-	/* Add binding to list */
+    /* Add binding to list */
 
-	curr = calloc(1, sizeof(struct Binding));
-	if (curr == NULL)
-		return 0;
+    curr = calloc(1, sizeof(struct Binding));
+    if (curr == NULL)
+        return 0;
 
-	curr->key = malloc(strlen(pcKey) + 1);
-	if (curr->key == NULL)
-		return 0;
-	strcpy((char *) curr->key, pcKey);
+    curr->key = malloc(strlen(pcKey) + 1);
+    if (curr->key == NULL)
+        return 0;
+    strcpy((char *)curr->key, pcKey);
 
-	curr->value = pvValue;
-	oSymTable->length++;
-	if (prev != NULL)
-		prev->next = curr;
-	else
-		oSymTable->first = curr;
+    curr->value = pvValue;
+    oSymTable->length++;
+    if (prev != NULL)
+        prev->next = curr;
+    else
+        oSymTable->first = curr;
 
-	return 1;
+    return 1;
 }
 
 void *SymTable_replace(SymTable_T oSymTable, const char *pcKey,
                        const void *pvValue) {
-	struct Binding *curr;
-	void *retval;
-	assert(oSymTable != NULL);
-	assert(pcKey != NULL);
+    struct Binding *curr;
+    void *retval;
+    assert(oSymTable != NULL);
+    assert(pcKey != NULL);
 
-	/* Locate binding and replace its value */
+    /* Locate binding and replace its value */
 
-	for (curr = oSymTable->first; curr != NULL; curr = curr->next)
-		if (strcmp(curr->key, pcKey) == 0) {
-			retval = (void *) curr->value;
-			curr->value = pvValue;
-			return retval;
-		}
+    for (curr = oSymTable->first; curr != NULL; curr = curr->next)
+        if (strcmp(curr->key, pcKey) == 0) {
+            retval = (void *)curr->value;
+            curr->value = pvValue;
+            return retval;
+        }
 
-	return NULL;
+    return NULL;
 }
 
 int SymTable_contains(SymTable_T oSymTable, const char *pcKey) {
-	struct Binding *curr;
-	assert(oSymTable != NULL);
-	assert(pcKey != NULL);
+    struct Binding *curr;
+    assert(oSymTable != NULL);
+    assert(pcKey != NULL);
 
-	/* Locate binding */
+    /* Locate binding */
 
-	for (curr = oSymTable->first; curr != NULL; curr = curr->next)
-		if (strcmp(curr->key, pcKey) == 0)
-			return 1;
+    for (curr = oSymTable->first; curr != NULL; curr = curr->next)
+        if (strcmp(curr->key, pcKey) == 0)
+            return 1;
 
-	return 0;
+    return 0;
 }
 
 void *SymTable_get(SymTable_T oSymTable, const char *pcKey) {
-	struct Binding *curr;
-	assert(oSymTable != NULL);
-	assert(pcKey != NULL);
+    struct Binding *curr;
+    assert(oSymTable != NULL);
+    assert(pcKey != NULL);
 
-	/* Locate binding */
+    /* Locate binding */
 
-	for (curr = oSymTable->first; curr != NULL; curr = curr->next)
-		if (strcmp(curr->key, pcKey) == 0)
-			return (void *) curr->value;
+    for (curr = oSymTable->first; curr != NULL; curr = curr->next)
+        if (strcmp(curr->key, pcKey) == 0)
+            return (void *)curr->value;
 
-	return NULL;
+    return NULL;
 }
 
 void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
-	struct Binding *prev;
-	struct Binding *curr;
-	void *retval;
-	assert(oSymTable != NULL);
-	assert(pcKey != NULL);
+    struct Binding *prev;
+    struct Binding *curr;
+    void *retval;
+    assert(oSymTable != NULL);
+    assert(pcKey != NULL);
 
-	/* Locate binding, remove it from the list, and clean up */
+    /* Locate binding, remove it from the list, and clean up */
 
-	prev = NULL;
-	for (curr = oSymTable->first; curr != NULL; curr = curr->next) {
-		if (strcmp(curr->key, pcKey) == 0) {
-			oSymTable->length--;
-			retval = (void *) curr->value;
+    prev = NULL;
+    for (curr = oSymTable->first; curr != NULL; curr = curr->next) {
+        if (strcmp(curr->key, pcKey) == 0) {
+            oSymTable->length--;
+            retval = (void *)curr->value;
 
-			if (prev != NULL)
-				prev->next = curr->next;
-			else
-				oSymTable->first = curr->next;
+            if (prev != NULL)
+                prev->next = curr->next;
+            else
+                oSymTable->first = curr->next;
 
-			free((char *) curr->key);
-			free(curr);
-			return retval;
-		}
-		prev = curr;
-	}
+            free((char *)curr->key);
+            free(curr);
+            return retval;
+        }
+        prev = curr;
+    }
 
-	return NULL;
+    return NULL;
 }
 
 void SymTable_map(SymTable_T oSymTable,
                   void (*pfApply)(const char *pcKey, void *pvValue,
                                   void *pvExtra),
                   const void *pvExtra) {
-	struct Binding *curr;
-	assert(oSymTable != NULL);
-	assert(pfApply != NULL);
+    struct Binding *curr;
+    assert(oSymTable != NULL);
+    assert(pfApply != NULL);
 
-	/* Traverse all bindings and apply the function */
+    /* Traverse all bindings and apply the function */
 
-	for (curr = oSymTable->first; curr != NULL; curr = curr->next)
-		pfApply(curr->key, (void *) curr->value, (void *) pvExtra);
+    for (curr = oSymTable->first; curr != NULL; curr = curr->next)
+        pfApply(curr->key, (void *)curr->value, (void *)pvExtra);
 }
