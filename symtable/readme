@@ -62,6 +62,8 @@ symtablelist.c:189:3: Statement has no effect: pfApply(curr->ke...
 Disagree with this warning because pfApply() itself will never have a
 "visible" effect to splint; only the client knows what that effect will
 be. For instance, pvValue may be modified (invisibly) within pfApply().
+Also, since its return type is void, it cannot be used to directly 
+modify a value through the assignment operator.
 
 ------------------------------------------------------------------------
 What warnings does critTer generate on symtablelist.c, and what are your
@@ -101,6 +103,8 @@ symtablehash.c:353:4: Statement has no effect: pfApply(curr->ke...
 Disagree with this warning because pfApply() itself will never have a
 "visible" effect to splint; only the client knows what that effect will
 be. For instance, pvValue may be modified (invisibly) within pfApply().
+Also, since its return type is void, it cannot be used to directly 
+modify a value through the assignment operator.
 
 ------------------------------------------------------------------------
 What warnings does critTer generate on symtablehash.c, and what are your
