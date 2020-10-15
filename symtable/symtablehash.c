@@ -115,7 +115,7 @@ static void SymTable_expand(SymTable_T oSymTable) {
 
     /* Allocate an expanded buckets array */
 
-    newBuckets = calloc(uNewSize, sizeof(struct Binding));
+    newBuckets = calloc(uNewSize, sizeof(struct Binding *));
     if (newBuckets == NULL)
         return;
 
@@ -150,7 +150,7 @@ SymTable_T SymTable_new(void) {
     if (oSymTable == NULL)
         return NULL;
 
-    oSymTable->buckets = calloc(INITIAL_SIZE, sizeof(struct Binding));
+    oSymTable->buckets = calloc(INITIAL_SIZE, sizeof(struct Binding *));
     if (oSymTable->buckets == NULL) {
         free(oSymTable);
         return NULL;
