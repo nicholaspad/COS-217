@@ -3,8 +3,6 @@
 /* Author: Nicholas Padmanabhan (ntyp) (P05)                          */
 /*--------------------------------------------------------------------*/
 
-#include <stdio.h>
-
 #include "symtable.h"
 
 /*
@@ -169,17 +167,13 @@ void SymTable_free(SymTable_T oSymTable) {
 
     /* Free each linked list */
 
-    printf("HERE\n");
-
     for (uIndex = 0; uIndex < oSymTable->nBuckets; uIndex++) {
         prev = NULL;
 
         for (curr = oSymTable->buckets[uIndex]; curr != NULL;
              curr = curr->next) {
             free(prev);
-            printf("NICHOLAS\n");
             free((char *)curr->key);
-            printf("PADMANABHAN\n");
             prev = curr;
         }
 
