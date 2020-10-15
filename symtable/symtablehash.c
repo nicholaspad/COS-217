@@ -126,9 +126,10 @@ static void SymTable_expand(SymTable_T oSymTable) {
             next = curr->next;
             i = SymTable_hash(curr->key, uNewSize);
 
-            if (newBuckets[i] == NULL)
+            if (newBuckets[i] == NULL) {
                 newBuckets[i] = curr;
-            else {
+                curr->next = NULL;
+            } else {
                 temp = newBuckets[i];
                 newBuckets[i] = curr;
                 newBuckets[i]->next = temp;
