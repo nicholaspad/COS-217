@@ -166,7 +166,7 @@ void SymTable_free(SymTable_T oSymTable) {
     size_t uIndex;
     assert(oSymTable != NULL);
 
-    /* Free each linked list */
+    /* Free each bucket's linked list */
 
     for (uIndex = 0; uIndex < oSymTable->nBuckets; uIndex++) {
         prev = NULL;
