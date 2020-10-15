@@ -102,8 +102,8 @@ static void SymTable_expand(SymTable_T oSymTable) {
     struct Binding *next;
     struct Binding *temp;
     size_t uNewSize;
-    size_t uIndex;
-    size_t i;
+    size_t uIndex; /* Index of buckets array */
+    size_t i;      /* Hash index */
     assert(oSymTable != NULL);
 
     /* Retrieve the next buckets count */
@@ -163,7 +163,7 @@ SymTable_T SymTable_new(void) {
 void SymTable_free(SymTable_T oSymTable) {
     struct Binding *prev;
     struct Binding *curr;
-    size_t uIndex;
+    size_t uIndex; /* Index of buckets array */
     assert(oSymTable != NULL);
 
     /* Free each bucket's linked list */
@@ -197,7 +197,7 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey,
                  const void *pvValue) {
     struct Binding *prev;
     struct Binding *curr;
-    size_t i;
+    size_t i; /* Hash index */
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
 
@@ -243,7 +243,7 @@ void *SymTable_replace(SymTable_T oSymTable, const char *pcKey,
                        const void *pvValue) {
     struct Binding *curr;
     void *retval;
-    size_t i;
+    size_t i; /* Hash index */
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
 
@@ -263,7 +263,7 @@ void *SymTable_replace(SymTable_T oSymTable, const char *pcKey,
 
 int SymTable_contains(SymTable_T oSymTable, const char *pcKey) {
     struct Binding *curr;
-    size_t i;
+    size_t i; /* Hash index */
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
 
@@ -280,7 +280,7 @@ int SymTable_contains(SymTable_T oSymTable, const char *pcKey) {
 
 void *SymTable_get(SymTable_T oSymTable, const char *pcKey) {
     struct Binding *curr;
-    size_t i;
+    size_t i; /* Hash index */
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
 
@@ -299,7 +299,7 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
     struct Binding *prev;
     struct Binding *curr;
     void *retval;
-    size_t i;
+    size_t i; /* Hash index */
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
 
@@ -334,7 +334,7 @@ void SymTable_map(SymTable_T oSymTable,
                                   void *pvExtra),
                   const void *pvExtra) {
     struct Binding *curr;
-    size_t uIndex;
+    size_t uIndex; /* Index of buckets array */
     assert(oSymTable != NULL);
     assert(pfApply != NULL);
 
