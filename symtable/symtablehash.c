@@ -22,7 +22,7 @@ enum {
 
 /*
    Represents a single binding, consisting of a key (string), a value
-   (any pointer), and a pointer to the next binding in the linked list.
+   (any pointer), and a pointer to the next binding.
  */
 struct Binding {
     /* Pointer to binding key (string) */
@@ -35,7 +35,8 @@ struct Binding {
 
 /*
    Represents the hash table, consisting of an array of linked lists
-   of bindings, the number of bindings, and the number of buckets.
+   of bindings (i.e. separate chaining), the number of bindings, and the
+   number of buckets.
  */
 struct SymTable {
     /* Pointer to buckets array */
