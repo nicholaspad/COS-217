@@ -64,35 +64,6 @@ static size_t SymTable_hash(const char *pcKey, size_t uBucketCount) {
 }
 
 /*
-   Frees the buckets array of oSymTable, a SymTable_T object.
- */
-static void SymTable_freeBuckets(SymTable_T oSymTable) {
-    struct Binding *prev;
-    struct Binding *curr;
-    size_t uIndex;
-    assert(oSymTable != NULL);
-
-    /* Free each linked list */
-
-    for (uIndex = 0; uIndex < oSymTable->nBuckets; uIndex++) {
-        prev = NULL;
-
-        for (curr = oSymTable->buckets[uIndex]; curr != NULL;
-             curr = curr->next) {
-            free(prev);
-            free((char *)curr->key);
-            prev = curr;
-        }
-
-        free(prev);
-    }
-
-    /* Free the buckets array */
-
-    free(oSymTable->buckets);
-}
-
-/*
    Returns the next bucket count based on the current bucket count
    uCurrentSize, needed during hash table expansion. Returns 0 if the
    maximum bucket count is already in use, or if expansion is not yet
@@ -126,56 +97,55 @@ static size_t SymTable_nextSize(size_t uCurrentSize) {
    size, or if there is insufficient memory.
  */
 static void SymTable_expand(SymTable_T oSymTable) {
-    SymTable_T newSymTable;
+    /*
+        Iterate through all bindings in oSymTable. Get new hash index.
+        Put binding pointer into chain at that index, in the new array.
+        Set the value in the old array to NULL. Repeat.
+
+        Free the old array (now empty). Point buckets to the new array.
+    */
+
+    struct Binding **newBuckets;
     struct Binding *curr;
+    struct Binding *temp;
     size_t uNewSize;
     size_t uIndex;
-    int res;
+    size_t h;
     assert(oSymTable != NULL);
-
-    /* Create a temporary SymTable_T */
-
-    newSymTable = SymTable_new();
-    if (newSymTable == NULL)
-        return;
 
     /* Retrieve the next buckets count */
 
     uNewSize = SymTable_nextSize(oSymTable->length);
-    if (uNewSize == 0) {
-        SymTable_free(newSymTable);
+    if (uNewSize == 0)
         return;
-    }
 
-    /* Expand temporary SymTable_T buckets array to new size */
+    /* Allocate an expanded buckets array */
 
-    free(newSymTable->buckets);
-    newSymTable->buckets = calloc(uNewSize, sizeof(struct Binding));
-    if (newSymTable->buckets == NULL) {
-        free(newSymTable);
+    newBuckets = calloc(uNewSize, sizeof(struct Binding));
+    if (newBuckets == NULL)
         return;
-    }
 
-    newSymTable->nBuckets = uNewSize;
-
-    /* Rehash all bindings from oSymTable to temporary SymTable_T */
+    /* Rehash all bindings into expanded buckets array */
     for (uIndex = 0; uIndex < oSymTable->nBuckets; uIndex++) {
         for (curr = oSymTable->buckets[uIndex]; curr != NULL;
              curr = curr->next) {
-            res = SymTable_put(newSymTable, curr->key, curr->value);
-            if (res == 0) {
-                SymTable_free(newSymTable);
-                return;
+            h = SymTable_hash(curr->key, uNewSize);
+
+            if (newBuckets[h] == NULL)
+                newBuckets[h] = curr;
+            else {
+                temp = newBuckets[h];
+                newBuckets[h] = curr;
+                newBuckets[h]->next = temp;
             }
         }
     }
 
     /* Link expanded buckets array to oSymTable and clean up */
 
-    SymTable_freeBuckets(oSymTable);
-    oSymTable->buckets = newSymTable->buckets;
+    free(oSymTable->buckets);
+    oSymTable->buckets = newBuckets;
     oSymTable->nBuckets = uNewSize;
-    free(newSymTable);
 }
 
 SymTable_T SymTable_new(void) {
@@ -195,9 +165,29 @@ SymTable_T SymTable_new(void) {
 }
 
 void SymTable_free(SymTable_T oSymTable) {
+    struct Binding *prev;
+    struct Binding *curr;
+    size_t uIndex;
     assert(oSymTable != NULL);
 
-    SymTable_freeBuckets(oSymTable);
+    /* Free each linked list */
+
+    for (uIndex = 0; uIndex < oSymTable->nBuckets; uIndex++) {
+        prev = NULL;
+
+        for (curr = oSymTable->buckets[uIndex]; curr != NULL;
+             curr = curr->next) {
+            free(prev);
+            free((char *)curr->key);
+            prev = curr;
+        }
+
+        free(prev);
+    }
+
+    /* Free the buckets array and oSymTable itself */
+
+    free(oSymTable->buckets);
     free(oSymTable);
 }
 
@@ -211,7 +201,7 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey,
                  const void *pvValue) {
     struct Binding *prev;
     struct Binding *curr;
-    size_t i;
+    size_t h;
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
 
@@ -220,12 +210,12 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey,
     if (oSymTable->length == oSymTable->nBuckets)
         SymTable_expand(oSymTable);
 
-    i = SymTable_hash(pcKey, oSymTable->nBuckets);
+    h = SymTable_hash(pcKey, oSymTable->nBuckets);
 
     /* Check bucket for duplicate key */
 
     prev = NULL;
-    for (curr = oSymTable->buckets[i]; curr != NULL;
+    for (curr = oSymTable->buckets[h]; curr != NULL;
          curr = curr->next) {
         if (strcmp(curr->key, pcKey) == 0)
             return 0;
@@ -248,7 +238,7 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey,
     if (prev != NULL)
         prev->next = curr;
     else
-        oSymTable->buckets[i] = curr;
+        oSymTable->buckets[h] = curr;
 
     return 1;
 }
@@ -257,15 +247,15 @@ void *SymTable_replace(SymTable_T oSymTable, const char *pcKey,
                        const void *pvValue) {
     struct Binding *curr;
     void *retval;
-    size_t i;
+    size_t h;
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
 
-    i = SymTable_hash(pcKey, oSymTable->nBuckets);
+    h = SymTable_hash(pcKey, oSymTable->nBuckets);
 
     /* Locate binding and replace its value */
 
-    for (curr = oSymTable->buckets[i]; curr != NULL; curr = curr->next)
+    for (curr = oSymTable->buckets[h]; curr != NULL; curr = curr->next)
         if (strcmp(curr->key, pcKey) == 0) {
             retval = (void *)curr->value;
             curr->value = pvValue;
@@ -277,15 +267,15 @@ void *SymTable_replace(SymTable_T oSymTable, const char *pcKey,
 
 int SymTable_contains(SymTable_T oSymTable, const char *pcKey) {
     struct Binding *curr;
-    size_t i;
+    size_t h;
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
 
-    i = SymTable_hash(pcKey, oSymTable->nBuckets);
+    h = SymTable_hash(pcKey, oSymTable->nBuckets);
 
     /* Locate binding */
 
-    for (curr = oSymTable->buckets[i]; curr != NULL; curr = curr->next)
+    for (curr = oSymTable->buckets[h]; curr != NULL; curr = curr->next)
         if (strcmp(curr->key, pcKey) == 0)
             return 1;
 
@@ -294,15 +284,15 @@ int SymTable_contains(SymTable_T oSymTable, const char *pcKey) {
 
 void *SymTable_get(SymTable_T oSymTable, const char *pcKey) {
     struct Binding *curr;
-    size_t i;
+    size_t h;
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
 
-    i = SymTable_hash(pcKey, oSymTable->nBuckets);
+    h = SymTable_hash(pcKey, oSymTable->nBuckets);
 
     /* Locate binding */
 
-    for (curr = oSymTable->buckets[i]; curr != NULL; curr = curr->next)
+    for (curr = oSymTable->buckets[h]; curr != NULL; curr = curr->next)
         if (strcmp(curr->key, pcKey) == 0)
             return (void *)curr->value;
 
@@ -313,16 +303,16 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
     struct Binding *prev;
     struct Binding *curr;
     void *retval;
-    size_t i;
+    size_t h;
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
 
-    i = SymTable_hash(pcKey, oSymTable->nBuckets);
+    h = SymTable_hash(pcKey, oSymTable->nBuckets);
 
     /* Locate binding, remove it from the linked list, and clean up */
 
     prev = NULL;
-    for (curr = oSymTable->buckets[i]; curr != NULL;
+    for (curr = oSymTable->buckets[h]; curr != NULL;
          curr = curr->next) {
         if (strcmp(curr->key, pcKey) == 0) {
             oSymTable->length--;
@@ -331,7 +321,7 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
             if (prev != NULL)
                 prev->next = curr->next;
             else
-                oSymTable->buckets[i] = curr->next;
+                oSymTable->buckets[h] = curr->next;
 
             free((char *)curr->key);
             free(curr);
