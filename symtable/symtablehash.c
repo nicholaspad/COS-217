@@ -348,5 +348,5 @@ void SymTable_map(SymTable_T oSymTable,
     for (uIndex = 0; uIndex < oSymTable->nBuckets; uIndex++)
         for (curr = oSymTable->buckets[uIndex]; curr != NULL;
              curr = curr->next)
-            pfApply(curr->key, (void *)curr->value, (void *)pvExtra);
+            (*pfApply)(curr->key, (void *)curr->value, (void *)pvExtra);
 }

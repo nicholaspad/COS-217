@@ -186,5 +186,5 @@ void SymTable_map(SymTable_T oSymTable,
     /* Traverse all bindings and apply the function */
 
     for (curr = oSymTable->first; curr != NULL; curr = curr->next)
-        pfApply(curr->key, (void *)curr->value, (void *)pvExtra);
+        (*pfApply)(curr->key, (void *)curr->value, (void *)pvExtra);
 }
