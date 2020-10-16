@@ -20,7 +20,8 @@ typedef struct SymTable *SymTable_T;
 
 /*
    Creates and returns an empty SymTable_T object, or NULL if
-   insufficient memory is available.
+   insufficient memory is available. The client is responsible for
+   freeing the returned SymTable_T with SymTable_free().
  */
 SymTable_T SymTable_new(void);
 

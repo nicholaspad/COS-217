@@ -27,8 +27,10 @@ enum {
 struct Binding {
     /* Pointer to binding key (string) */
     const char *key;
+
     /* Pointer to binding value */
     const void *value;
+
     /* Pointer to next binding in list */
     struct Binding *next;
 };
@@ -41,8 +43,10 @@ struct Binding {
 struct SymTable {
     /* Pointer to buckets array */
     struct Binding **buckets;
+
     /* Number of bindings in hash table */
     size_t length;
+
     /* Number of buckets in hash table */
     size_t nBuckets;
 };
