@@ -54,16 +54,7 @@ disagreements with them? Copy the splint warnings here, and express your
 disagreement after each warning. If there are no warnings, then write
 "None."
 
-symtablelist.c: (in function SymTable_map)
-symtablelist.c:189:3: Statement has no effect: pfApply(curr->ke...
-  Statement has no visible effect --- no values are modified. (Use
-  -noeffect to inhibit warning)
-
-Disagree with this warning because pfApply() itself will never have a
-"visible" effect to splint; only the client knows what that effect will
-be. For instance, pvValue may be modified (invisibly) within pfApply().
-Also, since its return type is void, it cannot be used to directly 
-modify a value through the assignment operator.
+None
 
 ------------------------------------------------------------------------
 What warnings does critTer generate on symtablelist.c, and what are your
@@ -74,20 +65,20 @@ write "None."
 symtablelist.c: line 65: medium priority:
 Do you want to validate 'pvValue' through an assert?
 
-Disagree with this warning because pvValue may be a pointer to anything,
-including NULL. No assert() is needed.
+Disagree with this warning because pvValue may be any pointer, including
+NULL. No assert() is needed.
 
 symtablelist.c: line 102: medium priority:
 Do you want to validate 'pvValue' through an assert?
 
-Disagree with this warning because pvValue may be a pointer to anything,
-including NULL. No assert() is needed.
+Disagree with this warning because pvValue may be any pointer, including
+NULL. No assert() is needed.
 
 symtablelist.c: line 181: medium priority:
 Do you want to validate 'pvExtra' through an assert?
 
-Disagree with this warning because pvExtra may be a pointer to anything,
-including NULL. No assert() is needed.
+Disagree with this warning because pvExtra may be any pointer, including
+NULL. No assert() is needed.
 
 ------------------------------------------------------------------------
 What warnings does splint generate on symtablehash.c, and what are your
@@ -95,16 +86,7 @@ disagreements with them? Copy the splint warnings here, and express your
 disagreement after each warning. If there are no warnings, then write
 "None."
 
-symtablehash.c: (in function SymTable_map)
-symtablehash.c:353:4: Statement has no effect: pfApply(curr->ke...
-  Statement has no visible effect --- no values are modified. (Use
-  -noeffect to inhibit warning)
-
-Disagree with this warning because pfApply() itself will never have a
-"visible" effect to splint; only the client knows what that effect will
-be. For instance, pvValue may be modified (invisibly) within pfApply().
-Also, since its return type is void, it cannot be used to directly 
-modify a value through the assignment operator.
+None
 
 ------------------------------------------------------------------------
 What warnings does critTer generate on symtablehash.c, and what are your
@@ -115,20 +97,20 @@ write "None."
 symtablehash.c: line 201: medium priority:
 Do you want to validate 'pvValue' through an assert?
 
-Disagree with this warning because pvValue may be a pointer to anything,
-including NULL. No assert() is needed.
+Disagree with this warning because pvValue may be any pointer, including
+NULL. No assert() is needed.
 
 symtablehash.c: line 247: medium priority:
 Do you want to validate 'pvValue' through an assert?
 
-Disagree with this warning because pvValue may be a pointer to anything,
-including NULL. No assert() is needed.
+Disagree with this warning because pvValue may be any pointer, including
+NULL. No assert() is needed.
 
 symtablehash.c: line 342: medium priority:
 Do you want to validate 'pvExtra' through an assert?
 
-Disagree with this warning because pvExtra may be a pointer to anything,
-including NULL. No assert() is needed.
+Disagree with this warning because pvExtra may be any pointer, including
+NULL. No assert() is needed.
 
 ------------------------------------------------------------------------
 What are the CPU times reported by testsymtable.c with binding counts
@@ -140,7 +122,7 @@ The linked list implementation with:
 -- 50 bindings consumed 0.000000 seconds.
 -- 500 bindings consumed 0.010000 seconds.
 -- 5000 bindings consumed 1.010000 seconds.
--- 50000 bindings consumed 99.540000 seconds.
+-- 50000 bindings consumed 99.460000 seconds.
 -- 500000 bindings consumed more than 5 minutes.
 
 The non-expanding hash table implementation with:

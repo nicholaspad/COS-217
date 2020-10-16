@@ -107,8 +107,8 @@ static void SymTable_expand(SymTable_T oSymTable) {
     struct Binding *next;
     struct Binding *temp;
     size_t uNewSize;
-    size_t uIndex; /* Index of buckets array */
-    size_t i;      /* Hash index */
+    size_t uIndex;
+    size_t i; /* Hash index */
     assert(oSymTable != NULL);
 
     /* Retrieve the next buckets count */
@@ -168,7 +168,7 @@ SymTable_T SymTable_new(void) {
 void SymTable_free(SymTable_T oSymTable) {
     struct Binding *prev;
     struct Binding *curr;
-    size_t uIndex; /* Index of buckets array */
+    size_t uIndex;
     assert(oSymTable != NULL);
 
     /* Free each bucket's linked list */
@@ -339,7 +339,7 @@ void SymTable_map(SymTable_T oSymTable,
                                   void *pvExtra),
                   const void *pvExtra) {
     struct Binding *curr;
-    size_t uIndex; /* Index of buckets array */
+    size_t uIndex;
     assert(oSymTable != NULL);
     assert(pfApply != NULL);
 
