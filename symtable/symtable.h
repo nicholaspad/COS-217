@@ -14,7 +14,8 @@
 /*
    A SymTable_T stores bindings each consisting of a key-value pair.
    Keys are strings that uniquely identify their bindings, and values
-   are data that are somehow associated with their keys.
+   are data that are somehow associated with their keys. Keys are owned
+   by SymTable_T (via defensive copy), while values are not.
  */
 typedef struct SymTable *SymTable_T;
 
