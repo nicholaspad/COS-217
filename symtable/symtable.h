@@ -14,16 +14,15 @@
 /*
    A SymTable_T stores bindings each consisting of a key-value pair.
    Keys are strings that uniquely identify their bindings, and values
-   are data that are somehow associated with their keys. Keys are owned
-   by SymTable_T (via defensive copy), while values are owned by the
-   client.
+   are data that are somehow associated with their keys. The memory
+   associated with keys is owned by SymTable_T (via defensive copy),
+   while the memory associated with values is owned by the client.
  */
 typedef struct SymTable *SymTable_T;
 
 /*
    Creates and returns an empty SymTable_T object, or NULL if
-   insufficient memory is available. The client is responsible for
-   freeing the returned SymTable_T with SymTable_free().
+   insufficient memory is available.
  */
 SymTable_T SymTable_new(void);
 
