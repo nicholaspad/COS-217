@@ -73,7 +73,8 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey);
 
 /*
    Applies function *pfApply to each binding in oSymTable, passing
-   pvExtra as an additional parameter.
+   pvExtra as an additional parameter. In other words, for each binding
+   in oSymTable, call (*pfApply)(pcKey, pvValue, pvExtra).
  */
 void SymTable_map(SymTable_T oSymTable,
                   void (*pfApply)(const char *pcKey, void *pvValue,
