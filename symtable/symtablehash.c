@@ -108,7 +108,7 @@ static void SymTable_expand(SymTable_T oSymTable) {
     struct Binding *temp;
     size_t uNewSize;
     size_t uIndex;
-    size_t i; /* Hash index */
+    size_t uHash;
     assert(oSymTable != NULL);
 
     /* Retrieve the next buckets count */
@@ -129,15 +129,15 @@ static void SymTable_expand(SymTable_T oSymTable) {
         for (curr = oSymTable->buckets[uIndex]; curr != NULL;
              curr = next) {
             next = curr->next;
-            i = SymTable_hash(curr->key, uNewSize);
+            uHash = SymTable_hash(curr->key, uNewSize);
 
-            if (newBuckets[i] == NULL) {
-                newBuckets[i] = curr;
+            if (newBuckets[uHash] == NULL) {
+                newBuckets[uHash] = curr;
                 curr->next = NULL;
             } else {
-                temp = newBuckets[i];
-                newBuckets[i] = curr;
-                newBuckets[i]->next = temp;
+                temp = newBuckets[uHash];
+                newBuckets[uHash] = curr;
+                newBuckets[uHash]->next = temp;
             }
         }
     }
@@ -202,7 +202,7 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey,
                  const void *pvValue) {
     struct Binding *prev;
     struct Binding *curr;
-    size_t i; /* Hash index */
+    size_t uHash;
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
 
@@ -211,12 +211,12 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey,
     if (oSymTable->length == oSymTable->nBuckets)
         SymTable_expand(oSymTable);
 
-    i = SymTable_hash(pcKey, oSymTable->nBuckets);
+    uHash = SymTable_hash(pcKey, oSymTable->nBuckets);
 
     /* Check bucket for duplicate key */
 
     prev = NULL;
-    for (curr = oSymTable->buckets[i]; curr != NULL;
+    for (curr = oSymTable->buckets[uHash]; curr != NULL;
          curr = curr->next) {
         if (strcmp(curr->key, pcKey) == 0)
             return 0;
@@ -239,7 +239,7 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey,
     if (prev != NULL)
         prev->next = curr;
     else
-        oSymTable->buckets[i] = curr;
+        oSymTable->buckets[uHash] = curr;
 
     return 1;
 }
@@ -248,15 +248,16 @@ void *SymTable_replace(SymTable_T oSymTable, const char *pcKey,
                        const void *pvValue) {
     struct Binding *curr;
     void *retval;
-    size_t i; /* Hash index */
+    size_t uHash;
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
 
-    i = SymTable_hash(pcKey, oSymTable->nBuckets);
+    uHash = SymTable_hash(pcKey, oSymTable->nBuckets);
 
     /* Locate binding and replace its value */
 
-    for (curr = oSymTable->buckets[i]; curr != NULL; curr = curr->next)
+    for (curr = oSymTable->buckets[uHash]; curr != NULL;
+         curr = curr->next)
         if (strcmp(curr->key, pcKey) == 0) {
             retval = (void *)curr->value;
             curr->value = pvValue;
@@ -268,15 +269,16 @@ void *SymTable_replace(SymTable_T oSymTable, const char *pcKey,
 
 int SymTable_contains(SymTable_T oSymTable, const char *pcKey) {
     struct Binding *curr;
-    size_t i; /* Hash index */
+    size_t uHash;
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
 
-    i = SymTable_hash(pcKey, oSymTable->nBuckets);
+    uHash = SymTable_hash(pcKey, oSymTable->nBuckets);
 
     /* Locate binding */
 
-    for (curr = oSymTable->buckets[i]; curr != NULL; curr = curr->next)
+    for (curr = oSymTable->buckets[uHash]; curr != NULL;
+         curr = curr->next)
         if (strcmp(curr->key, pcKey) == 0)
             return 1;
 
@@ -285,15 +287,16 @@ int SymTable_contains(SymTable_T oSymTable, const char *pcKey) {
 
 void *SymTable_get(SymTable_T oSymTable, const char *pcKey) {
     struct Binding *curr;
-    size_t i; /* Hash index */
+    size_t uHash;
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
 
-    i = SymTable_hash(pcKey, oSymTable->nBuckets);
+    uHash = SymTable_hash(pcKey, oSymTable->nBuckets);
 
     /* Locate binding */
 
-    for (curr = oSymTable->buckets[i]; curr != NULL; curr = curr->next)
+    for (curr = oSymTable->buckets[uHash]; curr != NULL;
+         curr = curr->next)
         if (strcmp(curr->key, pcKey) == 0)
             return (void *)curr->value;
 
@@ -304,16 +307,16 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
     struct Binding *prev;
     struct Binding *curr;
     void *retval;
-    size_t i; /* Hash index */
+    size_t uHash;
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
 
-    i = SymTable_hash(pcKey, oSymTable->nBuckets);
+    uHash = SymTable_hash(pcKey, oSymTable->nBuckets);
 
     /* Locate binding, remove it from the linked list, and clean up */
 
     prev = NULL;
-    for (curr = oSymTable->buckets[i]; curr != NULL;
+    for (curr = oSymTable->buckets[uHash]; curr != NULL;
          curr = curr->next) {
         if (strcmp(curr->key, pcKey) == 0) {
             oSymTable->length--;
@@ -322,7 +325,7 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
             if (prev != NULL)
                 prev->next = curr->next;
             else
-                oSymTable->buckets[i] = curr->next;
+                oSymTable->buckets[uHash] = curr->next;
 
             free((char *)curr->key);
             free(curr);
