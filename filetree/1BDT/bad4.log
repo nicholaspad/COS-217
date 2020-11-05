@@ -1,0 +1,86 @@
++run
+Starting program: /u/ntyp/COS-217-A4/1BDT/bdtBad4 
+[Inferior 1 (process 78067) exited normally]
+Missing separate debuginfos, use: debuginfo-install glibc-2.17-222.sd7.aarch64
++run
+Starting program: /u/ntyp/COS-217-A4/1BDT/bdtBad4 
+[Inferior 1 (process 78067) exited normally]
++run
+Starting program: /u/ntyp/COS-217-A4/1BDT/bdtBad4 
+[Inferior 1 (process 78067) exited normally]
++run
+Starting program: /u/ntyp/COS-217-A4/1BDT/bdtBad4 
+[Inferior 1 (process 78067) exited normally]
++break bdt_client.c:86
+Breakpoint 1 at 0x402ee8: file bdt_client.c, line 86.
++run
+Starting program: /u/ntyp/COS-217-A4/1BDT/bdtBad4 
+
+Breakpoint 1, main () at bdt_client.c:86
+/u/ntyp/COS-217-A4/1BDT/bdt_client.c:86:3544:beg:0x402ee8
++step
+BDT_toString () at bdtBad4.c:467
+/u/cos217/Assignment4/bdtBad4.c:467:11643:beg:0x402680
++step
+/u/cos217/Assignment4/bdtBad4.c:468:11694:beg:0x402688
++step
+/u/cos217/Assignment4/bdtBad4.c:470:11719:beg:0x40268c
++step
+/u/cos217/Assignment4/bdtBad4.c:473:11761:beg:0x4026a8
++next
+/u/cos217/Assignment4/bdtBad4.c:474:11793:beg:0x4026bc
++next
+/u/cos217/Assignment4/bdtBad4.c:476:11843:beg:0x4026d4
++next
+/u/cos217/Assignment4/bdtBad4.c:479:11954:beg:0x4026e8
++next
+/u/cos217/Assignment4/bdtBad4.c:480:11987:beg:0x4026f4
++print result
+$1 = 0x430220 "0\001C"
++step
+/u/cos217/Assignment4/bdtBad4.c:485:12064:beg:0x402710
++print *result
+$2 = 48 '0'
++step
+DynArray_map (oDynArray=0x430120, pfApply=0x4025dc <BDT_strcatAccumulate>, 
+    pvExtra=0x430220) at dynarray.c:246
+/u/ntyp/COS-217-A4/1BDT/dynarray.c:246:6201:beg:0x40134c
++step
+/u/ntyp/COS-217-A4/1BDT/dynarray.c:247:6231:beg:0x401378
++step
+/u/ntyp/COS-217-A4/1BDT/dynarray.c:248:6259:beg:0x4013a4
++step
+DynArray_isValid (oDynArray=0x430120) at dynarray.c:44
+/u/ntyp/COS-217-A4/1BDT/dynarray.c:44:1237:beg:0x4009a8
++step
+/u/ntyp/COS-217-A4/1BDT/dynarray.c:45:1296:beg:0x4009c4
++step
+/u/ntyp/COS-217-A4/1BDT/dynarray.c:46:1358:beg:0x4009e4
++step
+/u/ntyp/COS-217-A4/1BDT/dynarray.c:47:1404:beg:0x4009fc
++step
+/u/ntyp/COS-217-A4/1BDT/dynarray.c:48:1417:beg:0x400a00
++step
+DynArray_map (oDynArray=0x430120, pfApply=0x4025dc <BDT_strcatAccumulate>, 
+    pvExtra=0x430220) at dynarray.c:250
+/u/ntyp/COS-217-A4/1BDT/dynarray.c:250:6300:beg:0x4013d4
++step
+/u/ntyp/COS-217-A4/1BDT/dynarray.c:251:6344:beg:0x4013dc
++step
+BDT_strcatAccumulate (str=0x430010 "a", acc=0x430220 "0\001C")
+    at bdtBad4.c:452
+/u/cos217/Assignment4/bdtBad4.c:452:11192:beg:0x4025ec
++step
+/u/cos217/Assignment4/bdtBad4.c:453:11216:beg:0x402618
++step
+/u/cos217/Assignment4/bdtBad4.c:455:11241:beg:0x402644
++print str
+$3 = 0x430010 "a"
++print acc
+$4 = 0x430220 "0\001C"
++step
+/u/cos217/Assignment4/bdtBad4.c:456:11281:beg:0x402670
++print acc
+$5 = 0x430220 "0\001Ca\n"
++kill
+Kill the program being debugged? (y or n) +quit

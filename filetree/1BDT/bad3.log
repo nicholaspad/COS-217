@@ -1,0 +1,54 @@
++run
+Starting program: /u/ntyp/COS-217-A4/1BDT/bdtBad3 
+[Inferior 1 (process 74318) exited normally]
+Missing separate debuginfos, use: debuginfo-install glibc-2.17-222.sd7.aarch64
++break bdt_client.c:96
+Breakpoint 1 at 0x402fc4: file bdt_client.c, line 96.
++run
+Starting program: /u/ntyp/COS-217-A4/1BDT/bdtBad3 
+
+Breakpoint 1, main () at bdt_client.c:96
+/u/ntyp/COS-217-A4/1BDT/bdt_client.c:96:3903:beg:0x402fc4
++step
+BDT_rmPath (path=0x403738 "a/b") at bdtBad3.c:381
+/u/cos217/Assignment4/bdtBad3.c:381:9423:beg:0x40236c
++step
+/u/cos217/Assignment4/bdtBad3.c:383:9449:beg:0x402398
++step
+/u/cos217/Assignment4/bdtBad3.c:386:9507:beg:0x4023b4
++next
+/u/cos217/Assignment4/bdtBad3.c:387:9541:beg:0x4023c0
++next
+/u/cos217/Assignment4/bdtBad3.c:390:9589:beg:0x4023d4
++step
+BDT_rmPathAt (path=0x403738 "a/b", curr=0x4300a0) at bdtBad3.c:359
+/u/cos217/Assignment4/bdtBad3.c:359:8976:beg:0x4022a0
++step
+/u/cos217/Assignment4/bdtBad3.c:360:9001:beg:0x4022cc
++step
+/u/cos217/Assignment4/bdtBad3.c:362:9027:beg:0x4022f8
++step
+/u/cos217/Assignment4/bdtBad3.c:364:9054:beg:0x402304
++step
+/u/cos217/Assignment4/bdtBad3.c:365:9112:beg:0x40231c
++step
+/u/cos217/Assignment4/bdtBad3.c:368:9170:beg:0x402338
++step
+BDT_unlinkParentToChild (parent=0x430070, child=0x4300a0) at bdtBad3.c:201
+/u/cos217/Assignment4/bdtBad3.c:201:5396:beg:0x401f0c
++step
+/u/cos217/Assignment4/bdtBad3.c:203:5424:beg:0x401f38
++print parent->child1
+$1 = (Node) 0x4300a0
++print child
+$2 = (Node) 0x4300a0
++step
+/u/cos217/Assignment4/bdtBad3.c:204:5457:beg:0x401f4c
++step
+/u/cos217/Assignment4/bdtBad3.c:212:5605:beg:0x401f80
++print parent->child1
+$3 = (Node) 0x0
++print parent->child2
+$4 = (Node) 0x430190
++kill
+Kill the program being debugged? (y or n) +quit

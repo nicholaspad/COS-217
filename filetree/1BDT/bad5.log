@@ -1,0 +1,79 @@
++run
+Starting program: /u/ntyp/COS-217-A4/1BDT/bdtBad5 
+
+Program received signal SIGABRT, Aborted.
+0x0000ffffbe5f50e8 in raise () from /lib64/libc.so.6
+Missing separate debuginfos, use: debuginfo-install glibc-2.17-222.sd7.aarch64
++break main
+Breakpoint 1 at 0x40274c: file bdt_client.c, line 22.
++run
+The program being debugged has been started already.
+Start it from the beginning? (y or n) 
+Starting program: /u/ntyp/COS-217-A4/1BDT/bdtBad5 
+
+Breakpoint 1, main () at bdt_client.c:22
+/u/ntyp/COS-217-A4/1BDT/bdt_client.c:22:814:beg:0x40274c
++next
+/u/ntyp/COS-217-A4/1BDT/bdt_client.c:23:873:beg:0x402780
++next
+/u/ntyp/COS-217-A4/1BDT/bdt_client.c:24:919:beg:0x4027b4
++next
+/u/ntyp/COS-217-A4/1BDT/bdt_client.c:29:1143:beg:0x4027e8
++next
+/u/ntyp/COS-217-A4/1BDT/bdt_client.c:30:1176:beg:0x402814
++next
+/u/ntyp/COS-217-A4/1BDT/bdt_client.c:31:1222:beg:0x402848
++next
+
+Program received signal SIGABRT, Aborted.
+0x0000ffffbe5f50e8 in raise () from /lib64/libc.so.6
++delete
+Delete all breakpoints? (y or n) +break bdt_client.c:31
+Breakpoint 2 at 0x402848: file bdt_client.c, line 31.
++run
+The program being debugged has been started already.
+Start it from the beginning? (y or n) 
+Starting program: /u/ntyp/COS-217-A4/1BDT/bdtBad5 
+
+Breakpoint 2, main () at bdt_client.c:31
+/u/ntyp/COS-217-A4/1BDT/bdt_client.c:31:1222:beg:0x402848
++step
+BDT_toString () at bdtBad5.c:467
+/u/cos217/Assignment4/bdtBad5.c:467:11643:beg:0x402680
++step
+/u/cos217/Assignment4/bdtBad5.c:468:11694:beg:0x402688
++step
+/u/cos217/Assignment4/bdtBad5.c:470:11719:beg:0x40268c
++step
+/u/cos217/Assignment4/bdtBad5.c:473:11761:beg:0x4026a8
++print count
+$1 = 0
++next
+/u/cos217/Assignment4/bdtBad5.c:474:11795:beg:0x4026c0
++print nodes->uLength
+$2 = 1
++next
+/u/cos217/Assignment4/bdtBad5.c:476:11845:beg:0x4026d8
++step
+DynArray_map (oDynArray=0x430010, pfApply=0x402544 <BDT_strlenAccumulate>, 
+    pvExtra=0xfffffffff0a8) at dynarray.c:246
+/u/ntyp/COS-217-A4/1BDT/dynarray.c:246:6201:beg:0x40134c
++next
+/u/ntyp/COS-217-A4/1BDT/dynarray.c:247:6231:beg:0x401378
++next
+/u/ntyp/COS-217-A4/1BDT/dynarray.c:248:6259:beg:0x4013a4
++next
+/u/ntyp/COS-217-A4/1BDT/dynarray.c:250:6300:beg:0x4013d4
++step
+/u/ntyp/COS-217-A4/1BDT/dynarray.c:251:6344:beg:0x4013dc
++step
+BDT_strlenAccumulate (str=0x0, pAcc=0xfffffffff0a8) at bdtBad5.c:440
+/u/cos217/Assignment4/bdtBad5.c:440:10873:beg:0x402558
++print str
+$3 = 0x0
++step
+
+Program received signal SIGABRT, Aborted.
+0x0000ffffbe5f50e8 in raise () from /lib64/libc.so.6
++kill
+Kill the program being debugged? (y or n) +quit

@@ -1,0 +1,287 @@
+Assignment 4 readme File
+
+------------------------------------------------------------------------
+Student 1: What is your name?
+
+Byron Zhang
+
+------------------------------------------------------------------------
+Student 2: What is your name?
+
+Nicholas Padmanabhan
+
+------------------------------------------------------------------------
+Student 1: What authorized sources of information did you use to
+complete the assignment? COPY THE LIST of authorized sources of
+information given in the "Policies" web page to this section of the
+readme file, and edit it as appropriate.
+
+The course's lectures.
+
+The course's precepts.
+
+The course's website.
+
+Documents that are referenced directly by the course's website. 
+Such documents include the course's lecture slides and 
+precept handouts.
+
+The man pages on the armlab cluster.
+
+The course's current staff members outside of class time through office
+hours.
+
+The course's current staff members outside of class time through Ed.
+
+------------------------------------------------------------------------
+Student 2: What authorized sources of information did you use to
+complete the assignment? COPY THE LIST of authorized sources of
+information given in the "Policies" web page to this section of the
+readme file, and edit it as appropriate.
+
+The course's lectures.
+
+The course's precepts.
+
+The course's website.
+
+Documents that are referenced directly by the course's website. Such
+documents include the course's lecture slides and precept handouts.
+
+The course's current staff members outside of class time through office
+hours.
+
+The course's current staff members outside of class time through Ed.
+
+------------------------------------------------------------------------
+Student 1: What unauthorized sources of information did you use to
+complete the assignment? List any unauthorized sources of information
+that you used to complete the assignment, and describe how you used
+them. The course "Policies" web page defines unauthorized sources of
+information, and any source that you have used but not listed in the
+authorized sources should be included here. Please note that using an
+unauthorized source may trigger a course penalty, and depending on the
+nature of the interaction, may additionally require the interaction
+being reported to the Committee on Discipline. Write "None" if you used
+no unauthorized sources of information.
+
+None
+
+------------------------------------------------------------------------
+Student 2: What unauthorized sources of information did you use to
+complete the assignment? List any unauthorized sources of information
+that you used to complete the assignment, and describe how you used
+them. The course "Policies" web page defines unauthorized sources of
+information, and any source that you have used but not listed in the
+authorized sources should be included here. Please note that using an
+unauthorized source may trigger a course penalty, and depending on the
+nature of the interaction, may additionally require the interaction
+being reported to the Committee on Discipline. Write "None" if you used
+no unauthorized sources of information.
+
+None
+
+------------------------------------------------------------------------
+Student 1: What is your assessment of the assignment? Was it helpful?
+Was it fun?
+
+Helpful but very tedious, not really fun.
+
+------------------------------------------------------------------------
+Student 2: What is your assessment of the assignment? Was it helpful?
+Was it fun?
+
+I think that the assignment, especially part 3, was a bit too open-
+ended. Maybe more pointers/guidance would help students who spent a
+disproportional amount of time on this assignment.
+
+------------------------------------------------------------------------
+(optional) What information can you provide about your submission that
+will help your grader to grade it in the most favorable light? In
+particular, what bugs are in your submission?
+
+
+
+------------------------------------------------------------------------
+What warnings does critTer generate on checker.c, and what are your
+disagreements with them? Copy the critTer warnings here, and express
+your disagreement after each warning. If there are no warnings, then
+write "None."
+
+None.
+
+------------------------------------------------------------------------
+What warnings does critTer generate on your Part 3 code, and what are
+your disagreements with them? Copy the critTer warnings here, and
+express your disagreement after each warning. If there are no
+warnings, then write "None."
+
+Note that we did not check for warnings in dynarray.h, dynarray.c, and
+ft.h, since we neither wrote nor adapted those files.
+
+ft.c: line 499: low priority: 
+A file should contain no more than 15 functions;
+this file contains 21 functions
+
+Reducing the number of functions would make the code less modular.
+Further, refactoring functions into a utilities file is impractical
+because many require access to the (static) state variables defined in
+ft.c.
+
+ft.c: line 94: medium priority:
+Do you want to validate 'fileContents' through an assert?
+
+'fileContents' is owned by the client, so we need not to validate it.
+
+ft.c: line 281: medium priority:
+Do you want to validate 'contents' through an assert?
+
+'contents' is owned by the client, so we need not to validate it.
+
+ft.c: line 364: medium priority:
+Do you want to validate 'newContents' through an assert?
+
+'newContents' is owned by the client, so we need not to validate it.
+
+ft.c: line 47: low priority: 
+This area is deeply nested at level 5, consider refactoring
+
+There is no reasonable way to refactor the code here. This level of
+nesting is necessary to achieve the desired behavior.
+
+ft.c: line 51: low priority: 
+This area is deeply nested at level 4, consider refactoring
+
+There is no reasonable way to refactor the code here. This level of
+nesting is necessary to achieve the desired behavior.
+
+node.c: line 305: low priority: 
+A file should contain no more than 15 functions;
+this file contains 17 functions
+
+Reducing the number of functions would make the code less modular.
+Further, refactoring functions into a utilities file is impractical
+because most functions depend on one or more others.
+
+node.c: line 85: medium priority:
+Do you want to validate 'childID' through an assert?
+
+'childID' is owned by the caller, so we need not to validate it, and
+we ensured that we will not dereference childID if it is NULL.
+
+node.c: line 111: medium priority:
+Do you want to validate 'fileContents' through an assert?
+
+'fileContents' is owned by the client, so we need not to validate it.
+
+node.c: line 222: medium priority:
+Do you want to validate 'fileContents' through an assert?
+
+'fileContents' is owned by the client, so we need not to validate it.
+
+node.c: line 284: medium priority:
+Do you want to validate 'fileContents' through an assert?
+
+'fileContents' is owned by the client, so we need not to validate it.
+
+------------------------------------------------------------------------
+What warnings does splint generate for Part 2's checker, and what are
+your disagreements with them? Copy the splint warnings here, and
+express your disagreement after each warning. If there are no
+warnings, then write "None."
+
+None.
+
+------------------------------------------------------------------------
+What warnings does splint generate on Part 3, and what are your
+disagreements with them? Copy the splint warnings here, and express
+your disagreement after each warning. If there are no warnings, then
+write "None."
+
+Note that we did not include warnings in dynarray.c and ft.h, since we
+neither wrote nor adapted those files.
+
+node.c: (in function Node_hasChild)
+node.c:105:20: Variable index used before definition
+  An rvalue is used that may not be initialized to a value on some
+  execution path. (Use -usedef to inhibit warning)
+
+index is initilaized within DynArray_bsearch() by passing the function a
+pointer to index. The event where it remains uninitialized is handled
+appropriately. This is fully intended behavior and thus the warning can
+be ignored.
+
+node.c: (in function Node_unlinkChild)
+node.c:278:47: Variable i used before definition
+
+i is initialized within DynArray_bsearch() by passing the function a
+pointer to i. The event where it remains uninitialized is handled
+appropriately. This is fully intended behavior and thus the warning can
+be ignored.
+
+------------------------------------------------------------------------
+For each of the first three faulty BDT implementations required by Step
+1.5, identify the function where there is a bug. You do not have to
+identify the bug itself, only its location, but note that this must be
+the location of the underlying error, which is not necessarily where
+the error manifests itself or is "noticed" by the client.
+
+      Executable         Function with the underlying error
+===============================================================
+         ./bdtBad1       BDT_insertPath()
+---------------------------------------------------------------
+         ./bdtBad2       BDT_newNode()
+---------------------------------------------------------------
+         ./bdtBad3       BDT_unlinkParentToChild()
+===============================================================
+
+For bdtBad4, you do not have to find the bug. Instead, indicate what
+is different about trying to debug this executable in gdb versus the
+other three:
+
+In gdb, repeated executions to an executable use the same memory space.
+So, the output of bdtBad4 is always the same within gdb, since malloc()
+always return a pointer to the SAME heap junk data in each execution.
+However, in bash, repeated executions do NOT use the same memory space.
+This results in the output of bdtBad4 being different each time, since
+malloc() etc. return a pointer to DIFFERENT heap junk data in each
+execution. Overall, this can result in the bug being harder to find in
+gdb, as its detrimental effect on the code is partially masked.
+
+For bdtBad5, you do not have to find the bug. Instead, indicate one
+hypothesis for how the program could crash within the DynArray module,
+which we promise is itself correct:
+
+Since DynArray_map() takes a client-defined function, the program could
+crash within the DynArray module if that client-defined function itself
+produces an anomaly (e.g. fails an assert()). In this case, pfApply 
+(which is actually BDT_strlenAccumulate()) fails an assert() due to a 
+char* being NULL. In other words, the program could crash within the 
+DynArray module if the client passes a "bad" function to DynArray_map().
+
+------------------------------------------------------------------------
+What are your critiques of the given DT implementations, as
+specified in Step 2.5?
+
+Checker_Node_isValid() is used only within checker.c, and thus should be
+made static in checker.c and removed from checker.h. Similarly,
+Node_compare() and Node_hasChild() are used only within nodeGood.c, and
+thus should also be made static in nodeGood.c and removed from node.h.
+
+Node_addChild() is never used and thus should be removed from both
+nodeGood.c and node.h. Further, it is basically a wrapper function that
+calls Node_create() and Node_linkChild(), so its functionality can be
+easily replicated - this makes Node_addChild() redundant.
+
+DT_insertPath(), DT_containsPath(), and DT_rmPath() currently take char*
+path. They should instead take const char* path, because none of those
+methods should ever modify the path string.
+
+The argument order of Node_create() is (dir, parent), which is the
+opposite of that of many other methods such as Node_hasChild() that
+place the Node argument BEFORE the path argument. A well-designed
+interface should maintain consistent argument order, so the argument
+order of Node_create() should be reversed such that the Node argument
+(parent) comes first.
+
+------------------------------------------------------------------------
