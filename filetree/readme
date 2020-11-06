@@ -257,7 +257,8 @@ crash within the DynArray module if that client-defined function itself
 produces an anomaly (e.g. fails an assert()). In this case, pfApply 
 (which is actually BDT_strlenAccumulate()) fails an assert() due to a 
 char* being NULL. In other words, the program could crash within the 
-DynArray module if the client passes a "bad" function to DynArray_map().
+DynArray module if the client passes bad data (e.g. a DynArray of length
+count+1) to DynArray_map().
 
 ------------------------------------------------------------------------
 What are your critiques of the given DT implementations, as
@@ -265,8 +266,8 @@ specified in Step 2.5?
 
 Checker_Node_isValid() is used only within checker.c, and thus should be
 made static in checker.c and removed from checker.h. Similarly,
-Node_compare() and Node_hasChild() are used only within nodeGood.c, and
-thus should also be made static in nodeGood.c and removed from node.h.
+Node_hasChild() is used only within nodeGood.c, and thus should also be
+made static in nodeGood.c and removed from node.h.
 
 Node_addChild() is never used and thus should be removed from both
 nodeGood.c and node.h. Further, it is basically a wrapper function that
