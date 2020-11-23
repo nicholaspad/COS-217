@@ -102,7 +102,7 @@ loop1:
 
 endif5:
     // oSum->aulDigits[lIndex] = ulSum;
-    str     C_FLAG, [x2, LINDEX, lsl 3]
+    str     x7, [x2, LINDEX, lsl 3]
 
     // lIndex++;
     add     LINDEX, LINDEX, 1
