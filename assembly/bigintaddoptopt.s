@@ -71,7 +71,7 @@ endif1:
     bl      memset
 
 endif2:
-    // ulSum = 0;
+    // Set C_FLAG to 0
     mov     C_FLAG, 0
     // lIndex = 0;
     mov     LINDEX, 0
