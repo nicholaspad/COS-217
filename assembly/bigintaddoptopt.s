@@ -103,7 +103,7 @@ loop1:
     str     ULSUM, [x2, LINDEX, lsl 3]
 
     // ulSum = 0;
-    mov     ULSUM, 0
+    adcs    ULSUM, xzr, xzr
     b       endif5
 
 endif3:
@@ -116,7 +116,7 @@ endif4:
     str     ULSUM, [x2, LINDEX, lsl 3]
 
     // ulSum = 1;
-    mov     ULSUM, 1
+    adcs    ULSUM, xzr, xzr
 
 endif5:
     // lIndex++;
