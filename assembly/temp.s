@@ -89,16 +89,34 @@ loop1:
     ldr     x3, [x0, LINDEX, lsl 3]
     adcs    x7, ULSUM, x3
 
-    // Set ULSUM to C
-    adcs    ULSUM, xzr, xzr
+    // if carry occurred, normal-add the second addend and set ULSUM = 1
+    bcs     endif3
 
     // ulSum += oAddend2->aulDigits[lIndex];
     ldr     x4, [x1, LINDEX, lsl 3]
     adcs    ULSUM, x7, x4
 
-    // If C is 0, do not change ULSUM; otherwise, set ULSUM to 1
-    bcc     endif5
-    mov    ULSUM, 1
+    // if a carry occurred, set ULSUM = 1
+    bcs     endif4
+
+    // oSum->aulDigits[lIndex] = ulSum;
+    str     ULSUM, [x2, LINDEX, lsl 3]
+
+    // ulSum = 0;
+    mov     ULSUM, 0
+    b       endif5
+
+endif3:
+    // ulSum += oAddend2->aulDigits[lIndex];
+    ldr     x4, [x1, LINDEX, lsl 3]
+    add     ULSUM, x7, x4
+
+endif4:
+    // oSum->aulDigits[lIndex] = ulSum;
+    str     ULSUM, [x2, LINDEX, lsl 3]
+
+    // ulSum = 1;
+    mov     ULSUM, 1
 
 endif5:
     // lIndex++;
