@@ -98,7 +98,7 @@ loop1:
 
     // If C is 0, do not change C_FLAG; otherwise, set C_FLAG to 1
     bcc     endif3
-    adcs    C_FLAG, xzr, xzr
+    mov     C_FLAG, 1
 
 endif3:
     // oSum->aulDigits[lIndex] = ulSum;
