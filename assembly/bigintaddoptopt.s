@@ -78,7 +78,7 @@ endif2:
 
     // if (lIndex >= lSumLength) goto endloop1;
     cmp     LINDEX, LSUMLENGTH
-    bge     endif6
+    bge     endif4
 
     add     x0, OADDEND1, AULDIGITS
     add     x1, OADDEND2, AULDIGITS
