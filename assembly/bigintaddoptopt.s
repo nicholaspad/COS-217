@@ -8,7 +8,7 @@
     .equ    MAX_DIGITS, 32768
 
     // BigInt_add constants
-    ULSUM       .req x5
+    C_FLAG       .req x5
     LINDEX      .req x6
     OADDEND1    .req x19
     OADDEND2    .req x20
@@ -72,7 +72,7 @@ endif1:
 
 endif2:
     // ulSum = 0;
-    mov     ULSUM, 0
+    mov     C_FLAG, 0
     // lIndex = 0;
     mov     LINDEX, 0
 
@@ -87,20 +87,23 @@ endif2:
 loop1:    
     // ulSum += oAddend1->aulDigits[lIndex];
     ldr     x3, [x0, LINDEX, lsl 3]
-    adcs    x7, ULSUM, x3
+    adcs    x7, C_FLAG, x3
 
-    // Set ULSUM to C
-    adcs    ULSUM, xzr, xzr
+    // Set C_FLAG to C
+    adcs    C_FLAG, xzr, xzr
 
     // ulSum += oAddend2->aulDigits[lIndex];
     ldr     x4, [x1, LINDEX, lsl 3]
-    adcs    ULSUM, x7, x4
+    adcs    x7, x7, x4
 
-    // If C is 0, do not change ULSUM; otherwise, set ULSUM to 1
+    // If C is 0, do not change C_FLAG; otherwise, set C_FLAG to 1
     bcc     endif5
-    mov    ULSUM, 1
+    mov     C_FLAG, 1
 
 endif5:
+    // oSum->aulDigits[lIndex] = ulSum;
+    str     C_FLAG, [x2, LINDEX, lsl 3]
+
     // lIndex++;
     add     LINDEX, LINDEX, 1
 
@@ -109,8 +112,8 @@ endif5:
     blt     loop1
 
 endloop1:
-    // if (ulSum != 1) goto endif6;
-    cmp     ULSUM, 1
+    // if (C_FLAG != 1) goto endif6;
+    cmp     C_FLAG, 1
     bne     endif6
     
     // if (lSumLength != MAX_DIGITS) goto endif7;
