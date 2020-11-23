@@ -78,7 +78,7 @@ endif2:
 
     // if (lIndex >= lSumLength) goto endloop1;
     cmp     LINDEX, LSUMLENGTH
-    bge     endif4
+    bge     endif6
 
     add     x0, OADDEND1, AULDIGITS
     add     x1, OADDEND2, AULDIGITS
@@ -87,7 +87,7 @@ endif2:
 loop1:    
     // ulSum += oAddend1->aulDigits[lIndex];
     ldr     x3, [x0, LINDEX, lsl 3]
-    adcs    x7, x7, x3
+    adcs    x7, C_FLAG, x3
 
     // Set C_FLAG to C
     adcs    C_FLAG, xzr, xzr
@@ -97,10 +97,10 @@ loop1:
     adcs    x7, x7, x4
 
     // If C is 0, do not change C_FLAG; otherwise, set C_FLAG to 1
-    bcc     endif3
+    bcc     endif5
     mov     C_FLAG, 1
 
-endif3:
+endif5:
     // oSum->aulDigits[lIndex] = ulSum;
     str     x7, [x2, LINDEX, lsl 3]
 
@@ -112,13 +112,13 @@ endif3:
     blt     loop1
 
 endloop1:
-    // if (C_FLAG != 1) goto endif4;
+    // if (C_FLAG != 1) goto endif6;
     cmp     C_FLAG, 1
-    bne     endif4
+    bne     endif6
     
-    // if (lSumLength != MAX_DIGITS) goto endif5;
+    // if (lSumLength != MAX_DIGITS) goto endif7;
     cmp     LSUMLENGTH, MAX_DIGITS
-    bne     endif5
+    bne     endif7
 
     // Epilog and return FALSE
     mov     w0, FALSE
@@ -130,7 +130,7 @@ endloop1:
     add     sp, sp, BIGINT_ADD_STACK_BYTECOUNT
     ret
 
-endif5:
+endif7:
     // oSum->aulDigits[lSumLength] = 1;
     mov     x1, 1
     str     x1, [x2, LSUMLENGTH, lsl 3]
@@ -138,7 +138,7 @@ endif5:
     // lSumLength++;
     add     LSUMLENGTH, LSUMLENGTH, 1
 
-endif4:
+endif6:
     // oSum->lLength = lSumLength;
     str     LSUMLENGTH, [OSUM, LLENGTH]
     
