@@ -42,3 +42,5 @@ void List_free() {
     for (current = first; current != NULL; current = current->next)
         free(current);
 }
+
+int main(void) { return 0 }
