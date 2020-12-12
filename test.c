@@ -1,4 +1,6 @@
 char *bss;
-bss = "BSS";
 
-int main(void) { return 0; }
+int main(void) {
+    bss = "BSS";
+    return 0;
+}
